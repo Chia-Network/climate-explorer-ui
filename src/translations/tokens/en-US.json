@@ -1,0 +1,16 @@
+{
+  "climate-explorer": "Climate Explorer",
+  "hello-world": "Welcome To Climate Explorer",
+  "ok": "Ok",
+  "search": "Search",
+  "select": "Select",
+  "filters": "Filters",
+  "network-error": "Network error",
+  "there-is-a-connection-error": "There is a connection error",
+  "something-went-wrong": "Ups, something went wrong",
+  "success": "Success",
+  "no-explorer-data": "There are is no explorer data available.",
+  "explorer-data-not-loaded": "Explorer data could not be loaded.",
+  "actions": "Actions",
+  "carbon-token-retirement-explorer": "Carbon Token Retirement Explorer"
+}
