@@ -109,7 +109,7 @@ export const setLocale = locale => {
   };
 };
 
-export const getExplorerDate = ({
+export const getExplorerData = ({
   page,
   resultsLimit,
   searchQuery,
@@ -120,7 +120,7 @@ export const getExplorerDate = ({
       typeof page === 'number' && typeof resultsLimit === 'number';
 
     if (areRequestDetailsValid) {
-      let url = `${constants.API_HOST}/units?page=${page}&limit=${resultsLimit}`;
+      let url = `${constants.API_HOST}/activities?page=${page}&limit=${resultsLimit}`;
       if (searchQuery && typeof searchQuery === 'string') {
         url += `&search=${encodeURIComponent(searchQuery)}`;
       }
@@ -128,9 +128,11 @@ export const getExplorerDate = ({
       const onSuccessHandler = results => {
         dispatch({
           type: 'SET_EXPLORER_DATA',
-          payload: results,
+          payload: results.activities,
         });
-        dispatch(setPaginationNrOfPages(25));
+        dispatch(
+          setPaginationNrOfPages(Math.ceil(results.total / resultsLimit)),
+        );
       };
 
       const failedMessageId = 'explorer-data-not-loaded';

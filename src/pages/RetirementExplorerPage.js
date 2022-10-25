@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
 import { H3, DataTable, SearchInput } from '../components';
-import { getExplorerDate } from '../store/actions/appActions';
+import { getExplorerData } from '../store/actions/appActions';
 import constants from '../constants';
 
 const StyledSectionContainer = styled('div')`
@@ -47,24 +47,22 @@ const RetirementExplorerPage = () => {
 
   useEffect(() => {
     dispatch(
-      getExplorerDate({
+      getExplorerData({
         page: page,
         resultsLimit: constants.TABLE_ROWS,
-        searchQuery: 'testing',
-        isRequestMocked: true,
+        isRequestMocked: false,
       }),
     );
   }, [page]);
 
   const explorerDataKeysToBeDisplayed = useMemo(
     () => [
-      'blockHeight',
-      'value',
-      'assetName',
-      'name',
-      'publicKey',
-      'createdAt',
-      'notifiedAt',
+      'org_uid',
+      'warehouse_project_id',
+      'vintage_year',
+      'sequence_num',
+      'asset_id',
+      'beneficiary_name',
     ],
     [],
   );
