@@ -39,9 +39,14 @@ const NoDataMessageContainer = styled('div')`
   align-items: center;
 `;
 
+const searchByOptions = [
+  { value: 'onchain_metadata', label: 'Onchain metadata' },
+  { value: 'climate_warehouse', label: 'Climate Warehouse' },
+];
+
 const RetirementExplorerPage = () => {
   const dispatch = useDispatch();
-  const [searchSource, setSearchSource] = useState('onchain_metadata');
+  const [searchSource, setSearchSource] = useState(searchByOptions[0].value);
   const [searchQuery, setSearchQuery] = useState('');
 
   const pageContainerRef = useRef(null);
@@ -58,7 +63,7 @@ const RetirementExplorerPage = () => {
         searchSource,
       }),
     );
-  }, [page, searchQuery]);
+  }, [page, searchQuery, searchSource]);
 
   const explorerDataKeysToBeDisplayed = useMemo(
     () => [
@@ -86,8 +91,10 @@ const RetirementExplorerPage = () => {
     };
   }, []);
 
-  const convertSearchByLabelToValue = value =>
-    value === 'Onchain metadata' ? 'onchain_metadata' : 'climate_warehouse';
+  const convertSearchByValueToLabel = value => {
+    const foundItem = searchByOptions.find(item => item.value === value);
+    return foundItem.label;
+  };
 
   return (
     <>
@@ -99,11 +106,9 @@ const RetirementExplorerPage = () => {
 
           <StyledFiltersContainer>
             <SelectCreatable
-              options={['Onchain metadata', 'Climate Warehouse']}
-              selected={searchSource}
-              onChange={val =>
-                setSearchSource(convertSearchByLabelToValue(val))
-              }
+              options={searchByOptions}
+              selected={convertSearchByValueToLabel(searchSource)}
+              onChange={val => setSearchSource(val)}
               isClearable={false}
             />
           </StyledFiltersContainer>
