@@ -113,16 +113,20 @@ export const getExplorerData = ({
   page,
   resultsLimit,
   searchQuery,
+  searchSource,
   isRequestMocked,
 }) => {
   return async dispatch => {
     const areRequestDetailsValid =
       typeof page === 'number' && typeof resultsLimit === 'number';
+    const isSearchValid = searchQuery?.length > 0 && searchSource?.length > 0;
 
     if (areRequestDetailsValid) {
       let url = `${constants.API_HOST}/activities?page=${page}&limit=${resultsLimit}`;
-      if (searchQuery && typeof searchQuery === 'string') {
+
+      if (isSearchValid) {
         url += `&search=${encodeURIComponent(searchQuery)}`;
+        url += `&search_by=${searchSource}`;
       }
 
       const onSuccessHandler = results => {
