@@ -177,14 +177,18 @@ const SelectCreatable = withTheme(
       [placeholder],
     );
 
-    const optionsList = useMemo(
-      () =>
-        options?.map(optionItem => ({
-          value: optionItem,
-          label: optionItem,
-        })) ?? [],
-      [options],
-    );
+    const optionsList = useMemo(() => {
+      const isOptionsListOfLabelValueType =
+        Boolean(options[0]?.value) && Boolean(options[0]?.label);
+      if (isOptionsListOfLabelValueType) return options;
+
+      if (options?.length === 0) return [];
+
+      return options?.map(optionItem => ({
+        value: optionItem,
+        label: optionItem,
+      }));
+    }, [options]);
 
     const value = useMemo(() => {
       if (isMulti) {
