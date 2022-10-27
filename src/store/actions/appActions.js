@@ -144,10 +144,14 @@ export const getExplorerData = ({
       const randomResponseStubArrayIndex = Math.floor(
         Math.random() * (explorerDataStub.length - resultsLimit),
       );
-      const responseStub = explorerDataStub.slice(
+      const responseActivitiesStub = explorerDataStub.slice(
         randomResponseStubArrayIndex,
         randomResponseStubArrayIndex + resultsLimit,
       );
+      const responseStub = {
+        activities: responseActivitiesStub,
+        total: responseActivitiesStub.length,
+      };
 
       dispatch(
         fetchWrapper({

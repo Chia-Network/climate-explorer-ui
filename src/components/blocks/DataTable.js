@@ -114,6 +114,7 @@ const DataTable = withTheme(
     changePageTo,
     currentPage,
     numberOfPages,
+    onRowClick,
   }) => {
     const { theme } = useSelector(state => state);
     const ref = React.useRef(null);
@@ -151,7 +152,12 @@ const DataTable = withTheme(
             </THead>
             <tbody style={{ position: 'relative' }}>
               {data.map((record, index) => (
-                <Tr index={index} selectedTheme={theme} key={index}>
+                <Tr
+                  index={index}
+                  selectedTheme={theme}
+                  key={index}
+                  onClick={() => onRowClick(record)}
+                >
                   {headings.map((key, index) => (
                     <Td selectedTheme={theme} columnId={key} key={index}>
                       <TableCellText

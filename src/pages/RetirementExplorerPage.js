@@ -4,9 +4,16 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
-import { H3, DataTable, SearchInput, SelectCreatable } from '../components';
+import {
+  H3,
+  DataTable,
+  SearchInput,
+  SelectCreatable,
+  UnitDetailedView,
+} from '../components';
 import { getExplorerData } from '../store/actions/appActions';
 import constants from '../constants';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 const StyledSectionContainer = styled('div')`
   display: flex;
@@ -48,10 +55,12 @@ const RetirementExplorerPage = () => {
   const dispatch = useDispatch();
   const [searchSource, setSearchSource] = useState(searchByOptions[0].value);
   const [searchQuery, setSearchQuery] = useState('');
-
+  const [modalSizeAndPosition, setModalSizeAndPosition] = useState(null);
   const pageContainerRef = useRef(null);
   const [page, setPage] = useState(0);
   const { explorerData, paginationNrOfPages } = useSelector(store => store);
+  const windowSize = useWindowSize();
+  const [unitToBeViewed, setUnitToBeViewed] = useState(null);
 
   useEffect(() => {
     dispatch(
@@ -64,6 +73,22 @@ const RetirementExplorerPage = () => {
       }),
     );
   }, [page, searchQuery, searchSource]);
+
+  useEffect(() => {
+    if (pageContainerRef && pageContainerRef.current) {
+      setModalSizeAndPosition({
+        left: pageContainerRef.current.getBoundingClientRect().x,
+        top: pageContainerRef.current.getBoundingClientRect().y,
+        width: pageContainerRef.current.getBoundingClientRect().width,
+        height: pageContainerRef.current.getBoundingClientRect().height,
+      });
+    }
+  }, [
+    pageContainerRef,
+    pageContainerRef.current,
+    windowSize.height,
+    windowSize.width,
+  ]);
 
   const explorerDataKeysToBeDisplayed = useMemo(
     () => [
@@ -122,6 +147,7 @@ const RetirementExplorerPage = () => {
               changePageTo={page => setPage(page)}
               currentPage={page}
               numberOfPages={paginationNrOfPages}
+              onRowClick={entry => setUnitToBeViewed(entry)}
             />
           ) : (
             <NoDataMessageContainer>
@@ -132,6 +158,13 @@ const RetirementExplorerPage = () => {
           )}
         </StyledBodyContainer>
       </StyledSectionContainer>
+      {unitToBeViewed && (
+        <UnitDetailedView
+          onClose={() => setUnitToBeViewed(null)}
+          modalSizeAndPosition={modalSizeAndPosition}
+          unit={unitToBeViewed}
+        />
+      )}
     </>
   );
 };
