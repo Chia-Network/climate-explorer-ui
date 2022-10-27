@@ -18,6 +18,7 @@ export const StyledDetailedViewTabItem = styled('div')`
 export const StyledDetailedViewTab = styled('div')`
   display: grid;
   grid-template-columns: 50% 50%;
+  column-gap: 1rem;
 `;
 
 export const StyledItem = styled('div')`

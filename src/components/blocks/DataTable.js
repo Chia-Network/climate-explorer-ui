@@ -49,6 +49,7 @@ const Th = styled('th')`
 const Tr = styled('tr')`
   color: ${props => props.theme.colors[props.selectedTheme].onSurface};
   background-color: ${props => props.theme.colors.default.onButton};
+  cursor: pointer;
 `;
 
 const Td = styled('td')`
