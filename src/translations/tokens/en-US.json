@@ -12,5 +12,7 @@
   "no-explorer-data": "There are is no explorer data available.",
   "explorer-data-not-loaded": "Explorer data could not be loaded.",
   "actions": "Actions",
-  "carbon-token-retirement-explorer": "Carbon Token Retirement Explorer"
+  "carbon-token-retirement-explorer": "Carbon Token Retirement Explorer",
+  "unit-detailed-view": "Unit Detailed View",
+  "cancel": "Cancels"
 }
