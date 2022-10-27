@@ -29,7 +29,6 @@ export const StyledItem = styled('div')`
 
 const UnitDetailedView = ({ onClose, modalSizeAndPosition, unit }) => {
   const intl = useIntl();
-  console.log('unit', unit);
 
   const getShouldKeyValueBeDisplayed = key => {
     const valueType = typeof unit[key];
