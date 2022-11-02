@@ -4,7 +4,7 @@ import constants from '../../constants';
 import { keyMirror } from '../store-functions';
 import { LANGUAGE_CODES } from '../../translations';
 
-import { explorerDataStub } from '../mocks';
+import explorerDataStub from '../mocks/explorerStub.json';
 
 export const actions = keyMirror(
   'ACTIVATE_PROGRESS_INDICATOR',
@@ -144,7 +144,8 @@ export const getExplorerData = ({
       const randomResponseStubArrayIndex = Math.floor(
         Math.random() * (explorerDataStub.length - resultsLimit),
       );
-      const responseActivitiesStub = explorerDataStub.slice(
+      console.log('!', explorerDataStub);
+      const responseActivitiesStub = explorerDataStub?.slice(
         randomResponseStubArrayIndex,
         randomResponseStubArrayIndex + resultsLimit,
       );

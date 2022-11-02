@@ -47,8 +47,8 @@ const NoDataMessageContainer = styled('div')`
 `;
 
 const searchByOptions = [
-  { value: 'onchain_metadata', label: 'Onchain metadata' },
   { value: 'climate_warehouse', label: 'Climate Warehouse' },
+  { value: 'onchain_metadata', label: 'Onchain Metadata' },
 ];
 
 const RetirementExplorerPage = () => {
@@ -63,15 +63,18 @@ const RetirementExplorerPage = () => {
   const [unitToBeViewed, setUnitToBeViewed] = useState(null);
 
   useEffect(() => {
-    dispatch(
-      getExplorerData({
-        page: page,
-        resultsLimit: constants.TABLE_ROWS,
-        isRequestMocked: false,
-        searchQuery,
-        searchSource,
-      }),
-    );
+    setTimeout(() => {
+      console.log('####');
+      dispatch(
+        getExplorerData({
+          page: page,
+          resultsLimit: constants.TABLE_ROWS,
+          isRequestMocked: false,
+          searchQuery,
+          searchSource,
+        }),
+      );
+    }, 100);
   }, [page, searchQuery, searchSource]);
 
   useEffect(() => {
@@ -92,12 +95,14 @@ const RetirementExplorerPage = () => {
 
   const explorerDataKeysToBeDisplayed = useMemo(
     () => [
-      'org_uid',
-      'warehouse_project_id',
+      '',
+      'icon',
+      'registry_project_id',
+      'project_name',
       'vintage_year',
-      'sequence_num',
-      'asset_id',
-      'beneficiary_name',
+      'action',
+      'quantity',
+      'datetime',
     ],
     [],
   );

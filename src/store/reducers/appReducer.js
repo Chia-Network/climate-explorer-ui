@@ -18,7 +18,27 @@ const initialState = {
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
     case appActions.SET_EXPLORER_DATA:
-      return u({ explorerData: action.payload }, state);
+      /*'icon',
+      'registry_project_id',
+      'project_name',
+      'vintage_year',
+      'action',
+      'quantity',
+      'datetime',
+      */
+      // eslint-disable-next-line
+      const transformedData = action.payload.map(item => ({
+        ...item,
+        icon: item.cw_org.icon,
+        registry_project_id: item.cw_project.projectName,
+        project_name: item.cw_project.projectId,
+        vintage_year: item.cw_unit.vintageYear,
+        action: item.mode,
+        quantity: item.amount,
+        datetime: item.timestamp,
+      }));
+
+      return u({ explorerData: transformedData }, state);
 
     case appActions.SET_PAGINATION_NR_OF_PAGES:
       return u({ paginationNrOfPages: action.payload }, state);

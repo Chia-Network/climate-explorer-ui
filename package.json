@@ -1,6 +1,6 @@
 {
   "name": "climate-explorer",
-  "version": "1.0.10",
+  "version": "1.0.0",
   "private": true,
   "author": "Chia Network Inc. <hello@chia.net>",
   "homepage": "./",
@@ -97,8 +97,8 @@
     "standard-version": "^9.3.2"
   },
   "build": {
-    "appId": "org.chia.explorer",
-    "productName": "Climate Warehouse",
+    "appId": "org.chia.climate-explorer",
+    "productName": "Climate Explorer",
     "files": [
       "build/**/*",
       "node_modules/**/*"

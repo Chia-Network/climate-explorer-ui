@@ -137,7 +137,10 @@ const DataTable = withTheme(
                 {headings.map((heading, index) => (
                   <Th selectedTheme={theme} key={index}>
                     <TableCellHeaderText>
-                      {heading && convertPascalCaseToSentenceCase(heading)}
+                      {heading &&
+                        convertPascalCaseToSentenceCase(
+                          heading.replace(/_/g, ' '),
+                        )}
                     </TableCellHeaderText>
                   </Th>
                 ))}
@@ -172,9 +175,17 @@ const DataTable = withTheme(
                         {record[key] === 'null' ||
                         record[key] === '' ||
                         record[key] === null ||
-                        !record[key]
-                          ? '--'
-                          : record[key].toString()}
+                        !record[key] ? (
+                          '--'
+                        ) : index === 1 ? (
+                          <img
+                            width="25"
+                            height="25"
+                            src={record[key].toString()}
+                          />
+                        ) : (
+                          record[key].toString()
+                        )}
                       </TableCellText>
                     </Td>
                   ))}
