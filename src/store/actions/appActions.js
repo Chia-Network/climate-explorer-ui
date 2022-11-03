@@ -140,19 +140,7 @@ export const getExplorerData = ({
       };
 
       const failedMessageId = 'explorer-data-not-loaded';
-
-      const randomResponseStubArrayIndex = Math.floor(
-        Math.random() * (explorerDataStub.length - resultsLimit),
-      );
-      console.log('!', explorerDataStub);
-      const responseActivitiesStub = explorerDataStub?.slice(
-        randomResponseStubArrayIndex,
-        randomResponseStubArrayIndex + resultsLimit,
-      );
-      const responseStub = {
-        activities: responseActivitiesStub,
-        total: responseActivitiesStub.length,
-      };
+      const responseStub = explorerDataStub;
 
       dispatch(
         fetchWrapper({

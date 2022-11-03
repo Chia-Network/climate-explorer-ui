@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { Modal, modalTypeEnum, Body } from '../../components';
+import {
+  Modal,
+  modalTypeEnum,
+  Tab,
+  TabPanel,
+  Tabs,
+  UnitDetailsTab,
+} from '../../components';
 
 export const StyledDetailedViewTabItem = styled('div')`
   display: flex;
@@ -30,11 +37,27 @@ export const StyledItem = styled('div')`
 
 const UnitDetailedView = ({ onClose, modalSizeAndPosition, unit }) => {
   const intl = useIntl();
+  const [tabValue, setTabValue] = useState(0);
 
-  const getShouldKeyValueBeDisplayed = key => {
-    const valueType = typeof unit[key];
-    return valueType === 'string' || valueType === 'number';
-  };
+  const handleTabChange = useCallback(
+    (event, newValue) => setTabValue(newValue),
+    [setTabValue],
+  );
+
+  const unitKeys = Object?.keys(unit);
+  const unitDetails = {};
+  const unitTabs = [];
+
+  unitKeys?.forEach(key => {
+    const keyValue = unit[key];
+    if (typeof keyValue !== 'object' || keyValue === null) {
+      unitDetails[key] = keyValue;
+    } else if (keyValue instanceof Array && keyValue.length) {
+      unitTabs.unshift({ tabName: key, tabData: keyValue });
+    } else if (!(keyValue instanceof Array) && Object.keys(keyValue)?.length) {
+      unitTabs.unshift({ tabName: key, tabData: keyValue });
+    }
+  });
 
   return (
     <Modal
@@ -42,26 +65,27 @@ const UnitDetailedView = ({ onClose, modalSizeAndPosition, unit }) => {
       onClose={onClose}
       modalType={modalTypeEnum.basic}
       title={intl.formatMessage({
-        id: 'unit-detailed-view',
+        id: 'detailed-view',
       })}
       body={
-        <StyledDetailedViewTabItem>
-          <div style={{ width: '60%' }}>
-            <StyledDetailedViewTab>
-              {Object.keys(unit).map(
-                (key, index) =>
-                  getShouldKeyValueBeDisplayed(key) && (
-                    <StyledItem key={index}>
-                      <Body size="Bold" width="100%">
-                        {key}
-                      </Body>
-                      <Body>{unit[key]}</Body>
-                    </StyledItem>
-                  ),
-              )}
-            </StyledDetailedViewTab>
-          </div>
-        </StyledDetailedViewTabItem>
+        <>
+          <Tabs value={tabValue} onChange={handleTabChange}>
+            <Tab label="Unit details" />
+            {unitTabs?.length > 0 &&
+              unitTabs.map(tab => (
+                <Tab label={tab.tabName} key={tab.tabName} />
+              ))}
+          </Tabs>
+          <TabPanel value={tabValue} index={0}>
+            <UnitDetailsTab data={unitDetails} />
+          </TabPanel>
+          {unitTabs?.length > 0 &&
+            unitTabs.map((tab, index) => (
+              <TabPanel value={tabValue} index={index + 1} key={tab.tabName}>
+                <UnitDetailsTab data={tab.tabData} />
+              </TabPanel>
+            ))}
+        </>
       }
       hideButtons
     />
