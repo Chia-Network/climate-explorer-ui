@@ -30,8 +30,8 @@ const appReducer = (state = initialState, action) => {
       const transformedData = action.payload.map(item => ({
         ...item,
         icon: item.cw_org.icon,
-        registry_project_id: item.cw_project.projectName,
-        project_name: item.cw_project.projectId,
+        registry_project_id: item.cw_project.projectId,
+        project_name: item.cw_project.projectName,
         vintage_year: item.cw_unit.vintageYear,
         action: item.mode,
         quantity: item.amount,
