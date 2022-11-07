@@ -5,6 +5,7 @@ import { keyMirror } from '../store-functions';
 import { LANGUAGE_CODES } from '../../translations';
 
 import explorerDataStub from '../mocks/explorerStub.json';
+import { getISODateWithHoursAndMinutes } from '../../utils/dateUtils';
 
 export const actions = keyMirror(
   'ACTIVATE_PROGRESS_INDICATOR',
@@ -130,9 +131,20 @@ export const getExplorerData = ({
       }
 
       const onSuccessHandler = results => {
+        const activities = results.activities.map(item => ({
+          ...item,
+          icon: item.cw_org.icon,
+          registry_project_id: item.cw_project.projectId,
+          project_name: item.cw_project.projectName,
+          vintage_year: item.cw_unit.vintageYear,
+          action: item.mode,
+          quantity: item.amount / 1000,
+          datetime: getISODateWithHoursAndMinutes(item.timestamp),
+        }));
+
         dispatch({
           type: 'SET_EXPLORER_DATA',
-          payload: results.activities,
+          payload: activities,
         });
         dispatch(
           setPaginationNrOfPages(Math.ceil(results.total / resultsLimit)),
