@@ -12,3 +12,6 @@ export const getISODate = date => {
     ? dayjs(date, 'YYYY-MM-DD').format('YYYY/MM/DD')
     : date;
 };
+
+export const getISODateWithHoursAndMinutes = date =>
+  typeof date === 'number' ? dayjs(date).format('YYYY/MM/DD HH:mm') : date;

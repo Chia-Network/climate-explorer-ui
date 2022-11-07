@@ -64,7 +64,6 @@ const RetirementExplorerPage = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log('####');
       dispatch(
         getExplorerData({
           page: page,
