@@ -140,6 +140,7 @@ export const getExplorerData = ({
           action: item.mode,
           quantity: item.amount / 1000,
           datetime: getISODateWithHoursAndMinutes(item.timestamp * 1000),
+          cw_unit: null,
         }));
 
         dispatch({
