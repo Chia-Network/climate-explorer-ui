@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { withTheme, css } from 'styled-components';
 
 import { TableCellHeaderText, TableCellText } from '../typography';
-import { convertPascalCaseToSentenceCase } from '../../utils/stringUtils';
+import {
+  convertPascalCaseToSentenceCase,
+  isStringOfImageType,
+  isStringOfNoValueType,
+} from '../../utils/stringUtils';
 import { BasicMenu, PrimaryButton, Pagination } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { FormattedMessage } from 'react-intl';
@@ -33,9 +37,6 @@ const Th = styled('th')`
   border-bottom: 1px solid rgba(224, 224, 224, 1);
   letter-spacing: 0.01071em;
   vertical-align: inherit;
-  :nth-child(1) {
-    display: none;
-  }
 
   ${props =>
     props.stick &&
@@ -60,9 +61,6 @@ const Td = styled('td')`
   letter-spacing: 0.01071em;
   vertical-align: inherit;
   max-width: 200px;
-  :nth-child(1) {
-    display: none;
-  }
   ${props =>
     props.sticky &&
     css`
@@ -128,6 +126,16 @@ const DataTable = withTheme(
       );
     }, [ref.current, windowSize.height]);
 
+    const getFormattedContentDependingOnType = useCallback(value => {
+      if (isStringOfImageType(value)) {
+        return <img width="25" height="25" src={value.toString()} />;
+      } else if (isStringOfNoValueType(value)) {
+        return '--';
+      } else {
+        return value.toString();
+      }
+    }, []);
+
     return (
       <StyledRefContainer ref={ref}>
         <StyledScalableContainer height={`${height}px`}>
@@ -172,20 +180,7 @@ const DataTable = withTheme(
                           ].toString()}`
                         }
                       >
-                        {record[key] === 'null' ||
-                        record[key] === '' ||
-                        record[key] === null ||
-                        !record[key] ? (
-                          '--'
-                        ) : index === 1 ? (
-                          <img
-                            width="25"
-                            height="25"
-                            src={record[key].toString()}
-                          />
-                        ) : (
-                          record[key].toString()
-                        )}
+                        {getFormattedContentDependingOnType(record[key])}
                       </TableCellText>
                     </Td>
                   ))}
