@@ -63,7 +63,7 @@ const LeftNav = withTheme(({ children }) => {
           selected={location.pathname.includes(constants.ROUTES.createTokens)}
           to={constants.ROUTES.retirementExplorer}
         >
-          <FormattedMessage id="carbon-token-retirement-explorer" />
+          <FormattedMessage id="carbon-token-explorer" />
         </MenuItem>
         <div></div>
       </NavContainer>
