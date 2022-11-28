@@ -11,8 +11,20 @@ const Container = styled('div')`
   align-items: center;
 
   .MuiSelect-root,
-  .MuiSvgIcon-root {
-    color: ${props => props.theme.colors[props.selectedTheme].onSurface};
+  .MuiSvgIcon-root,
+  .MuiSelect-select {
+    color: ${props => props.theme.colors.default.primaryDark};
+    font-family: ${props => props.theme.typography.primary.semiBold};
+  }
+
+  .MuiSelect-root:hover,
+  .MuiSvgIcon-root:hover,
+  .MuiSelect-select:hover {
+    color: ${props => props.theme.colors.default.primary};
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border: 0;
   }
 `;
 
