@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Body } from '..';
+import { isStringOfImageType } from '../../utils/stringUtils';
 
 export const StyledDetailedViewTabItem = styled('div')`
   display: flex;
@@ -33,9 +34,6 @@ const UnitDetailsTab = ({ data }) => {
   const getShouldKeyValueBeDisplayed = value =>
     typeof value !== 'object' || value === null;
 
-  const isKeyValueOfStringImageType = value =>
-    typeof value === 'string' && value.startsWith('data:image/png;base64');
-
   if (isDataOfArrayType)
     return data.map((item, arrayIndex) => (
       <StyledDetailedViewTabItem key={arrayIndex}>
@@ -48,7 +46,7 @@ const UnitDetailsTab = ({ data }) => {
                     <Body size="Bold" width="100%">
                       {key}
                     </Body>
-                    {isKeyValueOfStringImageType(data[key]) ? (
+                    {isStringOfImageType(data[key]) ? (
                       <img src={data[key]} width={20} height={20} />
                     ) : (
                       <Body>{data[key]}</Body>
@@ -72,7 +70,7 @@ const UnitDetailsTab = ({ data }) => {
                   <Body size="Bold" width="100%">
                     {key}
                   </Body>
-                  {isKeyValueOfStringImageType(data[key]) ? (
+                  {isStringOfImageType(data[key]) ? (
                     <img src={data[key]} width={20} height={20} />
                   ) : (
                     <Body>{data[key]}</Body>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { LocaleSwitcher, ClimateWarehouseLogo } from '..';
+import { LocaleSwitcher, ExplorerLogo } from '../../components';
 
 const AppHeaderContainer = styled('div')`
   width: 100%;
@@ -15,18 +15,25 @@ const AppHeaderContainer = styled('div')`
   box-sizing: border-box;
 `;
 
-const LogoContainer = styled('div')`
-  align-self: center;
-  height: 100%;
+const ButtonsContainer = styled('div')`
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  align-items: center;
+
+  .MuiSelect-root,
+  .MuiSvgIcon-root {
+    color: ${props => props.theme.colors.onSurface};
+  }
 `;
 
 const AppHeader = () => {
   return (
     <AppHeaderContainer>
-      <LogoContainer>
-        <ClimateWarehouseLogo width="100%" height="100%" />
-      </LogoContainer>
-      <LocaleSwitcher />
+      <ExplorerLogo height={40} width={40} />
+      <ButtonsContainer>
+        <LocaleSwitcher />
+      </ButtonsContainer>
     </AppHeaderContainer>
   );
 };

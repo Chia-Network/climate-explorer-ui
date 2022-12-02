@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { withTheme, css } from 'styled-components';
 
 import { TableCellHeaderText, TableCellText } from '../typography';
-import { convertPascalCaseToSentenceCase } from '../../utils/stringUtils';
+import {
+  convertPascalCaseToSentenceCase,
+  isStringOfImageType,
+  isStringOfNoValueType,
+} from '../../utils/stringUtils';
 import { BasicMenu, PrimaryButton, Pagination } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { FormattedMessage } from 'react-intl';
@@ -15,27 +19,24 @@ const Table = styled('table')`
   display: table;
   border-spacing: 0;
   border-collapse: collapse;
+  overflow-x: scroll;
 `;
 
 const THead = styled('thead')`
   font-weight: 500;
-  background-color: ${props =>
-    props.theme.colors[props.selectedTheme].secondary};
+  background-color: ${props => props.theme.colors.default.gray3};
   border-left: 1px solid whitesmoke;
   border-right: 1px solid whitesmoke;
 `;
 
 const Th = styled('th')`
   padding: 1rem;
-  color: ${props => props.theme.colors[props.selectedTheme].onSurface};
+  color: ${props => props.theme.colors.default.secondary};
   display: table-cell;
   text-align: left;
   border-bottom: 1px solid rgba(224, 224, 224, 1);
   letter-spacing: 0.01071em;
   vertical-align: inherit;
-  :nth-child(1) {
-    display: none;
-  }
 
   ${props =>
     props.stick &&
@@ -47,9 +48,8 @@ const Th = styled('th')`
 `;
 
 const Tr = styled('tr')`
-  color: ${props => props.theme.colors[props.selectedTheme].onSurface};
+  color: ${props => props.theme.colors.default.secondary};
   background-color: ${props => props.theme.colors.default.onButton};
-  cursor: pointer;
 `;
 
 const Td = styled('td')`
@@ -60,9 +60,6 @@ const Td = styled('td')`
   letter-spacing: 0.01071em;
   vertical-align: inherit;
   max-width: 200px;
-  :nth-child(1) {
-    display: none;
-  }
   ${props =>
     props.sticky &&
     css`
@@ -76,6 +73,10 @@ const Td = styled('td')`
     `
   text-align: center;
   `}
+
+  button {
+    white-space: nowrap;
+  }
 `;
 
 export const StyledPaginationContainer = styled('div')`
@@ -128,6 +129,16 @@ const DataTable = withTheme(
       );
     }, [ref.current, windowSize.height]);
 
+    const getFormattedContentDependingOnType = useCallback(value => {
+      if (isStringOfImageType(value)) {
+        return <img width="25" height="25" src={value.toString()} />;
+      } else if (isStringOfNoValueType(value)) {
+        return '--';
+      } else {
+        return value.toString();
+      }
+    }, []);
+
     return (
       <StyledRefContainer ref={ref}>
         <StyledScalableContainer height={`${height}px`}>
@@ -172,20 +183,7 @@ const DataTable = withTheme(
                           ].toString()}`
                         }
                       >
-                        {record[key] === 'null' ||
-                        record[key] === '' ||
-                        record[key] === null ||
-                        !record[key] ? (
-                          '--'
-                        ) : index === 1 ? (
-                          <img
-                            width="25"
-                            height="25"
-                            src={record[key].toString()}
-                          />
-                        ) : (
-                          record[key].toString()
-                        )}
+                        {getFormattedContentDependingOnType(record[key])}
                       </TableCellText>
                     </Td>
                   ))}
