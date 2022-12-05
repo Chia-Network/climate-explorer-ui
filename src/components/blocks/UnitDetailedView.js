@@ -1,15 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
+import { Modal, modalTypeEnum, Body } from '../../components';
+import { getISODateWithHyphens } from '../../utils/dateUtils';
 import {
-  Modal,
-  modalTypeEnum,
-  Tab,
-  TabPanel,
-  Tabs,
-  UnitDetailsTab,
-} from '../../components';
+  convertSnakeCaseToPascalCase,
+  isStringOfImageType,
+  isStringOfNoValueType,
+} from '../../utils/stringUtils';
 
 export const StyledDetailedViewTabItem = styled('div')`
   display: flex;
@@ -35,29 +34,43 @@ export const StyledItem = styled('div')`
   padding: 10px 0;
 `;
 
-const UnitDetailedView = ({ onClose, modalSizeAndPosition, unit }) => {
+const UnitDetailedView = ({
+  onClose,
+  modalSizeAndPosition,
+  unit,
+  keysToDisplay,
+}) => {
   const intl = useIntl();
-  const [tabValue, setTabValue] = useState(0);
 
-  const handleTabChange = useCallback(
-    (event, newValue) => setTabValue(newValue),
-    [setTabValue],
-  );
+  const getShouldKeyBeDisplayed = key => {
+    const isRecordRetirement = unit.action !== 'RETIREMENT';
+    const isKeyARetirementKey = [
+      'beneficiary_name',
+      'beneficiary_key',
+    ].includes(key);
 
-  const unitKeys = Object?.keys(unit);
-  const unitDetails = {};
-  const unitTabs = [];
-
-  unitKeys?.forEach(key => {
-    const keyValue = unit[key];
-    if (typeof keyValue !== 'object' || keyValue === null) {
-      unitDetails[key] = keyValue;
-    } else if (keyValue instanceof Array && keyValue.length) {
-      unitTabs.unshift({ tabName: key, tabData: keyValue });
-    } else if (!(keyValue instanceof Array) && Object.keys(keyValue)?.length) {
-      unitTabs.unshift({ tabName: key, tabData: keyValue });
+    if (isRecordRetirement) {
+      return true;
     }
-  });
+
+    if (isKeyARetirementKey) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const getFormattedContentDependingOnKeyValue = useCallback((key, value) => {
+    if (isStringOfImageType(value)) {
+      return <img width="25" height="25" src={value.toString()} />;
+    } else if (isStringOfNoValueType(value)) {
+      return '--';
+    } else if (key.includes('timestamp')) {
+      return getISODateWithHyphens(value);
+    } else {
+      return value.toString();
+    }
+  }, []);
 
   return (
     <Modal
@@ -68,24 +81,26 @@ const UnitDetailedView = ({ onClose, modalSizeAndPosition, unit }) => {
         id: 'detailed-view',
       })}
       body={
-        <>
-          <Tabs value={tabValue} onChange={handleTabChange}>
-            <Tab label="Unit details" />
-            {unitTabs?.length > 0 &&
-              unitTabs.map(tab => (
-                <Tab label={tab.tabName} key={tab.tabName} />
-              ))}
-          </Tabs>
-          <TabPanel value={tabValue} index={0}>
-            <UnitDetailsTab data={unitDetails} />
-          </TabPanel>
-          {unitTabs?.length > 0 &&
-            unitTabs.map((tab, index) => (
-              <TabPanel value={tabValue} index={index + 1} key={tab.tabName}>
-                <UnitDetailsTab data={tab.tabData} />
-              </TabPanel>
-            ))}
-        </>
+        <StyledDetailedViewTabItem>
+          <div style={{ width: '60%' }}>
+            <StyledDetailedViewTab>
+              {keysToDisplay.map(
+                (key, index) =>
+                  getShouldKeyBeDisplayed(key) && (
+                    <StyledItem key={index}>
+                      <Body size="Bold" width="100%">
+                        {convertSnakeCaseToPascalCase(key)}
+                      </Body>
+
+                      <Body>
+                        {getFormattedContentDependingOnKeyValue(key, unit[key])}
+                      </Body>
+                    </StyledItem>
+                  ),
+              )}
+            </StyledDetailedViewTab>
+          </div>
+        </StyledDetailedViewTabItem>
       }
       hideButtons
     />

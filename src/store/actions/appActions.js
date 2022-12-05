@@ -143,6 +143,7 @@ export const getExplorerData = ({
           orgUid: item.cw_org.orgUid,
           warehouseProjectId: item.cw_project.warehouseProjectId,
           cw_unit: null,
+          beneficiary_key: item,
         }));
 
         dispatch({
