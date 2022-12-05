@@ -114,8 +114,6 @@ const RetirementExplorerPage = () => {
       'action',
       'quantity',
       'timestamp_UTC',
-      'warehouseProjectId',
-      'orgUid',
       'beneficiary_name',
       'beneficiary_key',
     ],
