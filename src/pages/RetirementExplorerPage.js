@@ -100,7 +100,7 @@ const RetirementExplorerPage = () => {
       'vintage_year',
       'action',
       'quantity',
-      'datetime',
+      'timestamp_UTC',
     ],
     [],
   );

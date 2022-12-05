@@ -139,7 +139,7 @@ export const getExplorerData = ({
           vintage_year: item.cw_unit.vintageYear,
           action: item.mode,
           quantity: item.amount / 1000,
-          datetime: getISODateWithHoursAndMinutes(item.timestamp * 1000),
+          timestamp_UTC: getISODateWithHoursAndMinutes(item.timestamp * 1000),
           cw_unit: null,
         }));
 
