@@ -43,7 +43,7 @@ const UnitDetailedView = ({
   const intl = useIntl();
 
   const getShouldKeyBeDisplayed = key => {
-    const isRecordRetirement = unit.action !== 'RETIREMENT';
+    const isRecordRetirement = unit.action === 'RETIREMENT';
     const isKeyARetirementKey = [
       'beneficiary_name',
       'beneficiary_key',
