@@ -24,6 +24,15 @@ export const formatValidationError = error => {
   return errorStringArray.join(' ');
 };
 
+export const convertSnakeCaseToPascalCase = string => {
+  const wordsOfString = string.split('_');
+  const newString = wordsOfString.reduce(
+    (acc, cur) => acc + ' ' + cur[0].toUpperCase() + cur.substring(1),
+    '',
+  );
+  return newString;
+};
+
 export const isStringOfImageType = value =>
   typeof value === 'string' && value.startsWith('data:image/png;base64');
 

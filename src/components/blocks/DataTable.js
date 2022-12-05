@@ -4,7 +4,7 @@ import styled, { withTheme, css } from 'styled-components';
 
 import { TableCellHeaderText, TableCellText } from '../typography';
 import {
-  convertPascalCaseToSentenceCase,
+  convertSnakeCaseToPascalCase,
   isStringOfImageType,
   isStringOfNoValueType,
 } from '../../utils/stringUtils';
@@ -148,10 +148,7 @@ const DataTable = withTheme(
                 {headings.map((heading, index) => (
                   <Th selectedTheme={theme} key={index}>
                     <TableCellHeaderText>
-                      {heading &&
-                        convertPascalCaseToSentenceCase(
-                          heading.replace(/_/g, ' '),
-                        )}
+                      {heading && convertSnakeCaseToPascalCase(heading)}
                     </TableCellHeaderText>
                   </Th>
                 ))}
