@@ -94,6 +94,7 @@ const RetirementExplorerPage = () => {
 
   const explorerDataKeysToBeDisplayed = useMemo(
     () => [
+      'icon',
       'registry_project_id',
       'project_name',
       'vintage_year',
