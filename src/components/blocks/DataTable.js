@@ -176,12 +176,7 @@ const DataTable = withTheme(
                   {headings.map((key, index) => (
                     <Td selectedTheme={theme} columnId={key} key={index}>
                       <TableCellText
-                        tooltip={
-                          record[key] &&
-                          `${convertPascalCaseToSentenceCase(key)}: ${record[
-                            key
-                          ].toString()}`
-                        }
+                        tooltip={record[key] && record[key].toString()}
                       >
                         {getFormattedContentDependingOnType(record[key])}
                       </TableCellText>
