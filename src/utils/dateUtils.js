@@ -15,3 +15,9 @@ export const getISODate = date => {
 
 export const getISODateWithHoursAndMinutes = date =>
   typeof date === 'number' ? dayjs(date).format('YYYY/MM/DD HH:mm') : date;
+
+export const getISODateWithHyphens = date => {
+  return getIsDateValid(date)
+    ? dayjs(date, 'YYYY-MM-DD').format('YYYY-MM-DD')
+    : date;
+};

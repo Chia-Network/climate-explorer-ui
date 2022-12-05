@@ -9,6 +9,7 @@ const Text = styled('h1')`
   font-style: normal;
   font-weight: 600;
   line-height: 1.375rem;
+  text-align: center;
 `;
 
 const TableCellHeaderText = withTheme(({ children, color }) => {

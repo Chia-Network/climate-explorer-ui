@@ -17,4 +17,3 @@ export * from './ToolTip';
 export * from './ToolTipContainer';
 export * from './DataTable';
 export * from './UnitDetailedView';
-export * from './UnitDetailsTab';
