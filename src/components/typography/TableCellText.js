@@ -13,6 +13,7 @@ const Text = styled('p')`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  text-align: center;
 `;
 
 const TableCellText = withTheme(({ children, tooltip, color }) => {

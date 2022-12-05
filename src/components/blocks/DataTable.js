@@ -4,13 +4,14 @@ import styled, { withTheme, css } from 'styled-components';
 
 import { TableCellHeaderText, TableCellText } from '../typography';
 import {
-  convertPascalCaseToSentenceCase,
+  convertSnakeCaseToPascalCase,
   isStringOfImageType,
   isStringOfNoValueType,
 } from '../../utils/stringUtils';
 import { BasicMenu, PrimaryButton, Pagination } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { FormattedMessage } from 'react-intl';
+import { getISODateWithHyphens } from '../../utils/dateUtils';
 
 const Table = styled('table')`
   box-sizing: border-box;
@@ -129,11 +130,13 @@ const DataTable = withTheme(
       );
     }, [ref.current, windowSize.height]);
 
-    const getFormattedContentDependingOnType = useCallback(value => {
+    const getFormattedContentDependingOnKeyValue = useCallback((key, value) => {
       if (isStringOfImageType(value)) {
         return <img width="25" height="25" src={value.toString()} />;
       } else if (isStringOfNoValueType(value)) {
         return '--';
+      } else if (key.includes('timestamp')) {
+        return getISODateWithHyphens(value);
       } else {
         return value.toString();
       }
@@ -148,10 +151,7 @@ const DataTable = withTheme(
                 {headings.map((heading, index) => (
                   <Th selectedTheme={theme} key={index}>
                     <TableCellHeaderText>
-                      {heading &&
-                        convertPascalCaseToSentenceCase(
-                          heading.replace(/_/g, ' '),
-                        )}
+                      {heading && convertSnakeCaseToPascalCase(heading)}
                     </TableCellHeaderText>
                   </Th>
                 ))}
@@ -178,12 +178,16 @@ const DataTable = withTheme(
                       <TableCellText
                         tooltip={
                           record[key] &&
-                          `${convertPascalCaseToSentenceCase(key)}: ${record[
-                            key
-                          ].toString()}`
+                          getFormattedContentDependingOnKeyValue(
+                            key,
+                            record[key].toString(),
+                          )
                         }
                       >
-                        {getFormattedContentDependingOnType(record[key])}
+                        {getFormattedContentDependingOnKeyValue(
+                          key,
+                          record[key],
+                        )}
                       </TableCellText>
                     </Td>
                   ))}

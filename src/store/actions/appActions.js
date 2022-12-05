@@ -137,10 +137,13 @@ export const getExplorerData = ({
           registry_project_id: item.cw_project.projectId,
           project_name: item.cw_project.projectName,
           vintage_year: item.cw_unit.vintageYear,
-          action: item.mode,
+          action: item.mode.includes('RETIREMENT') ? 'RETIREMENT' : item.mode,
           quantity: item.amount / 1000,
-          datetime: getISODateWithHoursAndMinutes(item.timestamp * 1000),
+          timestamp_UTC: getISODateWithHoursAndMinutes(item.timestamp * 1000),
+          orgUid: item.cw_org.orgUid,
+          warehouseProjectId: item.cw_project.warehouseProjectId,
           cw_unit: null,
+          beneficiary_key: item.beneficiary_address,
         }));
 
         dispatch({
