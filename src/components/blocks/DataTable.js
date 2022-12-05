@@ -5,12 +5,12 @@ import styled, { withTheme, css } from 'styled-components';
 import { TableCellHeaderText, TableCellText } from '../typography';
 import {
   convertSnakeCaseToPascalCase,
-  isStringOfImageType,
   isStringOfNoValueType,
 } from '../../utils/stringUtils';
 import { BasicMenu, PrimaryButton, Pagination } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { FormattedMessage } from 'react-intl';
+import { getIsDateValid, getISODateWithHyphens } from '../../utils/dateUtils';
 
 const Table = styled('table')`
   box-sizing: border-box;
@@ -130,8 +130,8 @@ const DataTable = withTheme(
     }, [ref.current, windowSize.height]);
 
     const getFormattedContentDependingOnType = useCallback(value => {
-      if (isStringOfImageType(value)) {
-        return <img width="25" height="25" src={value.toString()} />;
+      if (getIsDateValid(value)) {
+        return getISODateWithHyphens(value);
       } else if (isStringOfNoValueType(value)) {
         return '--';
       } else {
@@ -173,7 +173,12 @@ const DataTable = withTheme(
                   {headings.map((key, index) => (
                     <Td selectedTheme={theme} columnId={key} key={index}>
                       <TableCellText
-                        tooltip={record[key] && record[key].toString()}
+                        tooltip={
+                          record[key] &&
+                          getFormattedContentDependingOnType(
+                            record[key].toString(),
+                          )
+                        }
                       >
                         {getFormattedContentDependingOnType(record[key])}
                       </TableCellText>
