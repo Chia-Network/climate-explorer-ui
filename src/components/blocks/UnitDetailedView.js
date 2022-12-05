@@ -51,13 +51,11 @@ const UnitDetailedView = ({
 
     if (isRecordRetirement) {
       return true;
-    }
-
-    if (isKeyARetirementKey) {
+    } else if (isKeyARetirementKey) {
       return false;
+    } else {
+      return true;
     }
-
-    return true;
   };
 
   const getFormattedContentDependingOnKeyValue = useCallback((key, value) => {
