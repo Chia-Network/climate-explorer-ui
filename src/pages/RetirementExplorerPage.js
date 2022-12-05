@@ -105,6 +105,25 @@ const RetirementExplorerPage = () => {
     [],
   );
 
+  // const detailedViewDataKeys = useMemo(
+  //   () => [
+  //     'icon',
+  //     'registry_project_id',
+  //     'project_name',
+  //     'vintage_year',
+  //     'action',
+  //     'quantity',
+  //     'timestamp_UTC',
+  //     'warehouseProjectId',
+  //     'orgUid',
+  //     'beneficiary_name',
+  //     'beneficiary_key',
+  //   ],
+  //   [],
+  // );
+
+  // http://localhost:3001/#/projects?orgUid=72c4b2060ff9e685da3efce2cc05ed6bf50441083cd42f7e3b7345dab17b88da&myRegistry=true&projectId=6eafea86-1826-4ca6-9bfc-021da802b0ea
+
   const onSearch = useMemo(
     () =>
       _.debounce(event => {

@@ -11,7 +11,7 @@ import {
 import { BasicMenu, PrimaryButton, Pagination } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { FormattedMessage } from 'react-intl';
-// import { getIsDateValid, getISODateWithHyphens } from '../../utils/dateUtils';
+import { getISODateWithHyphens } from '../../utils/dateUtils';
 
 const Table = styled('table')`
   box-sizing: border-box;
@@ -130,21 +130,13 @@ const DataTable = withTheme(
       );
     }, [ref.current, windowSize.height]);
 
-    // const getFormattedContentDependingOnType = useCallback(value => {
-    //   if (getIsDateValid(value)) {
-    //     return getISODateWithHyphens(value);
-    //   } else if (isStringOfNoValueType(value)) {
-    //     return '--';
-    //   } else {
-    //     return value.toString();
-    //   }
-    // }, []);
-
-    const getFormattedContentDependingOnType = useCallback(value => {
+    const getFormattedContentDependingOnKeyValue = useCallback((key, value) => {
       if (isStringOfImageType(value)) {
         return <img width="25" height="25" src={value.toString()} />;
       } else if (isStringOfNoValueType(value)) {
         return '--';
+      } else if (key.includes('timestamp')) {
+        return getISODateWithHyphens(value);
       } else {
         return value.toString();
       }
@@ -186,12 +178,16 @@ const DataTable = withTheme(
                       <TableCellText
                         tooltip={
                           record[key] &&
-                          getFormattedContentDependingOnType(
+                          getFormattedContentDependingOnKeyValue(
+                            key,
                             record[key].toString(),
                           )
                         }
                       >
-                        {getFormattedContentDependingOnType(record[key])}
+                        {getFormattedContentDependingOnKeyValue(
+                          key,
+                          record[key],
+                        )}
                       </TableCellText>
                     </Td>
                   ))}
