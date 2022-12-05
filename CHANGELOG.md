@@ -1,4 +1,25 @@
-## 1.0.1 (2022-12-02)
+## [1.0.2](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.1...1.0.2) (2022-12-05)
+
+
+### Features
+
+* add about page ([5bc3b75](https://github.com/Chia-Network/climate-explorer-ui/commit/5bc3b75c7973b9102a0495646d597f4aac704698))
+* add icon column back ([84ad679](https://github.com/Chia-Network/climate-explorer-ui/commit/84ad67984b77c9704e23690b4b26ca3dbb831599))
+* center cell text and title ([c4805a8](https://github.com/Chia-Network/climate-explorer-ui/commit/c4805a84d0566123dffbe6b9055b14bd299fa718))
+* change datetime with timestamp utc ([c71f6a3](https://github.com/Chia-Network/climate-explorer-ui/commit/c71f6a3583c0526ee1fcb43ae837d07a539972ac))
+* convert table snake case to pascal case ([320dbfc](https://github.com/Chia-Network/climate-explorer-ui/commit/320dbfc68ddb163c41584f4d9f303c29fc4927a0))
+* detailed view ([7c79178](https://github.com/Chia-Network/climate-explorer-ui/commit/7c79178d35838518a75f32a661511e99c85047c9))
+* detailed view conditionally display beneficiary ([e015f1d](https://github.com/Chia-Network/climate-explorer-ui/commit/e015f1df8b81175d0de2e1f13f1b3332cc1721b3))
+* detailed view conditionally display beneficiary ([c771768](https://github.com/Chia-Network/climate-explorer-ui/commit/c77176821ff4913022b8dec546a392c1d443b1a7))
+* remove chia leafes ([331ffe2](https://github.com/Chia-Network/climate-explorer-ui/commit/331ffe203e75d21ffccc78f38cc0ad5558bb4492))
+* remove prefix from tooltip ([146d64c](https://github.com/Chia-Network/climate-explorer-ui/commit/146d64cc929d6e6d1a421a2172d61633c883aaad))
+* replace date slash with hyphens ([b3b0baa](https://github.com/Chia-Network/climate-explorer-ui/commit/b3b0baa43ca88b93e0d3ded0f542e34da59f4421))
+* update tab name ([2830356](https://github.com/Chia-Network/climate-explorer-ui/commit/28303568984cd211370348d0d107f3263b384b99))
+* use hyphens for timestamp ([d4e3cb9](https://github.com/Chia-Network/climate-explorer-ui/commit/d4e3cb9e603e2eea7e528eed5aedf58f6d87ea8e))
+
+
+
+## [1.0.1](https://github.com/Chia-Network/climate-explorer-ui/compare/a6a199b5218f6b97f7e175057f3b2acfa16de0ad...1.0.1) (2022-12-02)
 
 
 ### Bug Fixes
