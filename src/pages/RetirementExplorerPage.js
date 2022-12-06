@@ -120,6 +120,11 @@ const RetirementExplorerPage = () => {
     [],
   );
 
+  const tooltipsHeadings = useMemo(
+    () => ['registry_project_id', 'project_name'],
+    [],
+  );
+
   // http://localhost:3001/#/projects?orgUid=72c4b2060ff9e685da3efce2cc05ed6bf50441083cd42f7e3b7345dab17b88da&myRegistry=true&projectId=6eafea86-1826-4ca6-9bfc-021da802b0ea
 
   const onSearch = useMemo(
@@ -163,6 +168,7 @@ const RetirementExplorerPage = () => {
           {explorerData?.length > 0 ? (
             <DataTable
               headings={explorerDataKeysToBeDisplayed}
+              tooltipsHeadings={tooltipsHeadings}
               data={explorerData}
               changePageTo={page => setPage(page)}
               currentPage={page}

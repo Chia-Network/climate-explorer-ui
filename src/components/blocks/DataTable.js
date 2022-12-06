@@ -1,18 +1,12 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { withTheme, css } from 'styled-components';
 
 import { TableCellHeaderText, TableCellText } from '../typography';
-import {
-  convertSnakeCaseToPascalCase,
-  isStringOfImageType,
-  isStringOfNoValueType,
-} from '../../utils/stringUtils';
-import { BasicMenu, PrimaryButton, Pagination } from '..';
+import { convertSnakeCaseToPascalCase } from '../../utils/stringUtils';
+import { PrimaryButton, Pagination, BasicMenu } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { FormattedMessage } from 'react-intl';
-import { getISODateWithHyphens } from '../../utils/dateUtils';
-import { Chip } from '@mui/material';
 
 const Table = styled('table')`
   box-sizing: border-box;
@@ -119,6 +113,7 @@ const DataTable = withTheme(
     currentPage,
     numberOfPages,
     onRowClick,
+    tooltipsHeadings,
   }) => {
     const { theme } = useSelector(state => state);
     const ref = React.useRef(null);
@@ -130,39 +125,6 @@ const DataTable = withTheme(
         windowSize.height - ref.current.getBoundingClientRect().top - 20,
       );
     }, [ref.current, windowSize.height]);
-
-    const getChipColorDependingOnValue = useCallback(value => {
-      if (value === 'RETIREMENT') return 'error';
-      if (value === 'TOKENIZATION') return 'success';
-      if (value === 'DETOKENIZATION') return 'primary';
-    }, []);
-
-    const getFormattedContentDependingOnKeyValue = useCallback((key, value) => {
-      if (isStringOfImageType(value)) {
-        return <img width="25" height="25" src={value.toString()} />;
-      } else if (isStringOfNoValueType(value)) {
-        return <TableCellText>--</TableCellText>;
-      } else if (key.includes('timestamp')) {
-        return <TableCellText>{getISODateWithHyphens(value)}</TableCellText>;
-      } else if (key.includes('action')) {
-        return (
-          <div style={{ textAlign: 'center' }}>
-            <Chip
-              label={value}
-              color={getChipColorDependingOnValue(value)}
-              variant="outlined"
-            />
-          </div>
-        );
-      } else {
-        const valueToDisplay = value.toString();
-        return (
-          <TableCellText tooltip={valueToDisplay}>
-            {valueToDisplay}
-          </TableCellText>
-        );
-      }
-    }, []);
 
     return (
       <StyledRefContainer ref={ref}>
@@ -197,7 +159,11 @@ const DataTable = withTheme(
                 >
                   {headings.map((key, index) => (
                     <Td selectedTheme={theme} columnId={key} key={index}>
-                      {getFormattedContentDependingOnKeyValue(key, record[key])}
+                      <TableCellText
+                        heading={key}
+                        value={record[key]}
+                        tooltipsHeadings={tooltipsHeadings}
+                      />
                     </Td>
                   ))}
 
