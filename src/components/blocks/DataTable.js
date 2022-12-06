@@ -46,6 +46,11 @@ const Th = styled('th')`
 const Tr = styled('tr')`
   color: ${props => props.theme.colors.default.secondary};
   background-color: ${props => props.theme.colors.default.onButton};
+  cursor: pointer;
+
+  :hover {
+    background-color: ${props => props.theme.colors.default.gray6};
+  }
 `;
 
 const Td = styled('td')`
