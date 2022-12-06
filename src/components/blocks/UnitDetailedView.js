@@ -1,3 +1,4 @@
+import { Chip } from '@mui/material';
 import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
@@ -58,6 +59,12 @@ const UnitDetailedView = ({
     }
   };
 
+  const getChipColorDependingOnValue = useCallback(value => {
+    if (value === 'RETIREMENT') return 'error';
+    if (value === 'TOKENIZATION') return 'success';
+    if (value === 'DETOKENIZATION') return 'primary';
+  }, []);
+
   const getFormattedContentDependingOnKeyValue = useCallback((key, value) => {
     if (isStringOfImageType(value)) {
       return <img width="25" height="25" src={value.toString()} />;
@@ -65,6 +72,14 @@ const UnitDetailedView = ({
       return '--';
     } else if (key.includes('timestamp')) {
       return getISODateWithHyphens(value);
+    } else if (key.includes('action')) {
+      return (
+        <Chip
+          label={value}
+          color={getChipColorDependingOnValue(value)}
+          variant="outlined"
+        />
+      );
     } else {
       return value.toString();
     }
