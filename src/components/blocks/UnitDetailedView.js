@@ -80,6 +80,16 @@ const UnitDetailedView = ({
           variant="outlined"
         />
       );
+    } else if ('registry_project_id'.includes(key)) {
+      return <a href={unit.projectLink}>{value.toString()}</a>;
+    } else if ('project_name'.includes(key)) {
+      return (
+        <a
+          href={`http://localhost:3001/#/projects?orgUid=${unit.orgUid}&myRegistry=true&projectId=${unit.warehouseProjectId}`}
+        >
+          {value.toString()}
+        </a>
+      );
     } else {
       return value.toString();
     }
