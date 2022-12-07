@@ -81,11 +81,17 @@ const UnitDetailedView = ({
         />
       );
     } else if ('registry_project_id'.includes(key)) {
-      return <a href={unit.projectLink}>{value.toString()}</a>;
+      return (
+        <a href={unit.projectLink} target="_blank" rel="noreferrer">
+          {value.toString()}
+        </a>
+      );
     } else if ('project_name'.includes(key)) {
       return (
         <a
           href={`http://localhost:3001/#/projects?orgUid=${unit.orgUid}&myRegistry=true&projectId=${unit.warehouseProjectId}`}
+          target="_blank"
+          rel="noreferrer"
         >
           {value.toString()}
         </a>
