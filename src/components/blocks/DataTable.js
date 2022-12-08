@@ -1,17 +1,12 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { withTheme, css } from 'styled-components';
 
 import { TableCellHeaderText, TableCellText } from '../typography';
-import {
-  convertSnakeCaseToPascalCase,
-  isStringOfImageType,
-  isStringOfNoValueType,
-} from '../../utils/stringUtils';
-import { BasicMenu, PrimaryButton, Pagination } from '..';
+import { convertSnakeCaseToPascalCase } from '../../utils/stringUtils';
+import { PrimaryButton, Pagination, BasicMenu } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { FormattedMessage } from 'react-intl';
-import { getISODateWithHyphens } from '../../utils/dateUtils';
 
 const Table = styled('table')`
   box-sizing: border-box;
@@ -51,6 +46,11 @@ const Th = styled('th')`
 const Tr = styled('tr')`
   color: ${props => props.theme.colors.default.secondary};
   background-color: ${props => props.theme.colors.default.onButton};
+  cursor: pointer;
+
+  :hover {
+    background-color: ${props => props.theme.colors.default.gray6};
+  }
 `;
 
 const Td = styled('td')`
@@ -118,6 +118,7 @@ const DataTable = withTheme(
     currentPage,
     numberOfPages,
     onRowClick,
+    tooltipsHeadings,
   }) => {
     const { theme } = useSelector(state => state);
     const ref = React.useRef(null);
@@ -129,18 +130,6 @@ const DataTable = withTheme(
         windowSize.height - ref.current.getBoundingClientRect().top - 20,
       );
     }, [ref.current, windowSize.height]);
-
-    const getFormattedContentDependingOnKeyValue = useCallback((key, value) => {
-      if (isStringOfImageType(value)) {
-        return <img width="25" height="25" src={value.toString()} />;
-      } else if (isStringOfNoValueType(value)) {
-        return '--';
-      } else if (key.includes('timestamp')) {
-        return getISODateWithHyphens(value);
-      } else {
-        return value.toString();
-      }
-    }, []);
 
     return (
       <StyledRefContainer ref={ref}>
@@ -176,19 +165,10 @@ const DataTable = withTheme(
                   {headings.map((key, index) => (
                     <Td selectedTheme={theme} columnId={key} key={index}>
                       <TableCellText
-                        tooltip={
-                          record[key] &&
-                          getFormattedContentDependingOnKeyValue(
-                            key,
-                            record[key].toString(),
-                          )
-                        }
-                      >
-                        {getFormattedContentDependingOnKeyValue(
-                          key,
-                          record[key],
-                        )}
-                      </TableCellText>
+                        heading={key}
+                        value={record[key]}
+                        tooltipsHeadings={tooltipsHeadings}
+                      />
                     </Td>
                   ))}
 

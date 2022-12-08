@@ -142,6 +142,7 @@ export const getExplorerData = ({
           timestamp_UTC: getISODateWithHoursAndMinutes(item.timestamp * 1000),
           orgUid: item.cw_org.orgUid,
           warehouseProjectId: item.cw_project.warehouseProjectId,
+          projectLink: item.cw_project.projectLink,
           cw_unit: null,
           beneficiary_key: item.beneficiary_address,
         }));
