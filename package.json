@@ -38,7 +38,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "nf start -p 3009",
+    "start": "nf start -p 31321",
     "build": "react-scripts build",
     "test": "mocha tests/**/*.spec.js --reporter spec --exit",
     "eject": "react-scripts eject",

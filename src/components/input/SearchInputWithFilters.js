@@ -34,12 +34,28 @@ const StyledSelect = styled(Select)`
     border-radius: 0%;
   }
 
-  .MuiSelect-select,
-  .MuiSelect-icon {
+  .MuiSelect-select {
     color: ${props => props.theme.colors.default.onButton};
     font-family: ${props => props.theme.typography.primary.regular};
     font-size: 16px;
     background-color: ${props => props.theme.colors.default.primaryDark};
+    border-radius: 0.1rem;
+  }
+
+  div.MuiSelect-select,
+  div.MuiSelect-outlined,
+  div.MuiOutlinedInput-input,
+  div.MuiInputBase-input,
+  div.MuiInputBase-inputSizeSmall {
+    border-radius: 0.1rem;
+  }
+
+  .MuiSelect-icon {
+    color: ${props => props.theme.colors.default.onButton};
+  }
+
+  .MuiSelect-select:hover {
+    background-color: ${props => props.theme.colors.default.primary};
   }
 `;
 
