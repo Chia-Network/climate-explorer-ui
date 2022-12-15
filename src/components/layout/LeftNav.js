@@ -1,10 +1,10 @@
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
 
 import { Body } from '..';
 import constants from '../../constants';
+import { useSelector } from 'react-redux';
 
 const Container = styled('div')`
   display: flex;
@@ -33,7 +33,7 @@ const MenuItem = styled(Link)`
     background: ${props =>
       !props.selected && !props.disabled && props.theme.colors.default.primary};
   }
-  padding: 0.5625rem 0rem 0.75rem 3.25rem;
+  padding: 0.5625rem 0rem 0.5625rem 1.25rem;
   text-transform: uppercase;
   ${props =>
     props.disabled ? 'color: #BFBFBF; pointer-events: none;' : 'color: white;'}
@@ -46,22 +46,39 @@ const MenuItem = styled(Link)`
   font-size: 1.1rem;
   box-sizing: border-box;
   border-radius: 0.625rem;
-  margin-bottom: 0.625rem;
+  margin-bottom: 1rem;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+`;
+
+const StyledOrganizationLogo = styled('img')`
+  width: 25px;
+  height: 25px;
+  display: block;
+  padding-bottom: 10px;
 `;
 
 const LeftNav = withTheme(({ children }) => {
   const location = useLocation();
+  const { organizations } = useSelector(store => store);
 
   return (
     <Container>
       <NavContainer>
-        <MenuItem
-          selected={location.pathname.includes(constants.ROUTES.createTokens)}
-          to={constants.ROUTES.retirementExplorer}
-        >
-          <FormattedMessage id="carbon-token-explorer" />
-        </MenuItem>
-        <div></div>
+        {organizations &&
+          organizations.map(organization => (
+            <React.Fragment key={organization.orgUid}>
+              <MenuItem
+                selected={location.pathname.includes(
+                  constants.ROUTES.createTokens,
+                )}
+                to={constants.ROUTES.retirementExplorer}
+              >
+                <StyledOrganizationLogo src={organization.icon} />
+                {organization.name}
+              </MenuItem>
+              <div></div>
+            </React.Fragment>
+          ))}
       </NavContainer>
       {children}
       <StyledAppVersion>

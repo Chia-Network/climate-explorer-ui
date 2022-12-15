@@ -20,6 +20,7 @@ export const actions = keyMirror(
   'REFRESH_APP',
   'SET_EXPLORER_DATA',
   'SET_PAGINATION_NR_OF_PAGES',
+  'SET_ORGANIZATIONS',
 );
 
 export const refreshApp = render => ({
@@ -30,6 +31,11 @@ export const refreshApp = render => ({
 export const setPaginationNrOfPages = number => ({
   type: actions.SET_PAGINATION_NR_OF_PAGES,
   payload: number,
+});
+
+export const setOrganizations = organizations => ({
+  type: actions.SET_ORGANIZATIONS,
+  payload: organizations,
 });
 
 export const activateProgressIndicator = {
@@ -146,6 +152,21 @@ export const getExplorerData = ({
           cw_unit: null,
           beneficiary_key: item.beneficiary_address,
         }));
+
+        const organizations = results.activities.reduce(
+          (uniqueOrganizations, currentActivity) => {
+            const isCurrentActivityOrgNotAdded = !uniqueOrganizations.find(
+              orgItem => orgItem.orgUid === currentActivity.cw_org.orgUid,
+            );
+            if (isCurrentActivityOrgNotAdded) {
+              return [...uniqueOrganizations, { ...currentActivity.cw_org }];
+            }
+            return uniqueOrganizations;
+          },
+          [],
+        );
+
+        dispatch(setOrganizations(organizations));
 
         dispatch({
           type: 'SET_EXPLORER_DATA',
