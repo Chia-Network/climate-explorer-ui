@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { useSearchParams } from 'react-router-dom';
 
 import {
   H3,
@@ -60,6 +61,8 @@ const RetirementExplorerPage = () => {
   const { explorerData, paginationNrOfPages } = useSelector(store => store);
   const windowSize = useWindowSize();
   const [unitToBeViewed, setUnitToBeViewed] = useState(null);
+  let [searchParams] = useSearchParams();
+  const selectedOrgUid = searchParams.get('orgUid');
 
   useEffect(() => {
     setTimeout(() => {
@@ -70,10 +73,11 @@ const RetirementExplorerPage = () => {
           isRequestMocked: false,
           searchQuery: searchOptions.query,
           searchSource: searchOptions.filter,
+          orgUid: selectedOrgUid,
         }),
       );
     }, 100);
-  }, [page, searchOptions]);
+  }, [page, searchOptions, searchParams]);
 
   useEffect(() => {
     if (pageContainerRef && pageContainerRef.current) {

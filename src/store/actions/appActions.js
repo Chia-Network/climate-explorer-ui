@@ -121,6 +121,7 @@ export const getExplorerData = ({
   resultsLimit,
   searchQuery,
   searchSource,
+  orgUid,
   isRequestMocked,
 }) => {
   return async dispatch => {
@@ -136,23 +137,60 @@ export const getExplorerData = ({
         url += `&search_by=${searchSource}`;
       }
 
+      // TODO - REFACTOR TO FILTERED ENDPOINT THAT IS PASSED ORGUID
+      const isOrgUidNotSelected = !orgUid;
       const onSuccessHandler = results => {
-        const activities = results.activities.map(item => ({
-          ...item,
-          icon: item.cw_org.icon,
-          registry_project_id: item.cw_project.projectId,
-          project_name: item.cw_project.projectName,
-          vintage_year: item.cw_unit.vintageYear,
-          action: item.mode.includes('RETIREMENT') ? 'RETIREMENT' : item.mode,
-          quantity: item.amount / 1000,
-          timestamp_UTC: getISODateWithHoursAndMinutes(item.timestamp * 1000),
-          orgUid: item.cw_org.orgUid,
-          warehouseProjectId: item.cw_project.warehouseProjectId,
-          projectLink: item.cw_project.projectLink,
-          cw_unit: null,
-          beneficiary_key: item.beneficiary_address,
-        }));
+        const activities = results.activities.reduce((acc, item) => {
+          if (isOrgUidNotSelected) {
+            return [
+              ...acc,
+              {
+                ...item,
+                icon: item.cw_org.icon,
+                registry_project_id: item.cw_project.projectId,
+                project_name: item.cw_project.projectName,
+                vintage_year: item.cw_unit.vintageYear,
+                action: item.mode.includes('RETIREMENT')
+                  ? 'RETIREMENT'
+                  : item.mode,
+                quantity: item.amount / 1000,
+                timestamp_UTC: getISODateWithHoursAndMinutes(
+                  item.timestamp * 1000,
+                ),
+                orgUid: item.cw_org.orgUid,
+                warehouseProjectId: item.cw_project.warehouseProjectId,
+                projectLink: item.cw_project.projectLink,
+                cw_unit: null,
+                beneficiary_key: item.beneficiary_address,
+              },
+            ];
+          } else if (item.cw_org.orgUid === orgUid) {
+            return [
+              ...acc,
+              {
+                ...item,
+                icon: item.cw_org.icon,
+                registry_project_id: item.cw_project.projectId,
+                project_name: item.cw_project.projectName,
+                vintage_year: item.cw_unit.vintageYear,
+                action: item.mode.includes('RETIREMENT')
+                  ? 'RETIREMENT'
+                  : item.mode,
+                quantity: item.amount / 1000,
+                timestamp_UTC: getISODateWithHoursAndMinutes(
+                  item.timestamp * 1000,
+                ),
+                orgUid: item.cw_org.orgUid,
+                warehouseProjectId: item.cw_project.warehouseProjectId,
+                projectLink: item.cw_project.projectLink,
+                cw_unit: null,
+                beneficiary_key: item.beneficiary_address,
+              },
+            ];
+          } else return acc;
+        }, []);
 
+        // TODO - REFACTOR TO ORG ENDPOINT
         const organizations = results.activities.reduce(
           (uniqueOrganizations, currentActivity) => {
             const isCurrentActivityOrgNotAdded = !uniqueOrganizations.find(
@@ -165,7 +203,6 @@ export const getExplorerData = ({
           },
           [],
         );
-
         dispatch(setOrganizations(organizations));
 
         dispatch({

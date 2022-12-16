@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { withTheme } from 'styled-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import { Body } from '..';
 import constants from '../../constants';
@@ -58,20 +58,32 @@ const StyledOrganizationLogo = styled('img')`
 `;
 
 const LeftNav = withTheme(({ children }) => {
-  const location = useLocation();
   const { organizations } = useSelector(store => store);
+  let [searchParams] = useSearchParams();
+
+  // make is active work if that organization is selected
+  // first time page is loaded forward it to home org
+  // get content based on orgUid header
+  // make leftNav scrollable for situations where there are more organizations than vertical space
+
+  const selectedOrgUid = searchParams.get('orgUid');
 
   return (
     <Container>
       <NavContainer>
+        <MenuItem
+          selected={!selectedOrgUid}
+          to={constants.ROUTES.retirementExplorer}
+        >
+          All Organizations
+        </MenuItem>
+        <div></div>
         {organizations &&
           organizations.map(organization => (
             <React.Fragment key={organization.orgUid}>
               <MenuItem
-                selected={location.pathname.includes(
-                  constants.ROUTES.createTokens,
-                )}
-                to={constants.ROUTES.retirementExplorer}
+                selected={selectedOrgUid === organization.orgUid}
+                to={`${constants.ROUTES.retirementExplorer}?orgUid=${organization.orgUid}`}
               >
                 <StyledOrganizationLogo src={organization.icon} />
                 {organization.name}
