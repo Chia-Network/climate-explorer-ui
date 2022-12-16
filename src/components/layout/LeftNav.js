@@ -76,12 +76,14 @@ const LeftNav = withTheme(({ children }) => {
   return (
     <Container>
       <NavContainer>
-        <MenuItem
-          selected={!selectedOrgUid}
-          to={constants.ROUTES.retirementExplorer}
-        >
-          All Organizations
-        </MenuItem>
+        {organizations?.length > 2 && (
+          <MenuItem
+            selected={!selectedOrgUid}
+            to={constants.ROUTES.retirementExplorer}
+          >
+            All Organizations
+          </MenuItem>
+        )}
         <div></div>
         {organizations &&
           organizations.map(organization => (
