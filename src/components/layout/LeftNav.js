@@ -24,6 +24,17 @@ const NavContainer = styled('div')`
   min-width: 16rem;
   height: 100%;
   background-color: ${props => props.theme.colors.default.primaryDark};
+  overflow-y: scroll;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const StyledLastItem = styled('div')`
+  min-height: 100px;
 `;
 
 const MenuItem = styled(Link)`
@@ -60,12 +71,6 @@ const StyledOrganizationLogo = styled('img')`
 const LeftNav = withTheme(({ children }) => {
   const { organizations } = useSelector(store => store);
   let [searchParams] = useSearchParams();
-
-  // make is active work if that organization is selected
-  // first time page is loaded forward it to home org
-  // get content based on orgUid header
-  // make leftNav scrollable for situations where there are more organizations than vertical space
-
   const selectedOrgUid = searchParams.get('orgUid');
 
   return (
@@ -91,6 +96,7 @@ const LeftNav = withTheme(({ children }) => {
               <div></div>
             </React.Fragment>
           ))}
+        <StyledLastItem />
       </NavContainer>
       {children}
       <StyledAppVersion>
