@@ -76,7 +76,7 @@ const LeftNav = withTheme(({ children }) => {
   return (
     <Container>
       <NavContainer>
-        {organizations?.length > 2 && (
+        {organizations?.length > 1 && (
           <MenuItem
             selected={!selectedOrgUid}
             to={constants.ROUTES.retirementExplorer}
