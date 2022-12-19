@@ -128,6 +128,8 @@ const RetirementExplorerPage = () => {
     [],
   );
 
+  const headingsHidden = useMemo(() => ['icon'], []);
+
   const updateSearchOptionsDebounced = useMemo(
     () =>
       _.debounce(
@@ -170,6 +172,7 @@ const RetirementExplorerPage = () => {
           {explorerData?.length > 0 ? (
             <DataTable
               headings={explorerDataKeysToBeDisplayed}
+              headingsHidden={headingsHidden}
               tooltipsHeadings={tooltipsHeadings}
               data={explorerData}
               changePageTo={page => setPage(page)}

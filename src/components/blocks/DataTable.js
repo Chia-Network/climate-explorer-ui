@@ -114,6 +114,7 @@ const StyledScalableContainer = styled('div')`
 const DataTable = withTheme(
   ({
     headings,
+    headingsHidden,
     data,
     actions,
     buttonConfig,
@@ -143,7 +144,9 @@ const DataTable = withTheme(
                 {headings.map((heading, index) => (
                   <Th selectedTheme={theme} key={index}>
                     <TableCellHeaderText>
-                      {heading && convertSnakeCaseToPascalCase(heading)}
+                      {heading &&
+                        !headingsHidden?.includes(heading) &&
+                        convertSnakeCaseToPascalCase(heading)}
                     </TableCellHeaderText>
                   </Th>
                 ))}
