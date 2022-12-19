@@ -22,12 +22,20 @@ const Text = styled('p')`
   text-align: center;
 `;
 
+const StyledAlignedDiv = styled('div')`
+  text-align: center;
+`;
+
 const TableCellText = withTheme(
   ({ color, heading, value, tooltipsHeadings }) => {
     const appStore = useSelector(state => state);
 
     if (isStringOfImageType(value)) {
-      return <img width="25" height="25" src={value.toString()} />;
+      return (
+        <StyledAlignedDiv>
+          <img width="25" height="25" src={value.toString()} />
+        </StyledAlignedDiv>
+      );
     }
 
     if (isStringOfNoValueType(value)) {
@@ -56,13 +64,13 @@ const TableCellText = withTheme(
     const isHeadingAPill = heading.includes('action');
     if (isHeadingAPill) {
       return (
-        <div style={{ textAlign: 'center' }}>
+        <StyledAlignedDiv>
           <Chip
             label={value}
             color={getChipColorDependingOnValue(value)}
             variant="outlined"
           />
-        </div>
+        </StyledAlignedDiv>
       );
     }
 
