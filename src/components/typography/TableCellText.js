@@ -2,6 +2,8 @@ import { Chip } from '@mui/material';
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { withTheme } from 'styled-components';
+import { FormattedNumber } from 'react-intl';
+
 import { ToolTip, ToolTipPlacement } from '../../components';
 import { getISODateWithHyphens } from '../../utils/dateUtils';
 import {
@@ -72,6 +74,11 @@ const TableCellText = withTheme(
           />
         </StyledAlignedDiv>
       );
+    }
+
+    const isHeaderOfQuantityType = heading.includes('quantity');
+    if (isHeaderOfQuantityType) {
+      return <FormattedNumber value={value} />;
     }
 
     const valueToDisplay = value.toString();
