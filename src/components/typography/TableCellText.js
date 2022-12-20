@@ -78,7 +78,11 @@ const TableCellText = withTheme(
 
     const isHeaderOfQuantityType = heading.includes('quantity');
     if (isHeaderOfQuantityType) {
-      return <FormattedNumber value={value} />;
+      return (
+        <Text color={color} selectedTheme={appStore.theme}>
+          <FormattedNumber value={value} />
+        </Text>
+      );
     }
 
     const valueToDisplay = value.toString();
