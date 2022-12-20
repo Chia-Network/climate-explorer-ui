@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled, { withTheme } from 'styled-components';
 import { Link, useSearchParams } from 'react-router-dom';
 
@@ -71,7 +71,13 @@ const StyledOrganizationLogo = styled('img')`
 const LeftNav = withTheme(({ children }) => {
   const { organizations } = useSelector(store => store);
   let [searchParams] = useSearchParams();
-  const selectedOrgUid = searchParams.get('orgUid');
+
+  let selectedOrgUid = useMemo(() => {
+    if (organizations?.length === 1) {
+      return organizations[0].orgUid;
+    }
+    return searchParams.get('orgUid');
+  }, [organizations]);
 
   return (
     <Container>
