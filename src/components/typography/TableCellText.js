@@ -2,7 +2,6 @@ import { Chip } from '@mui/material';
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { withTheme } from 'styled-components';
-import { FormattedNumber } from 'react-intl';
 
 import { ToolTip, ToolTipPlacement } from '../../components';
 import { getISODateWithHyphens } from '../../utils/dateUtils';
@@ -80,7 +79,7 @@ const TableCellText = withTheme(
     if (isHeaderOfQuantityType) {
       return (
         <Text color={color} selectedTheme={appStore.theme}>
-          <FormattedNumber value={value} />
+          {value.toLocaleString(navigator.language)}
         </Text>
       );
     }
