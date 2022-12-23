@@ -85,7 +85,7 @@ const TableCellText = withTheme(
     }
 
     const valueToDisplay = value.toString();
-    const isTooltipVisible = tooltipsHeadings.includes(heading);
+    const isTooltipVisible = tooltipsHeadings?.includes(heading);
     return isTooltipVisible ? (
       <ToolTip body={valueToDisplay} placement={ToolTipPlacement.Top}>
         <Text color={color} selectedTheme={appStore.theme}>
