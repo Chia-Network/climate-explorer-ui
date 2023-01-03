@@ -18,6 +18,6 @@ export const getISODateWithHoursAndMinutes = date =>
 
 export const getISODateWithHyphens = date => {
   return getIsDateValid(date)
-    ? dayjs(date, 'YYYY-MM-DD').format('YYYY-MM-DD')
+    ? dayjs(date, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
     : date;
 };
