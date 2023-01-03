@@ -7,9 +7,10 @@ import { useSearchParams } from 'react-router-dom';
 
 import {
   H3,
-  DataTable,
   UnitDetailedView,
   SearchInputWithFilters,
+  Table,
+  TableColumnTypeEnum,
 } from '../components';
 import { getExplorerData } from '../store/actions/appActions';
 import constants from '../constants';
@@ -95,19 +96,6 @@ const RetirementExplorerPage = () => {
     windowSize.width,
   ]);
 
-  const explorerDataKeysToBeDisplayed = useMemo(
-    () => [
-      'icon',
-      'registry_project_id',
-      'project_name',
-      'vintage_year',
-      'action',
-      'quantity',
-      'timestamp_UTC',
-    ],
-    [],
-  );
-
   const keysToDisplay = useMemo(
     () => [
       'icon',
@@ -123,12 +111,59 @@ const RetirementExplorerPage = () => {
     [],
   );
 
-  const tooltipsHeadings = useMemo(
-    () => ['registry_project_id', 'project_name'],
+  const explorerDataTableConfig = useMemo(
+    () => ({
+      rows: {
+        onRowClick: entry => setUnitToBeViewed(entry),
+      },
+      columns: [
+        {
+          title: '',
+          key: 'icon',
+          type: TableColumnTypeEnum.image,
+          isTooltipVisible: false,
+        },
+        {
+          title: 'Registry Project Id',
+          key: 'registry_project_id',
+          type: TableColumnTypeEnum.string,
+          isTooltipVisible: true,
+        },
+        {
+          title: 'Project Name',
+          key: 'project_name',
+          type: TableColumnTypeEnum.string,
+          isTooltipVisible: true,
+        },
+        {
+          title: 'Vintage Year',
+          key: 'vintage_year',
+          type: TableColumnTypeEnum.string,
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          type: TableColumnTypeEnum.pill,
+          pillColorConfig: {
+            RETIREMENT: 'error',
+            TOKENIZATION: 'success',
+            DETOKENIZATION: 'primary',
+          },
+        },
+        {
+          title: 'Quantity',
+          key: 'quantity',
+          type: TableColumnTypeEnum.quantity,
+        },
+        {
+          title: 'Timestamp UTC',
+          key: 'timestamp_UTC',
+          type: TableColumnTypeEnum.date,
+        },
+      ],
+    }),
     [],
   );
-
-  const headingsHidden = useMemo(() => ['icon'], []);
 
   const updateSearchOptionsDebounced = useMemo(
     () =>
@@ -170,15 +205,12 @@ const RetirementExplorerPage = () => {
 
         <StyledBodyContainer>
           {explorerData?.length > 0 ? (
-            <DataTable
-              headings={explorerDataKeysToBeDisplayed}
-              headingsHidden={headingsHidden}
-              tooltipsHeadings={tooltipsHeadings}
+            <Table
+              config={explorerDataTableConfig}
               data={explorerData}
               changePageTo={page => setPage(page)}
               currentPage={page}
               numberOfPages={paginationNrOfPages}
-              onRowClick={entry => setUnitToBeViewed(entry)}
             />
           ) : (
             <NoDataMessageContainer>
