@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { withTheme, css } from 'styled-components';
 
-import { TableCellHeaderText } from '../typography';
 import { Pagination, TableCell } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
 
@@ -12,7 +11,6 @@ const TableColumnTypeEnum = {
   date: 'date',
   image: 'image',
   button: 'button',
-  pill: 'pill',
 };
 
 const StyledTable = styled('table')`
@@ -37,13 +35,18 @@ const StyledTableHead = styled('thead')`
 
 const Th = styled('th')`
   padding: 1rem;
-  color: ${props => props.theme.colors.default.secondary};
   display: table-cell;
   text-align: left;
   border-bottom: 1px solid rgba(224, 224, 224, 1);
   letter-spacing: 0.01071em;
   vertical-align: inherit;
   text-align: center;
+  color: ${props => props.color || props.theme.colors.default.secondary};
+  font-size: 0.875rem;
+  font-family: ${props => props.theme.typography.primary.semiBold};
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.375rem;
 `;
 
 const Tr = styled('tr')`
@@ -123,9 +126,7 @@ const Table = withTheme(
               <tr>
                 {config.columns.map(columnConfig => (
                   <Th selectedTheme={theme} key={columnConfig.key}>
-                    <TableCellHeaderText>
-                      {columnConfig.title}
-                    </TableCellHeaderText>
+                    {columnConfig.title}
                   </Th>
                 ))}
               </tr>
