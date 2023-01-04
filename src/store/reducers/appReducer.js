@@ -13,6 +13,7 @@ const initialState = {
   refresh: false,
   explorerData: null,
   paginationNrOfPages: null,
+  organizations: null,
 };
 
 const appReducer = (state = initialState, action) => {
@@ -22,6 +23,9 @@ const appReducer = (state = initialState, action) => {
 
     case appActions.SET_PAGINATION_NR_OF_PAGES:
       return u({ paginationNrOfPages: action.payload }, state);
+
+    case appActions.SET_ORGANIZATIONS:
+      return u({ organizations: action.payload }, state);
 
     case appActions.REFRESH_APP:
       return u({ refresh: action.payload }, state);

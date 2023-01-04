@@ -20,6 +20,7 @@ export const actions = keyMirror(
   'REFRESH_APP',
   'SET_EXPLORER_DATA',
   'SET_PAGINATION_NR_OF_PAGES',
+  'SET_ORGANIZATIONS',
 );
 
 export const refreshApp = render => ({
@@ -30,6 +31,11 @@ export const refreshApp = render => ({
 export const setPaginationNrOfPages = number => ({
   type: actions.SET_PAGINATION_NR_OF_PAGES,
   payload: number,
+});
+
+export const setOrganizations = organizations => ({
+  type: actions.SET_ORGANIZATIONS,
+  payload: organizations,
 });
 
 export const activateProgressIndicator = {
@@ -115,6 +121,7 @@ export const getExplorerData = ({
   resultsLimit,
   searchQuery,
   searchSource,
+  orgUid,
   isRequestMocked,
 }) => {
   return async dispatch => {
@@ -130,21 +137,73 @@ export const getExplorerData = ({
         url += `&search_by=${searchSource}`;
       }
 
+      // TODO - REFACTOR TO FILTERED ENDPOINT THAT IS PASSED ORGUID
+      const isOrgUidNotSelected = !orgUid;
       const onSuccessHandler = results => {
-        const activities = results.activities.map(item => ({
-          ...item,
-          icon: item.cw_org.icon,
-          registry_project_id: item.cw_project.projectId,
-          project_name: item.cw_project.projectName,
-          vintage_year: item.cw_unit.vintageYear,
-          action: item.mode.includes('RETIREMENT') ? 'RETIREMENT' : item.mode,
-          quantity: item.amount / 1000,
-          timestamp_UTC: getISODateWithHoursAndMinutes(item.timestamp * 1000),
-          orgUid: item.cw_org.orgUid,
-          warehouseProjectId: item.cw_project.warehouseProjectId,
-          cw_unit: null,
-          beneficiary_key: item.beneficiary_address,
-        }));
+        const activities = results.activities.reduce((acc, item) => {
+          if (isOrgUidNotSelected) {
+            return [
+              ...acc,
+              {
+                ...item,
+                icon: item.cw_org.icon,
+                registry_project_id: item.cw_project.projectId,
+                project_name: item.cw_project.projectName,
+                vintage_year: item.cw_unit.vintageYear,
+                action: item.mode.includes('RETIREMENT')
+                  ? 'RETIREMENT'
+                  : item.mode,
+                quantity: item.amount / 1000,
+                timestamp_UTC: getISODateWithHoursAndMinutes(
+                  item.timestamp * 1000,
+                ),
+                orgUid: item.cw_org.orgUid,
+                warehouseProjectId: item.cw_project.warehouseProjectId,
+                projectLink: item.cw_project.projectLink,
+                cw_unit: null,
+                beneficiary_key: item.beneficiary_address,
+              },
+            ];
+          } else if (item.cw_org.orgUid === orgUid) {
+            return [
+              ...acc,
+              {
+                ...item,
+                icon: item.cw_org.icon,
+                registry_project_id: item.cw_project.projectId,
+                project_name: item.cw_project.projectName,
+                vintage_year: item.cw_unit.vintageYear,
+                action: item.mode.includes('RETIREMENT')
+                  ? 'RETIREMENT'
+                  : item.mode,
+                quantity: item.amount / 1000,
+                timestamp_UTC: getISODateWithHoursAndMinutes(
+                  item.timestamp * 1000,
+                ),
+                orgUid: item.cw_org.orgUid,
+                warehouseProjectId: item.cw_project.warehouseProjectId,
+                projectLink: item.cw_project.projectLink,
+                cw_unit: null,
+                beneficiary_key: item.beneficiary_address,
+              },
+            ];
+          } else return acc;
+        }, []);
+
+        // TODO - REFACTOR TO ORG ENDPOINT
+        const organizations = results.activities.reduce(
+          (uniqueOrganizations, currentActivity) => {
+            const isCurrentActivityOrgNotAdded = !uniqueOrganizations.find(
+              orgItem => orgItem.orgUid === currentActivity.cw_org.orgUid,
+            );
+            if (isCurrentActivityOrgNotAdded) {
+              return [...uniqueOrganizations, { ...currentActivity.cw_org }];
+            }
+            return uniqueOrganizations;
+          },
+          [],
+        );
+        dispatch(setOrganizations(organizations));
 
         dispatch({
           type: 'SET_EXPLORER_DATA',

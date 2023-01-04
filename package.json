@@ -1,6 +1,6 @@
 {
   "name": "climate-explorer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "author": "Chia Network Inc. <hello@chia.net>",
   "homepage": "./",
@@ -25,6 +25,7 @@
     "react-dom": "^17.0.2",
     "react-indiana-drag-scroll": "^2.1.0",
     "react-intl": "^5.21.0",
+    "react-is": "^18.2.0",
     "react-notifications": "^1.7.3",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.3.0",
@@ -38,7 +39,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "nf start -p 3009",
+    "start": "nf start -p 31321",
     "build": "react-scripts build",
     "test": "mocha tests/**/*.spec.js --reporter spec --exit",
     "eject": "react-scripts eject",

@@ -9,3 +9,4 @@ export * from './UploadPngInput';
 export * from './UploadFileInput';
 export * from './YearSelect';
 export * from './DateSelect';
+export * from './SearchInputWithFilters';

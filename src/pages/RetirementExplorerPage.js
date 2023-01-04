@@ -3,13 +3,14 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { useSearchParams } from 'react-router-dom';
 
 import {
   H3,
-  DataTable,
-  SearchInput,
-  SelectCreatable,
   UnitDetailedView,
+  SearchInputWithFilters,
+  Table,
+  TableColumnTypeEnum,
 } from '../components';
 import { getExplorerData } from '../store/actions/appActions';
 import constants from '../constants';
@@ -27,14 +28,6 @@ const StyledHeaderContainer = styled('div')`
   padding: 30px 24px 14px 16px;
 `;
 
-const StyledSearchContainer = styled('div')`
-  max-width: 25.1875rem;
-`;
-
-const StyledFiltersContainer = styled('div')`
-  margin: 0rem 1.2813rem;
-`;
-
 const StyledBodyContainer = styled('div')`
   flex-grow: 1;
 `;
@@ -46,21 +39,31 @@ const NoDataMessageContainer = styled('div')`
   align-items: center;
 `;
 
-const searchByOptions = [
-  { value: 'climate_warehouse', label: 'Climate Warehouse' },
-  { value: 'onchain_metadata', label: 'Onchain Metadata' },
+const filterOptions = [
+  { value: 'climate_warehouse', label: 'Climate Data' },
+  {
+    value: 'onchain_metadata',
+    label: 'Beneficiary Information',
+  },
 ];
 
 const RetirementExplorerPage = () => {
   const dispatch = useDispatch();
-  const [searchSource, setSearchSource] = useState(searchByOptions[0].value);
+  const initialSearchFilter = filterOptions[0];
+  const [searchOptions, setSearchOptions] = useState({
+    query: '',
+    filter: initialSearchFilter.value,
+  });
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchFilter, setSearchFilter] = useState(initialSearchFilter);
   const [modalSizeAndPosition, setModalSizeAndPosition] = useState(null);
   const pageContainerRef = useRef(null);
   const [page, setPage] = useState(0);
   const { explorerData, paginationNrOfPages } = useSelector(store => store);
   const windowSize = useWindowSize();
   const [unitToBeViewed, setUnitToBeViewed] = useState(null);
+  let [searchParams] = useSearchParams();
+  const selectedOrgUid = searchParams.get('orgUid');
 
   useEffect(() => {
     setTimeout(() => {
@@ -69,12 +72,13 @@ const RetirementExplorerPage = () => {
           page: page,
           resultsLimit: constants.TABLE_ROWS,
           isRequestMocked: false,
-          searchQuery,
-          searchSource,
+          searchQuery: searchOptions.query,
+          searchSource: searchOptions.filter,
+          orgUid: selectedOrgUid,
         }),
       );
     }, 100);
-  }, [page, searchQuery, searchSource]);
+  }, [page, searchOptions, searchParams]);
 
   useEffect(() => {
     if (pageContainerRef && pageContainerRef.current) {
@@ -92,19 +96,6 @@ const RetirementExplorerPage = () => {
     windowSize.width,
   ]);
 
-  const explorerDataKeysToBeDisplayed = useMemo(
-    () => [
-      'icon',
-      'registry_project_id',
-      'project_name',
-      'vintage_year',
-      'action',
-      'quantity',
-      'timestamp_UTC',
-    ],
-    [],
-  );
-
   const keysToDisplay = useMemo(
     () => [
       'icon',
@@ -114,62 +105,112 @@ const RetirementExplorerPage = () => {
       'action',
       'quantity',
       'timestamp_UTC',
-      'warehouseProjectId',
-      'orgUid',
       'beneficiary_name',
       'beneficiary_key',
     ],
     [],
   );
 
-  // http://localhost:3001/#/projects?orgUid=72c4b2060ff9e685da3efce2cc05ed6bf50441083cd42f7e3b7345dab17b88da&myRegistry=true&projectId=6eafea86-1826-4ca6-9bfc-021da802b0ea
+  const explorerDataTableConfig = useMemo(
+    () => ({
+      rows: {
+        onRowClick: entry => setUnitToBeViewed(entry),
+      },
+      columns: [
+        {
+          title: '',
+          key: 'icon',
+          type: TableColumnTypeEnum.image,
+          isTooltipVisible: false,
+        },
+        {
+          title: 'Registry Project Id',
+          key: 'registry_project_id',
+          type: TableColumnTypeEnum.string,
+          isTooltipVisible: true,
+        },
+        {
+          title: 'Project Name',
+          key: 'project_name',
+          type: TableColumnTypeEnum.string,
+          isTooltipVisible: true,
+        },
+        {
+          title: 'Vintage Year',
+          key: 'vintage_year',
+          type: TableColumnTypeEnum.string,
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          type: TableColumnTypeEnum.pill,
+          pillColorConfig: {
+            RETIREMENT: 'error',
+            TOKENIZATION: 'success',
+            DETOKENIZATION: 'primary',
+          },
+        },
+        {
+          title: 'Quantity',
+          key: 'quantity',
+          type: TableColumnTypeEnum.quantity,
+        },
+        {
+          title: 'Timestamp UTC',
+          key: 'timestamp_UTC',
+          type: TableColumnTypeEnum.date,
+        },
+      ],
+    }),
+    [],
+  );
 
-  const onSearch = useMemo(
+  const updateSearchOptionsDebounced = useMemo(
     () =>
-      _.debounce(event => {
-        setSearchQuery(event.target.value?.toLowerCase() ?? '');
-      }, 300),
+      _.debounce(
+        (search, filter) =>
+          setSearchOptions({
+            query: search.toLowerCase(),
+            filter: filter,
+          }),
+        300,
+      ),
     [],
   );
 
   useEffect(() => {
     return () => {
-      onSearch.cancel();
+      updateSearchOptionsDebounced.cancel();
     };
   }, []);
 
-  const convertSearchByValueToLabel = value => {
-    const foundItem = searchByOptions.find(item => item.value === value);
-    return foundItem.label;
+  const onSearchChange = (search, filter) => {
+    setSearchQuery(search);
+    setSearchFilter(filter);
+    updateSearchOptionsDebounced(search, filter.value);
   };
 
   return (
     <>
       <StyledSectionContainer ref={pageContainerRef}>
         <StyledHeaderContainer>
-          <StyledSearchContainer>
-            <SearchInput size="large" onChange={onSearch} outline />
-          </StyledSearchContainer>
-
-          <StyledFiltersContainer>
-            <SelectCreatable
-              options={searchByOptions}
-              selected={convertSearchByValueToLabel(searchSource)}
-              onChange={val => setSearchSource(val)}
-              isClearable={false}
-            />
-          </StyledFiltersContainer>
+          <SearchInputWithFilters
+            searchQuery={searchQuery}
+            searchFilter={searchFilter}
+            filterOptions={filterOptions}
+            placeholder="Search ..."
+            onChange={onSearchChange}
+          />
         </StyledHeaderContainer>
 
         <StyledBodyContainer>
           {explorerData?.length > 0 ? (
-            <DataTable
-              headings={explorerDataKeysToBeDisplayed}
+            <Table
+              config={explorerDataTableConfig}
               data={explorerData}
               changePageTo={page => setPage(page)}
               currentPage={page}
               numberOfPages={paginationNrOfPages}
-              onRowClick={entry => setUnitToBeViewed(entry)}
             />
           ) : (
             <NoDataMessageContainer>
