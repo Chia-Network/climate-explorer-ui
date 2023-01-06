@@ -96,6 +96,8 @@ const UnitDetailedView = ({
           {value.toString()}
         </a>
       );
+    } else if ('quantity'.includes(key)) {
+      return value.toLocaleString(navigator.language);
     } else {
       return value.toString();
     }
