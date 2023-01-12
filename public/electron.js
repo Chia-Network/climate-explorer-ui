@@ -1,5 +1,12 @@
 // Module to control the application lifecycle and the native browser window.
-const { app, BrowserWindow, protocol, Menu, MenuItem } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  protocol,
+  Menu,
+  MenuItem,
+  shell,
+} = require('electron');
 const openAboutWindow = require('about-window').default;
 const path = require('path');
 const url = require('url');
@@ -32,11 +39,6 @@ function createWindow() {
     mainWindow.loadURL(appURL);
   });
 
-  mainWindow.webContents.on('new-window', (e, url) => {
-    e.preventDefault();
-    require('electron').shell.openExternal(url);
-  });
-
   // Automatically open Chrome's DevTools in development mode.
   if (!app.isPackaged) {
     mainWindow.webContents.openDevTools();
@@ -66,6 +68,11 @@ function createWindow() {
   );
 
   Menu.setApplicationMenu(newMenu);
+
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' };
+  });
 }
 
 // Setup a local proxy to adjust the paths of requested files when loading
@@ -111,15 +118,15 @@ app.on('window-all-closed', function () {
 // If your app has no need to navigate or only needs to navigate to known pages,
 // it is a good idea to limit navigation outright to that known scope,
 // disallowing any other kinds of navigation.
-const allowedNavigationDestinations = 'https://my-app.com';
-app.on('web-contents-created', (event, contents) => {
-  contents.on('will-navigate', (event, navigationURL) => {
-    const parsedURL = new URL(navigationURL);
-    if (!allowedNavigationDestinations.includes(parsedURL.origin)) {
-      event.preventDefault();
-    }
-  });
-});
+// const allowedNavigationDestinations = 'https://my-app.com';
+// app.on('web-contents-created', (event, contents) => {
+//   contents.on('will-navigate', (event, navigationURL) => {
+//     const parsedURL = new URL(navigationURL);
+//     if (!allowedNavigationDestinations.includes(parsedURL.origin)) {
+//       event.preventDefault();
+//     }
+//   });
+// });
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
