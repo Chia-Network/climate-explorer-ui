@@ -152,7 +152,7 @@ const Modal = withTheme(
     const intl = useIntl();
 
     return (
-      <MaskContainer onClick={onClose}>
+      <MaskContainer>
         <ModalContainer
           onClick={e => e.stopPropagation()}
           modalType={modalType}
