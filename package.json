@@ -36,7 +36,7 @@
     "styled-components": "^5.3.3",
     "updeep": "^1.2.1",
     "web-vitals": "^1.0.1",
-    "yup": "^0.32.11"
+    "yup": "^1.1.1"
   },
   "scripts": {
     "start": "nf start -p 31321",
