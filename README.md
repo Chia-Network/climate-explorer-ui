@@ -1,10 +1,28 @@
-# Climate Warehouse Auxiliary App
+# Climate Explorer User Interface
 
-Auxiliary App for the Climate Warehouse
+User interface for accessing data from the [Climate Explorer](https://github.com/Chia-Network/climate-token-driver/). 
+
+
+## Related Projects
+
+* [Chia Blockchain](https://github.com/Chia-Network/chia-blockchain)
+* [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine)
+* [Climate Tokenization Engine UI](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI)
+* [Climate Explorer](https://github.com/Chia-Network/climate-token-driver)
+* [Chia Climate Tokenization](https://github.com/Chia-Network/climate-token-driver)
+* [Climate Wallet](https://github.com/Chia-Network/Climate-Wallet)
+* [Climate Action Data Trust](https://github.com/Chia-Network/cadt)
+* [Climate Action Data Trust UI](https://github.com/Chia-Network/cadt-ui)
 
 ## QuickStart
 
 ### Installation
+
+Precompiled binaries and installers are available for MacOS, Windows, and Debian-based Linux distros (Ubuntu, Mint, PopOS, etc) on the [releases](https://github.com/Chia-Network/climate-explorer-ui/releases) page. 
+
+## Developer Guide
+
+### Installing from Source 
 
 ```
 npm install -g react-scripts
@@ -34,13 +52,15 @@ You'll need:
 - Git
 - [nvm](https://github.com/nvm-sh/nvm)
 
-  This app uses `nvm` to align node versions across development, CI and production. If you're working on Windows you should consider [nvm-windows](https://github.com/coreybutler/nvm-windows)
+This app uses `nvm` to align node versions across development, CI and production. If you're working on Windows you should consider [nvm-windows](https://github.com/coreybutler/nvm-windows)
 
 ## Contributing
 
 Upon your first commit, you will automatically be added to the package.json file as a contributor.
 
 ## Commiting
+
+[Signed commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits) are required.
 
 This repo uses a commit convention. A typical commit message might read:
 
@@ -55,9 +75,12 @@ The first part of this is the commit "type". The most common types are "feat" fo
 - `docs` for documentation only changes
 - `style` is for code formatting only
 - `refactor` is for changes to code which should not be detectable by users or testers
+- `perf` is for a code change that improves performance
 - `test` is for changes which only touch test files or related tooling
 - `build` is for changes which only touch our develop/release tools
-- `chore` is for housekeeping tasks such as hydrating from another branch
+- `ci` is for changes to the continuous integration files and scripts
+- `chore` is for changes that don't modify code, like a version bump
+- `revert` is for reverting a previous commit
 
 After the type and scope there should be a colon.
 
@@ -66,3 +89,7 @@ The "subject" of the commit follows. It should be a short indication of the chan
 ### Commit linting
 
 Each time you commit the message will be checked against these standards in a pre-commit hook. Additionally all the commits in a PR branch will be linted before it can be merged to master.
+
+### Branch Layout
+
+All pull requests should be made against the `develop` branch.  Commits to the `main` branch will trigger a release, so the `main` branch is always the code in the latest release.
