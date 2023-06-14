@@ -1,7 +1,10 @@
 # Climate Explorer User Interface
 
-User interface for accessing data from the [Climate Explorer](https://github.com/Chia-Network/climate-token-driver/). 
+The Climate Explorer User Interface is the best way for a registry or watchdog organization to follow all on-chain activity related to the tokenization of carbon credits using the [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine). This user interface accesses data from the [Climate Explorer](https://github.com/Chia-Network/climate-token-driver/) and displays all `Tokenization`, `Detokenization`, and `Retirement` events for carbon tokens issued by a particular registry. 
 
+The Climate Explorer UI is the final piece of the Climate Tokenization Suite to provide full transparency into the tokenization process. 
+
+Registries leveraging the [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine) should plan on setting up a separate machine to run the Climate Explorer, as the Climate Explorer is meant to publically surface registry token activity that is occurring on the Chia blockchain. By having a separate machine running the Climate Explorer, organizations are able to better protect the CADT, Climate Tokenization Engine, & Chia Climate Tokenization services while still providing transparency to their constituents. 
 
 ## Related Projects
 
