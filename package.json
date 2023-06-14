@@ -7,7 +7,7 @@
   "main": "src/start.js",
   "engineStrict": true,
   "engines": {
-    "node": ">=15.0.1"
+    "node": ">=16"
   },
   "proxy": "http://localhost:31310",
   "dependencies": {
