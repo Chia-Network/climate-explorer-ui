@@ -4,7 +4,7 @@ The Climate Explorer User Interface is the best way for a registry or watchdog o
 
 The Climate Explorer UI is the final piece of the Climate Tokenization Suite to provide full transparency into the tokenization process. 
 
-Registries leveraging the [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine) should plan on setting up a separate machine to run the Climate Explorer, as the Climate Explorer is meant to publicly surface registry token activity that is occurring on the Chia blockchain. By having a separate machine running the Climate Explorer, organizations are able to better protect the CADT, Climate Tokenization Engine, & Chia Climate Tokenization services while still providing transparency to their constituents. 
+Registries leveraging the [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine) should plan on setting up a separate machine to run the Climate Explorer and UI, as the Climate Explorer is meant to publicly surface registry token activity that is occurring on the Chia blockchain. By having a separate machine running the Climate Explorer, organizations are able to better protect the CADT, Climate Tokenization Engine, & Chia Climate Tokenization services while still providing transparency to their constituents. 
 
 ## Related Projects
 
@@ -23,16 +23,39 @@ Registries leveraging the [Climate Tokenization Engine](https://github.com/Chia-
 
 Precompiled binaries and installers are available for MacOS, Windows, and Debian-based Linux distros (Ubuntu, Mint, PopOS, etc) on the [releases](https://github.com/Chia-Network/climate-explorer-ui/releases) page. 
 
+#### Installing from Source
+
+Install [Node 16](https://nodejs.org/en/download/releases) and then run the following:
+
+```sh
+git clone git@github.com:Chia-Network/climate-explorer-ui
+cd climate-explorer-ui
+npm install foreman -g
+npm install
+npm run start
+```
+
 ## Developer Guide
 
-### Installing from Source 
+### Prerequisites
 
-```
+You'll need:
+
+- Git
+- [nvm](https://github.com/nvm-sh/nvm)
+
+This app uses `nvm` to align node versions across development, CI and production. If you're working on Windows you should consider [nvm-windows](https://github.com/coreybutler/nvm-windows)
+
+### Development Environment
+
+Use the following commands to prepare you development environment and run the Climate Explorer UI:
+
+```sh
 npm install -g react-scripts
 git clone git@github.com:Chia-Network/climate-explorer-ui
 cd climate-explorer-ui
-nvm install 16.0.0
-nvm use 16.0.0
+nvm install 16
+nvm use 16
 npm install foreman -g
 npm install -g husky
 npm install -g prettier
@@ -48,20 +71,11 @@ chmod ug+x .git/hooks/*
 npm run start
 ```
 
-### Prerequisites
-
-You'll need:
-
-- Git
-- [nvm](https://github.com/nvm-sh/nvm)
-
-This app uses `nvm` to align node versions across development, CI and production. If you're working on Windows you should consider [nvm-windows](https://github.com/coreybutler/nvm-windows)
-
-## Contributing
+### Contributing
 
 Upon your first commit, you will automatically be added to the package.json file as a contributor.
 
-## Commiting
+### Commiting
 
 [Signed commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits) are required.
 
