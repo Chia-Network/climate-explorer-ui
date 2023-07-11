@@ -11,8 +11,8 @@ concurrency:
   group: main-release-check
 
 jobs:
-  check-version:
-    name: Check version increment
+  tag-and-changelog:
+    name: Create Changelog and tag release
     runs-on: ubuntu-latest
     steps:
       - name: Clean Workspace
@@ -31,7 +31,7 @@ jobs:
           gpg_private_key: ${{ secrets.CHIA_AUTOMATION_PRIVATE_GPG_KEY }}
           passphrase: ${{ secrets.CHIA_AUTOMATION_PRIVATE_GPG_PASSPHRASE }}
 
-      - name: Check for current version tag. Create if it doesn't exist
+      - name: Check for current version tag. Create if it doesn't exist. Generate changelog
         run: |
           version=$(cat $GITHUB_WORKSPACE/package.json | jq -r '.version')
           echo "Version is: $version"
@@ -45,7 +45,7 @@ jobs:
             changes=$(npx conventional-changelog-cli -r 1 | tail -n +2)
             git add CHANGELOG.md
             git commit -m "chore: Updating changelog for $version [skip ci]"
+            git push origin main
             git tag $version -m "Release $version  $changes"
             git push origin $version
-            git push origin main
           fi
