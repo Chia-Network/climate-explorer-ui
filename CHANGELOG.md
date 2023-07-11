@@ -1,3 +1,33 @@
+## [1.0.7](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.6...1.0.7) (2023-07-10)
+
+
+
+## [1.0.6](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.5...1.0.6) (2023-06-29)
+
+
+
+## [1.0.5](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.4...1.0.5) (2023-06-15)
+
+
+
+## [1.0.4](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.3...1.0.4) (2023-06-14)
+
+
+### Bug Fixes
+
+* dont close modals when click out of modal ([32ea6f4](https://github.com/Chia-Network/climate-explorer-ui/commit/32ea6f45e15475c4d61977af96d1b1a4a20a6b53))
+* fix electron navbar ([006ea23](https://github.com/Chia-Network/climate-explorer-ui/commit/006ea23159bde7dcab392491580b1fed83c52c65))
+* link opening in electron not in browser ([43144a3](https://github.com/Chia-Network/climate-explorer-ui/commit/43144a34480ca8a942a8f93441ad4e43925e0f96))
+* Modal fix ([fd4ad6c](https://github.com/Chia-Network/climate-explorer-ui/commit/fd4ad6c9e5d0af97101193b5114c283eebc308fc))
+
+
+### Features
+
+* add link support to table ([fb697ef](https://github.com/Chia-Network/climate-explorer-ui/commit/fb697efba26d3b25e5148015db9c5f0839ab3ac0))
+* add quantity localization for detailed view ([1eeca88](https://github.com/Chia-Network/climate-explorer-ui/commit/1eeca881eee4c3da6d0a0ab1447b9e1101dca57b))
+
+
+
 ## [1.0.3](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.2...1.0.3) (2023-01-04)
 
 
