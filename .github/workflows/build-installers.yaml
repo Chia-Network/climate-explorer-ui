@@ -108,6 +108,7 @@ jobs:
         run: |
           node --version
           npm install
+
       - name: Build electron app
         run: npm run electron:package:linux
 
