@@ -1,8 +1,9 @@
 {
   "name": "climateexplorerui",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "private": true,
   "author": "Chia Network Inc. <hello@chia.net>",
+  "description": "User interface for the Chia Climate Explorer application"
   "homepage": "./",
   "main": "src/start.js",
   "engineStrict": true,
