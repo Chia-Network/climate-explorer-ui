@@ -46,7 +46,7 @@ curl -sL https://repo.chia.net/FD39E6D3.pubkey.asc | sudo gpg --dearmor -o /usr/
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/chia.gpg] https://repo.chia.net/climate-tokenization/debian/ stable main" | sudo tee /etc/apt/sources.list.d/climate-tokenization.list > /dev/null
 ```
 
-4.  Install the Climate Explorer UI Engine
+4.  Install the Climate Explorer UI
 
 ```
 sudo apt-get update
@@ -86,8 +86,8 @@ Use the following commands to prepare you development environment and run the Cl
 npm install -g react-scripts
 git clone git@github.com:Chia-Network/climate-explorer-ui
 cd climate-explorer-ui
-nvm install 16
-nvm use 16
+nvm install 18.16.0
+nvm use 18.16.0
 npm install foreman -g
 npm install -g husky
 npm install -g prettier
