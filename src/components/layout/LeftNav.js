@@ -109,8 +109,9 @@ const LeftNav = withTheme(({ children }) => {
       {children}
       <StyledAppVersion>
         <Body size="X-Small" color="white">
-          {process?.env?.REACT_APP_VERSION &&
-            `v${process.env.REACT_APP_VERSION}`}
+          {typeof process !== 'undefined' &&
+            process?.env?.REACT_APP_VERSION &&
+            `v${process?.env?.REACT_APP_VERSION}`}
         </Body>
       </StyledAppVersion>
     </Container>
