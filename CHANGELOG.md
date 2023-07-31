@@ -1,3 +1,17 @@
+# [1.1.0](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.9...1.1.0) (2023-07-31)
+
+
+### Bug Fixes
+
+* typo ([8242025](https://github.com/Chia-Network/climate-explorer-ui/commit/8242025518eb31b8953f487ef38fb1804a30ec1f))
+
+
+### Features
+
+* migrate to node18 ([6c1d5ff](https://github.com/Chia-Network/climate-explorer-ui/commit/6c1d5ffe4ec5fa5febc857aa4f16d213874d19c4))
+
+
+
 ## [1.0.9](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.8...1.0.9) (2023-07-19)
 
 
