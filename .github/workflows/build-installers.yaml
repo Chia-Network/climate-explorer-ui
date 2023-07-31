@@ -172,6 +172,12 @@ jobs:
           name: linux-installer
           path: linux-installer
 
+      - name: Download Web artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: climate-explorer-ui-web-build
+          path: climate-explorer-ui-web-build
+
       - name: Get Filenames
         run: |
           DMG_FILE=$(find ${{ github.workspace }}/mac-installer/ -type f -name '*.dmg')
