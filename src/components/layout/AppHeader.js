@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { LocaleSwitcher, ExplorerLogo } from '../../components';
+import { LocaleSwitcher, ExplorerLogo, Connect } from '../../components';
 
 const AppHeaderContainer = styled('div')`
   width: 100%;
@@ -32,6 +32,7 @@ const AppHeader = () => {
     <AppHeaderContainer>
       <ExplorerLogo height={40} width={40} />
       <ButtonsContainer>
+        <Connect />
         <LocaleSwitcher />
       </ButtonsContainer>
     </AppHeaderContainer>

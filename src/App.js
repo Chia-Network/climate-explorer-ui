@@ -19,10 +19,9 @@ const App = () => {
   const appStore = useSelector(state => state);
   const [translationTokens, setTranslationTokens] = useState();
 
-  useEffect(
-    () => dispatch(setThemeFromLocalStorage),
-    [setThemeFromLocalStorage],
-  );
+  useEffect(() => {
+    dispatch(setThemeFromLocalStorage);
+  }, [setThemeFromLocalStorage]);
 
   useEffect(() => {
     if (appStore.locale) {
