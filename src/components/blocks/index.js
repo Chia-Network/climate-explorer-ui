@@ -18,3 +18,4 @@ export * from './ToolTipContainer';
 export * from './UnitDetailedView';
 export * from './Table';
 export * from './TableCell';
+export * from './Connect';

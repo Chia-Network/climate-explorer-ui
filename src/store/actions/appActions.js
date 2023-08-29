@@ -21,7 +21,40 @@ export const actions = keyMirror(
   'SET_EXPLORER_DATA',
   'SET_PAGINATION_NR_OF_PAGES',
   'SET_ORGANIZATIONS',
+  'SIGN_USER_IN',
+  'SIGN_USER_OUT',
 );
+
+export const signIn = ({ insertedServerAddress }) => {
+  return async dispatch => {
+    console.log(insertedServerAddress);
+    if (insertedServerAddress) {
+      localStorage.setItem(
+        'climateExplorerRemoteServerAddress',
+        insertedServerAddress,
+      );
+      dispatch({
+        type: actions.SIGN_USER_IN,
+        payload: {
+          insertedServerAddress,
+        },
+      });
+      dispatch(refreshApp(true));
+    }
+  };
+};
+
+export const signOut = () => {
+  return async dispatch => {
+    localStorage.removeItem('climateExplorerRemoteServerAddress');
+    dispatch({
+      type: actions.SIGN_USER_OUT,
+      payload: {
+        serverAddress: null,
+      },
+    });
+  };
+};
 
 export const refreshApp = render => ({
   type: actions.REFRESH_APP,
@@ -230,6 +263,35 @@ export const getExplorerData = ({
   };
 };
 
+const maybeServerOverrideFetch = async (originalUrl, payload) => {
+  const serverAddress = localStorage.getItem(
+    'climateExplorerRemoteServerAddress',
+  );
+
+  // If serverAddress is valid, replace the domain of the original URL.
+  if (serverAddress && typeof serverAddress === 'string') {
+    const serverUrl = new URL(serverAddress);
+    originalUrl = new URL(originalUrl);
+
+    // Remove trailing slash from serverUrl.pathname if it exists
+    let serverPathname = serverUrl.pathname;
+    serverPathname = serverPathname.replace(/\/$/, '');
+
+    // Replace the domain of the original URL with the server URL domain.
+    // Also, append the server URL's pathname to the original URL's pathname.
+    // And, maintain the query parameters from the original URL.
+    const newUrl = new URL(
+      serverPathname + originalUrl.pathname + originalUrl.search,
+      serverUrl,
+    );
+
+    return fetch(newUrl.toString(), payload);
+  }
+
+  // If serverAddress is not valid, return the original URL.
+  return fetch(originalUrl, payload);
+};
+
 // encapsulates error handling, network failure, loader toggling and on success or failed handlers
 const fetchWrapper = ({
   url,
@@ -247,7 +309,7 @@ const fetchWrapper = ({
     } else {
       try {
         dispatch(activateProgressIndicator);
-        const response = await fetch(url, payload);
+        const response = await maybeServerOverrideFetch(url, payload);
 
         if (response.ok) {
           dispatch(setConnectionCheck(true));
