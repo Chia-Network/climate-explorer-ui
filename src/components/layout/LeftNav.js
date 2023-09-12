@@ -38,16 +38,16 @@ const StyledLastItem = styled('div')`
 `;
 
 const MenuItem = styled(Link)`
-  background: ${props =>
-    props.selected ? props.theme.colors.default.primary : 'transparent'};
+  background: ${props => (props.selected ? 'white' : 'transparent')};
   :hover {
-    background: ${props =>
-      !props.selected && !props.disabled && props.theme.colors.default.primary};
+    background: ${props => props.theme.colors.default.primary};
   }
-  padding: 0.5625rem 0rem 0.5625rem 1.25rem;
+  padding: 0.5625rem 0rem 0.75rem 3.25rem;
   text-transform: uppercase;
   ${props =>
-    props.disabled ? 'color: #BFBFBF; pointer-events: none;' : 'color: white;'}
+    props.selected
+      ? `color: ${props.theme.colors.default.primary};`
+      : 'color: #6e7d7f;'}
   font-family: ${props => props.theme.typography.primary.bold};
   cursor: pointer;
   display: block;
@@ -57,8 +57,7 @@ const MenuItem = styled(Link)`
   font-size: 1.1rem;
   box-sizing: border-box;
   border-radius: 0.625rem;
-  margin-bottom: 1rem;
-  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  margin-bottom: 0.625rem;
 `;
 
 const StyledOrganizationLogo = styled('img')`
