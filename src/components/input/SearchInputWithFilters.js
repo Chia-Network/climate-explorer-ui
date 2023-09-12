@@ -35,10 +35,10 @@ const StyledSelect = styled(Select)`
   }
 
   .MuiSelect-select {
-    color: ${props => props.theme.colors.default.onButton};
+    color: white;
     font-family: ${props => props.theme.typography.primary.regular};
     font-size: 16px;
-    background-color: ${props => props.theme.colors.default.primaryDark};
+    background-color: ${props => props.theme.colors.default.primary};
     border-radius: 0.1rem;
   }
 
