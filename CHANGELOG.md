@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.1...1.1.2) (2023-09-12)
+
+
+### Features
+
+* light theme ([23beeb0](https://github.com/Chia-Network/climate-explorer-ui/commit/23beeb01fe2b825afc51c8fec760ab8c2ead61ce))
+
+
+
 ## [1.1.1](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.0...1.1.1) (2023-08-29)
 
 
