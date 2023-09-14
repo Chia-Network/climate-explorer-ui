@@ -1,3 +1,12 @@
+## [1.1.3](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.2...1.1.3) (2023-09-14)
+
+
+### Bug Fixes
+
+* page starts at 1 ([5eddcc5](https://github.com/Chia-Network/climate-explorer-ui/commit/5eddcc5e18be4b670fa172850ea34198f0647439))
+
+
+
 ## [1.1.2](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.1...1.1.2) (2023-09-12)
 
 
