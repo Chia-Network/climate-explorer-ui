@@ -58,7 +58,7 @@ const RetirementExplorerPage = () => {
   const [searchFilter, setSearchFilter] = useState(initialSearchFilter);
   const [modalSizeAndPosition, setModalSizeAndPosition] = useState(null);
   const pageContainerRef = useRef(null);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const { explorerData, paginationNrOfPages } = useSelector(store => store);
   const windowSize = useWindowSize();
   const [unitToBeViewed, setUnitToBeViewed] = useState(null);
