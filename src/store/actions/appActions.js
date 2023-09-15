@@ -158,108 +158,61 @@ export const getExplorerData = ({
   isRequestMocked,
 }) => {
   return async dispatch => {
-    const areRequestDetailsValid =
-      typeof page === 'number' && typeof resultsLimit === 'number';
-    const isSearchValid = searchQuery?.length > 0 && searchSource?.length > 0;
+    if (typeof page !== 'number' || typeof resultsLimit !== 'number') return;
 
-    if (areRequestDetailsValid) {
-      let url = `${constants.API_HOST}/activities?page=${page}&limit=${resultsLimit}`;
-
-      if (isSearchValid) {
-        url += `&search=${encodeURIComponent(searchQuery)}`;
-        url += `&search_by=${searchSource}`;
-      }
-
-      // TODO - REFACTOR TO FILTERED ENDPOINT THAT IS PASSED ORGUID
-      const isOrgUidNotSelected = !orgUid;
-      const onSuccessHandler = results => {
-        const activities = results.activities.reduce((acc, item) => {
-          if (isOrgUidNotSelected) {
-            return [
-              ...acc,
-              {
-                ...item,
-                icon: item.cw_org.icon,
-                registry_project_id: item.cw_project.projectId,
-                project_name: item.cw_project.projectName,
-                vintage_year: item.cw_unit.vintageYear,
-                action: item.mode.includes('RETIREMENT')
-                  ? 'RETIREMENT'
-                  : item.mode,
-                quantity: item.amount / 1000,
-                timestamp_UTC: getISODateWithHoursAndMinutes(
-                  item.timestamp * 1000,
-                ),
-                orgUid: item.cw_org.orgUid,
-                warehouseProjectId: item.cw_project.warehouseProjectId,
-                projectLink: item.cw_project.projectLink,
-                cw_unit: null,
-                beneficiary_key: item.beneficiary_address,
-              },
-            ];
-          } else if (item.cw_org.orgUid === orgUid) {
-            return [
-              ...acc,
-              {
-                ...item,
-                icon: item.cw_org.icon,
-                registry_project_id: item.cw_project.projectId,
-                project_name: item.cw_project.projectName,
-                vintage_year: item.cw_unit.vintageYear,
-                action: item.mode.includes('RETIREMENT')
-                  ? 'RETIREMENT'
-                  : item.mode,
-                quantity: item.amount / 1000,
-                timestamp_UTC: getISODateWithHoursAndMinutes(
-                  item.timestamp * 1000,
-                ),
-                orgUid: item.cw_org.orgUid,
-                warehouseProjectId: item.cw_project.warehouseProjectId,
-                projectLink: item.cw_project.projectLink,
-                cw_unit: null,
-                beneficiary_key: item.beneficiary_address,
-              },
-            ];
-          } else return acc;
-        }, []);
-
-        // TODO - REFACTOR TO ORG ENDPOINT
-        const organizations = results.activities.reduce(
-          (uniqueOrganizations, currentActivity) => {
-            const isCurrentActivityOrgNotAdded = !uniqueOrganizations.find(
-              orgItem => orgItem.orgUid === currentActivity.cw_org.orgUid,
-            );
-            if (isCurrentActivityOrgNotAdded) {
-              return [...uniqueOrganizations, { ...currentActivity.cw_org }];
-            }
-            return uniqueOrganizations;
-          },
-          [],
-        );
-        dispatch(setOrganizations(organizations));
-
-        dispatch({
-          type: 'SET_EXPLORER_DATA',
-          payload: activities,
-        });
-        dispatch(
-          setPaginationNrOfPages(Math.ceil(results.total / resultsLimit)),
-        );
-      };
-
-      const failedMessageId = 'explorer-data-not-loaded';
-      const responseStub = explorerDataStub;
-
-      dispatch(
-        fetchWrapper({
-          url,
-          failedMessageId,
-          onSuccessHandler,
-          isRequestMocked,
-          responseStub,
-        }),
-      );
+    let url = `${constants.API_HOST}/activities?page=${page}&limit=${resultsLimit}`;
+    if (searchQuery?.length > 0 && searchSource?.length > 0) {
+      url += `&search=${encodeURIComponent(
+        searchQuery,
+      )}&search_by=${searchSource}`;
     }
+
+    const formatActivity = item => ({
+      ...item,
+      icon: item.cw_org.icon,
+      registry_project_id: item.cw_project.projectId,
+      project_name: item.cw_project.projectName,
+      vintage_year: item.cw_unit.vintageYear,
+      action: item.mode.includes('RETIREMENT') ? 'RETIREMENT' : item.mode,
+      quantity: item.amount / 1000,
+      timestamp_UTC: getISODateWithHoursAndMinutes(item.timestamp * 1000),
+      orgUid: item.cw_org.orgUid,
+      warehouseProjectId: item.cw_project.warehouseProjectId,
+      projectLink: item.cw_project.projectLink,
+      cw_unit: null,
+      beneficiary_key: item.beneficiary_address,
+    });
+
+    const onSuccessHandler = results => {
+      const activities = results.activities.reduce((acc, item) => {
+        if (!orgUid || item.cw_org.orgUid === orgUid) {
+          return [...acc, formatActivity(item)];
+        }
+        return acc;
+      }, []);
+
+      const organizations = [
+        ...new Set(results.activities.map(a => a.cw_org.orgUid)),
+      ].map(
+        uid => results.activities.find(a => a.cw_org.orgUid === uid).cw_org,
+      );
+
+      dispatch(setOrganizations(organizations));
+      dispatch({ type: 'SET_EXPLORER_DATA', payload: activities });
+      dispatch(setPaginationNrOfPages(Math.ceil(results.total / resultsLimit)));
+    };
+
+    const failedMessageId = 'explorer-data-not-loaded';
+
+    dispatch(
+      fetchWrapper({
+        url,
+        failedMessageId,
+        onSuccessHandler,
+        isRequestMocked,
+        responseStub: explorerDataStub,
+      }),
+    );
   };
 };
 

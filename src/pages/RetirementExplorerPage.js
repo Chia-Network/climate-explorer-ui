@@ -69,7 +69,7 @@ const RetirementExplorerPage = () => {
     setTimeout(() => {
       dispatch(
         getExplorerData({
-          page: page,
+          page,
           resultsLimit: constants.TABLE_ROWS,
           isRequestMocked: false,
           searchQuery: searchOptions.query,
