@@ -1,3 +1,15 @@
+## [1.1.4](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.3...1.1.4) (2023-09-27)
+
+
+### Bug Fixes
+
+* Change suggested connection string to have the right port ([a5e974e](https://github.com/Chia-Network/climate-explorer-ui/commit/a5e974ea87a9170a08535904493a065b07e5ead1))
+* empty state text ([73a6057](https://github.com/Chia-Network/climate-explorer-ui/commit/73a60576d57bbda34a0924be33b141ae5fa8a7ed))
+* improve language; update license date ([cb2c03e](https://github.com/Chia-Network/climate-explorer-ui/commit/cb2c03e51f294d7d0df1113ca5141a05393e289d))
+* pagination ui glitch ([843fecb](https://github.com/Chia-Network/climate-explorer-ui/commit/843fecbfc4dcbbf5ad00536fa230a13920753149))
+
+
+
 ## [1.1.3](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.2...1.1.3) (2023-09-14)
 
 
