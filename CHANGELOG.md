@@ -1,3 +1,13 @@
+## [1.1.5](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.4...1.1.5) (2023-09-27)
+
+
+### Bug Fixes
+
+* add translations for UI elements ([97b8291](https://github.com/Chia-Network/climate-explorer-ui/commit/97b82914dc9c06d89f09cbde2249b1b917571ead))
+* pagination bug ([ae652fa](https://github.com/Chia-Network/climate-explorer-ui/commit/ae652faf9c2c25c177d8b6c9ff91d7cfa115fe4d))
+
+
+
 ## [1.1.4](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.3...1.1.4) (2023-09-27)
 
 
