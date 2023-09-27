@@ -21,5 +21,7 @@
   "api-key": "Api Key",
   "import-home-org": "Import Home",
   "connect-to-remote": "Connect to Remote",
-  "update-home-org": "Home Update"
+  "update-home-org": "Home Update",
+  "add-valid-server-address": "Add valid server address",
+  "import": "Connect"
 }

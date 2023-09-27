@@ -13,7 +13,7 @@ const Container = styled('div')`
   .MuiSelect-root,
   .MuiSvgIcon-root,
   .MuiSelect-select {
-    color: ${props => props.theme.colors.default.primaryDark};
+    color: ${props => props.theme.colors.default.primary};
     font-family: ${props => props.theme.typography.primary.semiBold};
   }
 

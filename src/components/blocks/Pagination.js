@@ -70,11 +70,9 @@ const PagesContainer = styled(ControlsContainer)`
 
 const Pagination = withTheme(
   ({ pages, current, showLast = false, callback }) => {
-    // if current page number higher or equal than number of pages, first page is displayed
-    const currentPageNumber =
-      current && current > 0 && current < pages ? current : 1;
+    const currentPageNumber = current;
     const numberOfPages = pages && pages !== 0 ? pages : 1;
-    const changeCurrentPageTo = value => callback(value - 1);
+    const changeCurrentPageTo = value => callback(value);
     const backButtonIsDisabled = currentPageNumber === 1;
     const nextButtonIsDisabled = currentPageNumber === numberOfPages;
 
