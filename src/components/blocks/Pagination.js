@@ -70,10 +70,9 @@ const PagesContainer = styled(ControlsContainer)`
 
 const Pagination = withTheme(
   ({ pages, current, showLast = false, callback }) => {
-    // No need to increment currentPageNumber by 1 here
     const currentPageNumber = current;
     const numberOfPages = pages && pages !== 0 ? pages : 1;
-    const changeCurrentPageTo = value => callback(value); // Remove the - 1 here
+    const changeCurrentPageTo = value => callback(value);
     const backButtonIsDisabled = currentPageNumber === 1;
     const nextButtonIsDisabled = currentPageNumber === numberOfPages;
 
