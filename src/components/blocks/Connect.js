@@ -147,7 +147,7 @@ const Connect = withTheme(({ openModal = false, onClose, isHeader = true }) => {
                         variant={InputVariantEnum.default}
                         value={serverAddress}
                         onChange={value => setServerAddress(value)}
-                        placeholderText="http://0.0.0.0:31310"
+                        placeholderText="http://127.0.0.1:31313"
                       />
                     </InputContainer>
                     {(serverAddress === null ||
