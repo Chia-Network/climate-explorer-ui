@@ -26,7 +26,7 @@ const ConnectContainer = styled('div')`
   cursor: pointer;
   align-items: center;
 
-  color: ${props => props.theme.colors.default.primaryDark};
+  color: ${props => props.theme.colors.default.primary};
 
   :hover {
     color: ${props => props.theme.colors.default.primary};
