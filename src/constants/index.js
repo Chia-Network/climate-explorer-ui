@@ -4,7 +4,7 @@ const buildAPIHost = process.env.REACT_APP_API_HOST;
 const hostName = String(_.get(window, 'location.hostname', ''));
 const protocol = String(_.get(window, 'location.protocol', 'http'));
 
-let apiHost, appUrl;
+let apiHost;
 
 if (!_.isEmpty(buildAPIHost)) {
   apiHost = buildAPIHost;
