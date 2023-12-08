@@ -1,3 +1,12 @@
+## [1.1.7](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.6...1.1.7) (2023-12-08)
+
+
+### Bug Fixes
+
+* remove unused var ([4dced97](https://github.com/Chia-Network/climate-explorer-ui/commit/4dced97a32d30187fdf16212031b3625449b1433))
+
+
+
 ## [1.1.6](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.5...1.1.6) (2023-09-27)
 
 
