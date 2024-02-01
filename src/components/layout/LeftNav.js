@@ -60,13 +60,6 @@ const MenuItem = styled(Link)`
   margin-bottom: 0.625rem;
 `;
 
-const StyledOrganizationLogo = styled('img')`
-  width: 25px;
-  height: 25px;
-  display: block;
-  padding-bottom: 10px;
-`;
-
 const LeftNav = withTheme(({ children }) => {
   const { organizations } = useSelector(store => store);
   let [searchParams] = useSearchParams();
@@ -97,7 +90,6 @@ const LeftNav = withTheme(({ children }) => {
                 selected={selectedOrgUid === organization.orgUid}
                 to={`${constants.ROUTES.retirementExplorer}?orgUid=${organization.orgUid}`}
               >
-                <StyledOrganizationLogo src={organization.icon} />
                 {organization.name}
               </MenuItem>
               <div></div>

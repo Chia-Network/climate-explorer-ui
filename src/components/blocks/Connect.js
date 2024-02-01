@@ -77,7 +77,7 @@ const Connect = withTheme(({ openModal = false, onClose, isHeader = true }) => {
       if (event.origin !== window.location.origin) {
         return;
       }
-      console.log('Received message:', event.data);
+
       if (
         event?.data?.serverAddress &&
         validateUrl(event?.data?.serverAddress)
