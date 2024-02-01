@@ -1,3 +1,12 @@
+## [1.1.8](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.7...1.1.8) (2024-02-01)
+
+
+### Features
+
+* remove org icons ([9618f62](https://github.com/Chia-Network/climate-explorer-ui/commit/9618f629074d2e353a2411f430a6e885f26bf091))
+
+
+
 ## [1.1.7](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.6...1.1.7) (2023-12-08)
 
 
