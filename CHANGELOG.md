@@ -1,3 +1,95 @@
+## [1.1.9](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.8...1.1.9) (2024-02-23)
+
+
+
+## [1.1.8](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.7...1.1.8) (2024-02-01)
+
+
+### Features
+
+* remove org icons ([9618f62](https://github.com/Chia-Network/climate-explorer-ui/commit/9618f629074d2e353a2411f430a6e885f26bf091))
+
+
+
+## [1.1.7](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.6...1.1.7) (2023-12-08)
+
+
+### Bug Fixes
+
+* remove unused var ([4dced97](https://github.com/Chia-Network/climate-explorer-ui/commit/4dced97a32d30187fdf16212031b3625449b1433))
+
+
+
+## [1.1.6](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.5...1.1.6) (2023-09-27)
+
+
+
+## [1.1.5](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.4...1.1.5) (2023-09-27)
+
+
+### Bug Fixes
+
+* add translations for UI elements ([97b8291](https://github.com/Chia-Network/climate-explorer-ui/commit/97b82914dc9c06d89f09cbde2249b1b917571ead))
+* pagination bug ([ae652fa](https://github.com/Chia-Network/climate-explorer-ui/commit/ae652faf9c2c25c177d8b6c9ff91d7cfa115fe4d))
+
+
+
+## [1.1.4](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.3...1.1.4) (2023-09-27)
+
+
+### Bug Fixes
+
+* Change suggested connection string to have the right port ([a5e974e](https://github.com/Chia-Network/climate-explorer-ui/commit/a5e974ea87a9170a08535904493a065b07e5ead1))
+* empty state text ([73a6057](https://github.com/Chia-Network/climate-explorer-ui/commit/73a60576d57bbda34a0924be33b141ae5fa8a7ed))
+* improve language; update license date ([cb2c03e](https://github.com/Chia-Network/climate-explorer-ui/commit/cb2c03e51f294d7d0df1113ca5141a05393e289d))
+* pagination ui glitch ([843fecb](https://github.com/Chia-Network/climate-explorer-ui/commit/843fecbfc4dcbbf5ad00536fa230a13920753149))
+
+
+
+## [1.1.3](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.2...1.1.3) (2023-09-14)
+
+
+### Bug Fixes
+
+* page starts at 1 ([5eddcc5](https://github.com/Chia-Network/climate-explorer-ui/commit/5eddcc5e18be4b670fa172850ea34198f0647439))
+
+
+
+## [1.1.2](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.1...1.1.2) (2023-09-12)
+
+
+### Features
+
+* light theme ([23beeb0](https://github.com/Chia-Network/climate-explorer-ui/commit/23beeb01fe2b825afc51c8fec760ab8c2ead61ce))
+
+
+
+## [1.1.1](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.0...1.1.1) (2023-08-29)
+
+
+
+# [1.1.0](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.9...1.1.0) (2023-07-31)
+
+
+### Bug Fixes
+
+* typo ([8242025](https://github.com/Chia-Network/climate-explorer-ui/commit/8242025518eb31b8953f487ef38fb1804a30ec1f))
+
+
+### Features
+
+* migrate to node18 ([6c1d5ff](https://github.com/Chia-Network/climate-explorer-ui/commit/6c1d5ffe4ec5fa5febc857aa4f16d213874d19c4))
+
+
+
+## [1.0.9](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.8...1.0.9) (2023-07-19)
+
+
+
+## [1.0.8](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.7...1.0.8) (2023-07-11)
+
+
+
 ## [1.0.7](https://github.com/Chia-Network/climate-explorer-ui/compare/1.0.6...1.0.7) (2023-07-10)
 
 
