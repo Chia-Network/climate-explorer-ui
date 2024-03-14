@@ -1,3 +1,11 @@
+## [1.1.11](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.10...1.1.11) (2024-03-07)
+
+
+
+## [1.1.10](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.9...1.1.10) (2024-03-01)
+
+
+
 ## [1.1.9](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.8...1.1.9) (2024-02-23)
 
 
