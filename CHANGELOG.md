@@ -1,3 +1,12 @@
+## [1.1.13](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.12...1.1.13) (2024-07-26)
+
+
+### Features
+
+* update localization to receive and apply locale changes from core-registery ([fc62cfd](https://github.com/Chia-Network/climate-explorer-ui/commit/fc62cfd99e96ddc3c8f3ede28d200d17795d55bc))
+
+
+
 ## [1.1.12](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.11...1.1.12) (2024-03-14)
 
 
