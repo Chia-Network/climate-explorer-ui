@@ -65,7 +65,7 @@ const appReducer = (state = initialState, action) => {
       localStorage.setItem('theme', theme);
       return u({ theme }, state);
     case appActions.SET_CUSTOM_THEME:
-      return { ...state, customTheme: action.payload };
+      return u({ customTheme: action.payload }, state);
 
     case appActions.CONNECTION_CHECK:
       return u({ connectionCheck: action.payload }, state);

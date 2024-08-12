@@ -6,7 +6,6 @@ import { LANGUAGE_CODES } from '../../translations';
 
 import explorerDataStub from '../mocks/explorerStub.json';
 import { getISODateWithHoursAndMinutes } from '../../utils/dateUtils';
-import theme from '../../theme';
 
 export const actions = keyMirror(
   'ACTIVATE_PROGRESS_INDICATOR',
@@ -89,7 +88,7 @@ export const setThemeFromLocalStorage = {
 export const setCustomTheme = customColors => {
   return {
     type: actions.SET_CUSTOM_THEME,
-    payload: { ...theme, customColors },
+    payload: customColors,
   };
 };
 
