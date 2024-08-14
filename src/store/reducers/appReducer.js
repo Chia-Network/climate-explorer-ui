@@ -2,12 +2,14 @@ import u from 'updeep';
 
 import { actions as appActions } from '../actions/appActions';
 import constants from '../../constants';
+import theme from '../../theme';
 
 const initialState = {
   showProgressOverlay: false,
   theme: constants.THEME.DEFAULT,
   errorMessage: null,
   locale: null,
+  customTheme: theme,
   connectionCheck: true,
   notification: null,
   refresh: false,
@@ -62,6 +64,8 @@ const appReducer = (state = initialState, action) => {
           : constants.THEME.DARK;
       localStorage.setItem('theme', theme);
       return u({ theme }, state);
+    case appActions.SET_CUSTOM_THEME:
+      return u({ customTheme: action.payload }, state);
 
     case appActions.CONNECTION_CHECK:
       return u({ connectionCheck: action.payload }, state);
