@@ -1,3 +1,19 @@
+## [1.1.14](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.13...1.1.14) (2024-08-14)
+
+
+### Bug Fixes
+
+* all the colors could be changed by parent ui, removed conditional colors rendering ([68bcfe2](https://github.com/Chia-Network/climate-explorer-ui/commit/68bcfe20aeae445cdec6e7bc4a4d0c748c3f5136))
+* used arrow functions ([82e78fc](https://github.com/Chia-Network/climate-explorer-ui/commit/82e78fcffcdc0b03dd000591fc67491647949900))
+
+
+### Features
+
+* implement theme changing feature to sync with parent app ([0f9d914](https://github.com/Chia-Network/climate-explorer-ui/commit/0f9d9149e84500afb77afa659776999e7a315611))
+* integrate theme changes received from parent app and used redux and themeProvider ([621cadd](https://github.com/Chia-Network/climate-explorer-ui/commit/621cadd5ca4753181c921a916eec3d8e0e459d35))
+
+
+
 ## [1.1.13](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.12...1.1.13) (2024-07-26)
 
 
