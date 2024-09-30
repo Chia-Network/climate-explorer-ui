@@ -1,4 +1,2 @@
-export * from '@/api/climate-explorer/projects.api';
-export * from '@/api/climate-explorer/system.api';
-export * from '@/api/climate-explorer/units.api';
-export * from '@/api/climate-explorer/organizations.api';
+export * from '@/api/climate-explorer/v1/activities.api';
+export * from '@/api/climate-explorer/v1/system.api';

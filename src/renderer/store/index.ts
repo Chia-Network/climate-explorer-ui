@@ -4,10 +4,10 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, REGISTER, REHYDRAT
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 // @ts-ignore
 import { rtkQueryErrorLogger } from './middleware/rtkQueryErrorLogger';
-import { climateExplorerApi } from 'renderer/api/climate-explorer';
 import { appReducer } from './slices';
 import { PersistState } from 'redux-persist/es/types';
 import { AppState } from './slices/app/app.initialstate';
+import { climateExplorerApi } from '@/api/climate-explorer/v1';
 
 const persistAppsConfig = {
   key: 'app',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, DetokenizeUnitButton } from '@/components';
+import { Card } from '@/components';
 import { FormattedMessage } from 'react-intl';
 
 const RevertTokensPage: React.FC = () => {
@@ -10,7 +10,6 @@ const RevertTokensPage: React.FC = () => {
           <h5 className=" capitalize text-xl font-bold tracking-tight text-gray-900 dark:text-white pb-10">
             <FormattedMessage id="revert-carbon-unit-tokenization" />
           </h5>
-          <DetokenizeUnitButton />
         </Card>
       </div>
     </>
