@@ -11,6 +11,7 @@ export interface Activity {
   coin_id: string;
   height: number;
   amount: number;
+  mode: string;
   timestamp: number;
   token: Token;
   cw_unit: Unit;

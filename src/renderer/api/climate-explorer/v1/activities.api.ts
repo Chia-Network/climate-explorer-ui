@@ -38,6 +38,4 @@ const activityApi = climateExplorerApi.injectEndpoints({
   }),
 });
 
-export const invalidateProjectApiTag = activityApi.util.invalidateTags;
-
 export const { useGetActivitiesQuery } = activityApi;

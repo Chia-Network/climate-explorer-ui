@@ -2,10 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import initialState from '@/store/slices/app/app.initialstate';
 
 export const RECORDS_PER_PAGE = 10;
-export const projectsTag = 'projects';
-export const untokenizedUnitsTag = 'untokenizedUnits';
-export const tokenizedUnitsTag = 'tokenizedUnits';
-export const projectsByIdsTag = 'projectsByIds';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: '/',
@@ -46,5 +42,5 @@ export const climateExplorerApi = createApi({
   baseQuery: baseQueryWithDynamicHost,
   reducerPath: 'climateExplorerApi',
   endpoints: () => ({}),
-  tagTypes: [projectsTag, untokenizedUnitsTag, tokenizedUnitsTag, projectsByIdsTag],
+  tagTypes: [],
 });

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { Card, NoHomeOrgModal, Sidebar, Tooltip } from '@/components';
+import { Card, Sidebar, Tooltip } from '@/components';
 import ROUTES from '@/routes/route-constants';
 import { RiTokenSwapLine } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
@@ -68,7 +68,6 @@ const LeftNav = () => {
         </Sidebar>
       </div>
       {/* app-wide modals */}
-      <NoHomeOrgModal />
     </div>
   );
 };
