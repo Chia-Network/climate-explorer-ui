@@ -15,8 +15,6 @@ interface GetHealthParams {
 
 interface ServerHealth {
   isHealthy: boolean;
-  readOnly: boolean;
-  coreRegistryMode: boolean;
 }
 
 export interface Config {
@@ -27,26 +25,23 @@ const systemApi = climateExplorerApi.injectEndpoints({
   endpoints: (builder) => ({
     getHealth: builder.query<ServerHealth, GetHealthParams>({
       query: ({ apiHost = '', apiKey }) => ({
-        url: `${apiHost}/healthz`,
+        url: `${apiHost}/v1/info`,
         method: 'GET',
         headers: apiKey ? { 'X-Api-Key': apiKey } : {},
       }),
-      transformResponse: (response: BaseQueryResult<Health>, meta): ServerHealth => {
-        const isHealthy = response?.message === 'OK';
-        const readOnly = meta?.response?.headers.get('cw-read-only') === 'true';
-        const coreRegistryMode = meta?.response?.headers.get('x-core-registry-mode') === 'true';
-        return { isHealthy, readOnly, coreRegistryMode };
+      transformResponse: (response: BaseQueryResult<Health>): ServerHealth => {
+        return { isHealthy: Boolean(response?.blockchain_name) };
       },
       keepUnusedDataFor: 0,
     }),
     getHealthImmediate: builder.mutation<boolean, GetHealthParams>({
       query: ({ apiHost = '', apiKey }) => ({
-        url: `${apiHost}/healthz`,
+        url: `${apiHost}/v1/info`,
         method: 'GET',
         headers: apiKey ? { 'X-Api-Key': apiKey } : {},
       }),
       transformResponse(baseQueryReturnValue: BaseQueryResult<Health>): boolean {
-        return baseQueryReturnValue?.message === 'OK';
+        return Boolean(baseQueryReturnValue?.blockchain_name);
       },
     }),
     getUiConfig: builder.query<Config | undefined, void>({
