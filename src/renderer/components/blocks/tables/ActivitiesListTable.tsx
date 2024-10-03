@@ -1,6 +1,6 @@
 import { DebouncedFunc } from 'lodash';
 import React, { useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Column, DataTable, PageCounter, Pagination, Tooltip } from '@/components';
 import { Badge } from 'flowbite-react';
 import { Activity } from '@/schemas/Activity.schema';
@@ -29,6 +29,7 @@ const ActivitiesListTable: React.FC<TableProps> = ({
   totalPages,
   totalCount,
 }) => {
+  const intl = useIntl();
   const columns = useMemo(() => {
     /*
       note that the datatable has default rendering for attributes at the top level of the passed in data object so all
@@ -82,39 +83,54 @@ const ActivitiesListTable: React.FC<TableProps> = ({
         title: <FormattedMessage id="action" />,
         key: 'mode',
         render: (row: Activity) => {
-          const action = row?.mode || '--';
+          const action = row?.mode;
           let color: string = '';
+          let displayText = '';
           switch (action) {
             case 'TOKENIZATION': {
               color = 'lime';
+              displayText = intl.formatMessage({ id: 'tokenization' });
               break;
             }
             case 'DETOKENIZATION': {
               color = 'yellow';
+              displayText = intl.formatMessage({ id: 'detokenization' });
               break;
             }
             case 'PERMISSIONLESS_RETIREMENT': {
               color = 'red';
+              displayText = intl.formatMessage({ id: 'retirement' });
               break;
             }
             default: {
               color = 'gray';
+              displayText = '--';
               break;
             }
           }
 
           return (
             <div className="flex">
-              <Badge color={color} size="sm">
-                {action}
+              <Badge color={color} size="sm" className="capitalize">
+                {displayText}
               </Badge>
             </div>
           );
         },
       },
       {
-        title: <FormattedMessage id="amount" />,
+        title: <FormattedMessage id="tons-co2" />,
         key: 'amount',
+        render: (row: Activity) => {
+          const amount = row.amount ? row.amount / 1000 : '--';
+          return (
+            <Tooltip content={amount}>
+              <div style={{ maxWidth: '310px' }}>
+                <p className="text-left text-ellipsis w-full overflow-hidden whitespace-nowrap">{amount}</p>
+              </div>
+            </Tooltip>
+          );
+        },
       },
       {
         title: <FormattedMessage id="timestamp-utc" />,

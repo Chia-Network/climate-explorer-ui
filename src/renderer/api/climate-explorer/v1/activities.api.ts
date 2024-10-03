@@ -28,7 +28,7 @@ const activityApi = climateExplorerApi.injectEndpoints({
         }
 
         return {
-          url: `/activities`,
+          url: `/v1/activities`,
           params,
           method: 'GET',
         };
