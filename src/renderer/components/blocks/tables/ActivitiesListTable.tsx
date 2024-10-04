@@ -149,7 +149,7 @@ const ActivitiesListTable: React.FC<TableProps> = ({
     ];
 
     return staticColumns;
-  }, []);
+  }, [intl]);
 
   return (
     <>

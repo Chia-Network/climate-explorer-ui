@@ -87,5 +87,8 @@
   "action": "action",
   "tons-co2": "tons co2",
   "retirement": "retirement",
-  "detokenization": "detokenization"
+  "detokenization": "detokenization",
+  "cannot-get-activity-details": "cannot get activity details",
+  "summary": "summary",
+  "activity-details": "activity details"
 }

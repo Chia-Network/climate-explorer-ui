@@ -1,16 +1,20 @@
-import { useColumnOrderHandler, useQueryParamState } from '@/hooks';
+import { useColumnOrderHandler, useQueryParamState, useWildCardUrlHash } from '@/hooks';
 import { debounce } from 'lodash';
-import { ActivitiesListTable, SearchBox, SkeletonTable } from '@/components';
+import { ActivitiesListTable, ActivityDetailsModal, SearchBox, SkeletonTable } from '@/components';
 import { FormattedMessage } from 'react-intl';
 import { useGetActivitiesQuery } from '@/api';
 import { RECORDS_PER_PAGE } from '@/api/climate-explorer/v1';
 import React from 'react';
+import { Activity } from '@/schemas/Activity.schema';
 
 const ActivitiesPage: React.FC = () => {
   const [search, setSearch] = useQueryParamState('search', undefined);
   const [order, setOrder] = useQueryParamState('order', undefined);
   const [currentPage, setCurrentPage] = useQueryParamState('page', '1');
   const handleSetOrder = useColumnOrderHandler(order, setOrder);
+  const [activityDetailsModalUrlFragment, showActivityDetailsModal, setShowActivityDetailsModalActive] =
+    useWildCardUrlHash('activity-details');
+
   const {
     data: activitiesData,
     isLoading: activitiesQueryLoading,
@@ -22,7 +26,6 @@ const ActivitiesPage: React.FC = () => {
   });
 
   const handleSearchChange = debounce((event: any) => setSearch(event.target.value), 800);
-
   const handlePageChange = debounce((page) => setCurrentPage(page), 800);
 
   if (activitiesQueryError) {
@@ -49,11 +52,20 @@ const ActivitiesPage: React.FC = () => {
           currentPage={Number(currentPage)}
           onPageChange={handlePageChange}
           setOrder={handleSetOrder}
+          onRowClick={(activity: Activity) =>
+            setShowActivityDetailsModalActive(true, activity?.cw_unit?.warehouseUnitId || '')
+          }
           order={order}
           totalPages={Math.ceil(activitiesData.total / RECORDS_PER_PAGE)}
           totalCount={activitiesData.total}
         />
       </div>
+      {showActivityDetailsModal && (
+        <ActivityDetailsModal
+          warehouseUnitId={activityDetailsModalUrlFragment.replace('activity-details-', '')}
+          onClose={() => setShowActivityDetailsModalActive(false, '')}
+        />
+      )}
     </>
   );
 };
