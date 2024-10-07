@@ -3,11 +3,12 @@ import { TagInput } from '@/components';
 import { Label } from 'flowbite-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { ClimateActionModeRenderer } from '@/components/blocks/widgets/ClimateActionModeRenderer';
 
 interface FieldProps {
   name: string;
   label: string;
-  type: 'text' | 'tag' | 'date' | 'link' | 'number';
+  type: 'text' | 'tag' | 'date' | 'link' | 'number' | 'climateActionMode';
   value: any;
 }
 
@@ -37,6 +38,8 @@ const InformationDisplayField: React.FC<FieldProps> = ({ name, label, type, valu
         return `${dayjs(new Date(value)).format('MMMM D, YYYY')}`;
       case 'tag':
         return <TagInput defaultValue={value} onChange={() => {}} readonly={true} />;
+      case 'climateActionMode':
+        return <ClimateActionModeRenderer actionMode={value} />;
       default:
         return <p className="dark:text-white overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400">{value}</p>;
     }

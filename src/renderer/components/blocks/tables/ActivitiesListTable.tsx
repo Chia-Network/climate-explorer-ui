@@ -2,9 +2,9 @@ import { DebouncedFunc } from 'lodash';
 import React, { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Column, DataTable, PageCounter, Pagination, Tooltip } from '@/components';
-import { Badge } from 'flowbite-react';
 import { Activity } from '@/schemas/Activity.schema';
 import { timestampToUtcString } from '@/utils/date-time-utils';
+import { ClimateActionModeRenderer } from '@/components/blocks/widgets/ClimateActionModeRenderer';
 
 interface TableProps {
   data: Activity[];
@@ -84,38 +84,7 @@ const ActivitiesListTable: React.FC<TableProps> = ({
         key: 'mode',
         render: (row: Activity) => {
           const action = row?.mode;
-          let color: string = '';
-          let displayText = '';
-          switch (action) {
-            case 'TOKENIZATION': {
-              color = 'lime';
-              displayText = intl.formatMessage({ id: 'tokenization' });
-              break;
-            }
-            case 'DETOKENIZATION': {
-              color = 'yellow';
-              displayText = intl.formatMessage({ id: 'detokenization' });
-              break;
-            }
-            case 'PERMISSIONLESS_RETIREMENT': {
-              color = 'red';
-              displayText = intl.formatMessage({ id: 'retirement' });
-              break;
-            }
-            default: {
-              color = 'gray';
-              displayText = '--';
-              break;
-            }
-          }
-
-          return (
-            <div className="flex">
-              <Badge color={color} size="sm" className="capitalize">
-                {displayText}
-              </Badge>
-            </div>
-          );
+          return <ClimateActionModeRenderer actionMode={action} />;
         },
       },
       {
