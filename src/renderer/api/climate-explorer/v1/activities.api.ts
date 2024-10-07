@@ -6,7 +6,7 @@ import { BaseQueryResult } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
 interface GetActivityParams {
   page?: number;
   search?: string | null;
-  order?: string | null;
+  sort?: string | null;
 }
 
 interface GetActivitiesResponse {
@@ -17,7 +17,7 @@ interface GetActivitiesResponse {
 const activityApi = climateExplorerApi.injectEndpoints({
   endpoints: (builder) => ({
     getActivities: builder.query<GetActivitiesResponse, GetActivityParams>({
-      query: ({ page, search, order }: GetActivityParams) => {
+      query: ({ page, search, sort }: GetActivityParams) => {
         // Initialize the params object with page and limit
         const params: GetActivityParams & { limit: number } = { page, limit: RECORDS_PER_PAGE };
 
@@ -25,8 +25,8 @@ const activityApi = climateExplorerApi.injectEndpoints({
           params.search = search.replace(/[^a-zA-Z0-9 _.-]+/, '');
         }
 
-        if (order) {
-          params.order = order;
+        if (sort) {
+          params.sort = sort;
         }
 
         return {

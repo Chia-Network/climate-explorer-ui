@@ -15,6 +15,15 @@ const ActivitiesPage: React.FC = () => {
   const [activityDetailsModalUrlFragment, showActivityDetailsModal, setShowActivityDetailsModalActive] =
     useWildCardUrlHash('activity-details');
 
+  /**
+   * use column order handler tags the order with the table column key in the form 'col_key:order'
+   * the explorer api does not support this format and can only joint sort on height and coin_id
+   *
+   * this is the extracted order without the column key
+   */
+  const explorerApiCompatibleOrder: string = order?.split(':')?.[1];
+  console.log('%%%%%%', explorerApiCompatibleOrder);
+
   const {
     data: activitiesData,
     isLoading: activitiesQueryLoading,
@@ -22,7 +31,7 @@ const ActivitiesPage: React.FC = () => {
   } = useGetActivitiesQuery({
     search,
     page: Number(currentPage),
-    order,
+    sort: explorerApiCompatibleOrder,
   });
 
   const handleSearchChange = debounce((event: any) => setSearch(event.target.value), 800);

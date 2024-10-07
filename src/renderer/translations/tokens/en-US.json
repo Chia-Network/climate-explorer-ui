@@ -93,5 +93,6 @@
   "beneficiary-name": "beneficiary name",
   "beneficiary-key": "beneficiary key",
   "registry": "registry",
-  "project-link": "project link"
+  "project-link": "project link",
+  "blockchain-confirmation-height": "blockchain confirmation height"
 }
