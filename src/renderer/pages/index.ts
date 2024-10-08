@@ -1,3 +1,3 @@
 export * from './ErrorBoundary';
 export * from './ActivitiesPage';
-export * from './RevertTokensPage';
+export * from './LoadingPage';

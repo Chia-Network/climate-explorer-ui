@@ -4,10 +4,12 @@ import { ActivitiesListTable, ActivityDetailsModal, SearchBox, SkeletonTable } f
 import { FormattedMessage } from 'react-intl';
 import { useGetActivitiesQuery } from '@/api';
 import { RECORDS_PER_PAGE } from '@/api/climate-explorer/v1';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Activity } from '@/schemas/Activity.schema';
+import { useParams } from 'react-router-dom';
 
 const ActivitiesPage: React.FC = () => {
+  const { orgUid } = useParams();
   const [search, setSearch] = useQueryParamState('search', undefined);
   const [order, setOrder] = useQueryParamState('order', undefined);
   const [currentPage, setCurrentPage] = useQueryParamState('page', '1');
@@ -25,7 +27,7 @@ const ActivitiesPage: React.FC = () => {
   console.log('%%%%%%', explorerApiCompatibleOrder);
 
   const {
-    data: activitiesData,
+    data: allActivitiesData,
     isLoading: activitiesQueryLoading,
     error: activitiesQueryError,
   } = useGetActivitiesQuery({
@@ -34,6 +36,14 @@ const ActivitiesPage: React.FC = () => {
     sort: explorerApiCompatibleOrder,
   });
 
+  const orgActivitiesData: Activity[] | undefined = useMemo<Activity[] | undefined>(() => {
+    if (allActivitiesData?.activities?.map) {
+      return allActivitiesData.activities.filter((activity) => activity?.cw_org?.orgUid === orgUid);
+    } else {
+      return undefined;
+    }
+  }, [allActivitiesData?.activities, orgUid]);
+
   const handleSearchChange = debounce((event: any) => setSearch(event.target.value), 800);
   const handlePageChange = debounce((page) => setCurrentPage(page), 800);
 
@@ -41,11 +51,11 @@ const ActivitiesPage: React.FC = () => {
     return <FormattedMessage id={'unable-to-load-contents'} />;
   }
 
-  if (activitiesQueryLoading) {
+  if (activitiesQueryLoading || !orgUid) {
     return <SkeletonTable />;
   }
 
-  if (!activitiesData?.total) {
+  if (!orgActivitiesData?.length) {
     return <FormattedMessage id={'no-records-found'} />;
   }
 
@@ -56,7 +66,7 @@ const ActivitiesPage: React.FC = () => {
           <SearchBox defaultValue={search} onChange={handleSearchChange} />
         </div>
         <ActivitiesListTable
-          data={activitiesData?.activities || []}
+          data={orgActivitiesData || []}
           isLoading={activitiesQueryLoading}
           currentPage={Number(currentPage)}
           onPageChange={handlePageChange}
@@ -65,8 +75,8 @@ const ActivitiesPage: React.FC = () => {
             setShowActivityDetailsModalActive(true, activity?.cw_unit?.warehouseUnitId || '')
           }
           order={order}
-          totalPages={Math.ceil(activitiesData.total / RECORDS_PER_PAGE)}
-          totalCount={activitiesData.total}
+          totalPages={Math.ceil(orgActivitiesData?.length / RECORDS_PER_PAGE)}
+          totalCount={orgActivitiesData?.length}
         />
       </div>
       {showActivityDetailsModal && (
