@@ -94,5 +94,6 @@
   "beneficiary-key": "beneficiary key",
   "registry": "registry",
   "project-link": "project link",
-  "blockchain-confirmation-height": "blockchain confirmation height"
+  "blockchain-confirmation-height": "blockchain confirmation height",
+  "no-climate-activity-data-to-display": "no climate activity data to display"
 }

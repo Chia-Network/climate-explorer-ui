@@ -22,7 +22,6 @@ const ActivitiesPage: React.FC = () => {
    * this is the extracted order without the column key
    */
   const explorerApiCompatibleOrder: string = order?.split(':')?.[1];
-  console.log('%%%%%%', explorerApiCompatibleOrder);
 
   const {
     data: activitiesData,
@@ -46,7 +45,13 @@ const ActivitiesPage: React.FC = () => {
   }
 
   if (!activitiesData?.total) {
-    return <FormattedMessage id={'no-records-found'} />;
+    return (
+      <div className="h-full flex items-center justify-center">
+        <div className="sentence-case font-medium text-lg">
+          <FormattedMessage id="no-climate-activity-data-to-display" />
+        </div>
+      </div>
+    );
   }
 
   return (

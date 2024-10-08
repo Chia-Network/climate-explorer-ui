@@ -1,7 +1,5 @@
 import { climateExplorerApi, RECORDS_PER_PAGE } from './index';
 import { Activity } from '@/schemas/Activity.schema';
-//@ts-ignore
-import { BaseQueryResult } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
 
 interface GetActivityParams {
   page?: number;
@@ -41,32 +39,14 @@ const activityApi = climateExplorerApi.injectEndpoints({
     getActivityByWarehouseUnitId: builder.query<Activity | undefined, string>({
       query: (warehouseUnitId) => {
         // Initialize the params object with page and limit
-        const params = { page: 1, limit: 1, search: warehouseUnitId };
+        const params = { page: 1, limit: 1, cw_unit_id: warehouseUnitId };
 
         return {
-          url: `/v1/activities`,
+          url: `/v1/activities/by-cw-unit-id`,
           params,
           method: 'GET',
         };
       },
-      transformResponse(
-        baseQueryReturnValue: BaseQueryResult<GetActivitiesResponse>,
-        _,
-        arg: string,
-      ): Promise<Activity | undefined> | Activity | undefined {
-        try {
-          const returnedWarehouseUnitId: string | null =
-            baseQueryReturnValue?.activities?.[0]?.cw_unit?.warehouseUnitId;
-          console.log('^^^^^^^ returned', returnedWarehouseUnitId, 'requested', arg);
-          if (returnedWarehouseUnitId === arg) {
-            return baseQueryReturnValue.activities[0];
-          }
-          return undefined;
-        } catch (error) {
-          return undefined;
-        }
-      },
-      keepUnusedDataFor: 0,
     }),
   }),
 });

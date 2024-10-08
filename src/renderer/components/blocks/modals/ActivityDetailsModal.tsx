@@ -16,6 +16,8 @@ const ActivityDetailsModal: React.FC<DetailsModalProps> = ({ onClose, warehouseU
     error: activityDataError,
   } = useGetActivityByWarehouseUnitIdQuery(warehouseUnitId);
 
+  console.log('data:', activityData, 'loading:', activityDataLoading, 'error:', activityDataError);
+
   const modalBody = () => {
     if (activityDataLoading) {
       return (
