@@ -1,20 +1,32 @@
 import { ComponentCenteredSpinner, IssuanceInformation, Modal, Tabs, UnitInformation } from '@/components';
 import { FormattedMessage } from 'react-intl';
 import React from 'react';
-import { useGetActivityByWarehouseUnitIdQuery } from '@/api';
+import { ClimateActionMode, useGetActivityRecordQuery } from '@/api';
 import { ActivitySummaryInformation } from '@/components/blocks/layout/ActivitySummaryInformation';
+import { useWildCardUrlHash } from '@/hooks';
 
 interface DetailsModalProps {
   warehouseUnitId: string;
   onClose: () => void;
 }
 
-const ActivityDetailsModal: React.FC<DetailsModalProps> = ({ onClose, warehouseUnitId }) => {
+const ActivityDetailsModal: React.FC<DetailsModalProps> = ({ onClose }) => {
+  const [activityDetailsModalUrlFragment] = useWildCardUrlHash('activity-details');
+  /**
+   * see {@link ActivitiesPage} event handlers for hash content order
+   */
+  const urlHashValues: string[] = activityDetailsModalUrlFragment?.replace('activity-details-', '')?.split('^');
+  const warehouseUnitId = urlHashValues?.length >= 1 ? urlHashValues[0] : '';
+  const assetTokenId = urlHashValues?.length >= 2 ? urlHashValues[1] : '';
+  const actionMode: ClimateActionMode = (urlHashValues?.length >= 3
+    ? urlHashValues[2]
+    : 'PERMISSIONLESS_RETIREMENT') as unknown as ClimateActionMode;
+
   const {
     data: activityData,
     isLoading: activityDataLoading,
     error: activityDataError,
-  } = useGetActivityByWarehouseUnitIdQuery(warehouseUnitId);
+  } = useGetActivityRecordQuery({ warehouseUnitId, assetTokenId, actionMode });
 
   console.log('data:', activityData, 'loading:', activityDataLoading, 'error:', activityDataError);
 
