@@ -95,5 +95,7 @@
   "registry": "registry",
   "project-link": "project link",
   "blockchain-confirmation-height": "blockchain confirmation height",
-  "no-climate-activity-data-to-display": "no climate activity data to display"
+  "no-climate-activity-data-to-display": "no climate activity data to display",
+  "search-by-climate-data": "search by climate data",
+  "search-by-beneficiary-information": "search by beneficiary information"
 }

@@ -1,25 +1,51 @@
 import { useColumnOrderHandler, useQueryParamState, useWildCardUrlHash } from '@/hooks';
-import { debounce } from 'lodash';
+import _, { debounce } from 'lodash';
 import {
   ActivitiesListTable,
   ActivityDetailsModal,
+  Dropdown,
   IndeterminateProgressOverlay,
   SearchBox,
   SkeletonTable,
 } from '@/components';
 import { FormattedMessage } from 'react-intl';
-import { useGetActivitiesQuery } from '@/api';
+import { ActivitySearchBy, useGetActivitiesQuery } from '@/api';
 import { RECORDS_PER_PAGE } from '@/api/climate-explorer/v1';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Activity } from '@/schemas/Activity.schema';
+import { DropdownItem } from 'flowbite-react';
+
+const SEARCH_BY_CLIMATE_DATA: ActivitySearchBy = 'climate_warehouse';
+const SEARCH_BY_ON_CHAIN_METADATA: ActivitySearchBy = 'onchain_metadata';
 
 const ActivitiesPage: React.FC = () => {
+  // manage searchBy value and searchByString query param separately to avoid query trigger if no search
   const [search, setSearch] = useQueryParamState('search', undefined);
+  const [searchByString, setSearchByString] = useQueryParamState('search-by', SEARCH_BY_CLIMATE_DATA);
+  const [searchBy, setSearchBy] = useState<ActivitySearchBy | undefined>(undefined);
   const [order, setOrder] = useQueryParamState('order', undefined);
   const [currentPage, setCurrentPage] = useQueryParamState('page', '1');
   const handleSetOrder = useColumnOrderHandler(order, setOrder);
   const [activityDetailsModalUrlFragment, showActivityDetailsModal, setShowActivityDetailsModalActive] =
     useWildCardUrlHash('activity-details');
+
+  useEffect(() => {
+    if (searchByString !== SEARCH_BY_ON_CHAIN_METADATA && searchByString !== SEARCH_BY_CLIMATE_DATA) {
+      setSearchByString(SEARCH_BY_CLIMATE_DATA);
+    }
+  }, [searchByString, setSearchByString]);
+
+  useEffect(() => {
+    if (search) {
+      const searchBy: ActivitySearchBy =
+        searchByString === SEARCH_BY_ON_CHAIN_METADATA || searchByString === SEARCH_BY_CLIMATE_DATA
+          ? searchByString
+          : SEARCH_BY_CLIMATE_DATA;
+      setSearchBy(searchBy);
+    } else if (!search && searchBy) {
+      setSearchBy(undefined);
+    }
+  }, [search, searchBy, searchByString]);
 
   /**
    * use column order handler tags the order with the table column key in the form 'col_key:order'
@@ -27,7 +53,7 @@ const ActivitiesPage: React.FC = () => {
    *
    * this is the extracted order without the column key
    */
-  const explorerApiCompatibleOrder: string = order?.split(':')?.[1];
+  const explorerApiCompatibleOrder: string | null = order?.split(':')?.[1];
 
   const {
     data: activitiesData,
@@ -35,6 +61,7 @@ const ActivitiesPage: React.FC = () => {
     isFetching: activitiesQueryFetching,
     error: activitiesQueryError,
   } = useGetActivitiesQuery({
+    searchBy,
     search,
     page: Number(currentPage),
     sort: explorerApiCompatibleOrder,
@@ -59,7 +86,7 @@ const ActivitiesPage: React.FC = () => {
     return <SkeletonTable />;
   }
 
-  if (!activitiesData?.total) {
+  if (_.isNil(activitiesData?.total)) {
     return (
       <div className="h-full flex items-center justify-center">
         <div className="sentence-case font-medium text-lg">
@@ -74,6 +101,30 @@ const ActivitiesPage: React.FC = () => {
       {activitiesQueryFetching && <IndeterminateProgressOverlay />}
       <div className="pt-2 pl-2 pr-2 h-full">
         <div className="flex flex-col md:flex-row gap-6 my-2.5 relative z-30 items-center h-auto">
+          <Dropdown
+            label={
+              searchByString === SEARCH_BY_ON_CHAIN_METADATA ? (
+                <p className="capitalize">
+                  <FormattedMessage id="search-by-beneficiary-information" />
+                </p>
+              ) : (
+                <p className="capitalize">
+                  <FormattedMessage id="search-by-climate-data" />
+                </p>
+              )
+            }
+          >
+            <DropdownItem onClick={() => setSearchByString(SEARCH_BY_CLIMATE_DATA)}>
+              <p className="capitalize">
+                <FormattedMessage id="search-by-climate-data" />
+              </p>
+            </DropdownItem>
+            <DropdownItem onClick={() => setSearchByString(SEARCH_BY_ON_CHAIN_METADATA)}>
+              <p className="capitalize">
+                <FormattedMessage id="search-by-beneficiary-information" />
+              </p>
+            </DropdownItem>
+          </Dropdown>
           <SearchBox defaultValue={search} onChange={handleSearchChange} />
         </div>
         <ActivitiesListTable
