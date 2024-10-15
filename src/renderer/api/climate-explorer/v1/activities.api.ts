@@ -1,10 +1,25 @@
 import { climateExplorerApi, RECORDS_PER_PAGE } from './index';
 import { Activity } from '@/schemas/Activity.schema';
 
+// see https://github.com/Chia-Network/climate-token-driver/blob/develop/app/schemas/activity.py
+export type ActivitySearchBy = 'onchain_metadata' | 'climate_warehouse';
+
 interface GetActivitiesParams {
-  page?: number;
+  page: number;
   search?: string | null;
-  sort?: string | null;
+  searchBy?: ActivitySearchBy;
+  sort?: 'desc' | 'asc' | string | null;
+}
+
+// query parameter names the explorer api is expecting
+interface GetActivitiesExplorerQueryParams {
+  search?: string;
+  search_by?: ActivitySearchBy;
+  minHeight?: number;
+  mode?: ClimateActionMode;
+  page: number;
+  limit: number;
+  sort?: 'desc' | 'asc';
 }
 
 interface GetActivityRecordParams {
@@ -13,6 +28,7 @@ interface GetActivityRecordParams {
   actionMode: ClimateActionMode;
 }
 
+// query parameter names the explorer api is expecting
 interface GetActivityRecordExplorerQueryParams {
   cw_unit_id: string;
   coin_id: string;
@@ -31,16 +47,20 @@ interface GetActivitiesResponse {
 const activityApi = climateExplorerApi.injectEndpoints({
   endpoints: (builder) => ({
     getActivities: builder.query<GetActivitiesResponse, GetActivitiesParams>({
-      query: ({ page, search, sort }: GetActivitiesParams) => {
-        // Initialize the params object with page and limit
-        const params: GetActivitiesParams & { limit: number } = { page, limit: RECORDS_PER_PAGE };
+      query: ({ page, search, sort, searchBy }: GetActivitiesParams) => {
+        const params: GetActivitiesExplorerQueryParams = {
+          page,
+          limit: RECORDS_PER_PAGE,
+        };
+
+        if (sort) {
+          params.sort =
+            sort?.toLowerCase() === 'asc' || sort?.toLowerCase() === 'desc' ? (sort as 'asc' | 'desc') : 'desc';
+        }
 
         if (search) {
           params.search = search.replace(/[^a-zA-Z0-9 _.-]+/, '');
-        }
-
-        if (sort) {
-          params.sort = sort;
+          params.search_by = searchBy;
         }
 
         return {
