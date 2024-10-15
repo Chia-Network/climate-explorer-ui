@@ -1,30 +1,46 @@
 import { climateExplorerApi, RECORDS_PER_PAGE } from './index';
 import { Activity } from '@/schemas/Activity.schema';
 
-interface GetActivityParams {
+interface GetActivitiesParams {
   page?: number;
   search?: string | null;
-  order?: string | null;
+  sort?: string | null;
 }
 
-interface GetActivityResponse {
+interface GetActivityRecordParams {
+  warehouseUnitId: string;
+  coinId: string;
+  actionMode: ClimateActionMode;
+}
+
+interface GetActivityRecordExplorerQueryParams {
+  cw_unit_id: string;
+  coin_id: string;
+  action_mode: ClimateActionMode;
+}
+
+export interface ClimateActionMode {
+  actionMode: 'TOKENIZATION' | 'DETOKENIZATION' | 'PERMISSIONLESS_RETIREMENT';
+}
+
+interface GetActivitiesResponse {
   activities: Activity[];
   total: number;
 }
 
 const activityApi = climateExplorerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getActivities: builder.query<GetActivityResponse, GetActivityParams>({
-      query: ({ page, search, order }: GetActivityParams) => {
+    getActivities: builder.query<GetActivitiesResponse, GetActivitiesParams>({
+      query: ({ page, search, sort }: GetActivitiesParams) => {
         // Initialize the params object with page and limit
-        const params: GetActivityParams & { limit: number } = { page, limit: RECORDS_PER_PAGE };
+        const params: GetActivitiesParams & { limit: number } = { page, limit: RECORDS_PER_PAGE };
 
         if (search) {
           params.search = search.replace(/[^a-zA-Z0-9 _.-]+/, '');
         }
 
-        if (order) {
-          params.order = order;
+        if (sort) {
+          params.sort = sort;
         }
 
         return {
@@ -33,9 +49,28 @@ const activityApi = climateExplorerApi.injectEndpoints({
           method: 'GET',
         };
       },
-      keepUnusedDataFor: 0,
+      keepUnusedDataFor: 600,
+    }),
+
+    getActivityRecord: builder.query<Activity | undefined, GetActivityRecordParams>({
+      query: ({ warehouseUnitId, actionMode, coinId }) => {
+        const params: GetActivityRecordExplorerQueryParams = {
+          cw_unit_id: warehouseUnitId,
+          action_mode: actionMode,
+          coin_id: coinId,
+        };
+
+        return {
+          url: `/v1/activities/activity-record`,
+          params,
+          method: 'GET',
+        };
+      },
+      transformResponse(baseQueryReturnValue: any): Activity | undefined {
+        return baseQueryReturnValue?.activity || undefined;
+      },
     }),
   }),
 });
 
-export const { useGetActivitiesQuery } = activityApi;
+export const { useGetActivitiesQuery, useGetActivityRecordQuery } = activityApi;

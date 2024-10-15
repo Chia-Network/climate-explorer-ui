@@ -82,7 +82,7 @@ const DataTable: React.FC<DataTableProps> = ({
 
       {/* Desktop view */}
       {footer && data.length ? (
-        <div id="footer" className="bg-gray-100 dark:bg-gray-700 w-full p-4 text-left fixed bottom-0 z-50">
+        <div id="footer" className="bg-gray-100 dark:bg-gray-700 w-full p-4 text-left fixed bottom-0 z-40">
           {footer}
         </div>
       ) : null}
@@ -99,7 +99,7 @@ const DataTable: React.FC<DataTableProps> = ({
                   return (
                     <th
                       key={column.key}
-                      style={{ cursor: onChangeOrder ? 'pointer' : 'default' }}
+                      style={{ cursor: onChangeOrder && !column.ignoreOrderChange ? 'pointer' : 'default' }}
                       className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
                         isActive
                           ? 'bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white'

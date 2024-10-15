@@ -40,7 +40,6 @@
   "unit-owner": "unit owner",
   "not-specified": "not specified",
   "vintage-year": "vintage year",
-  "project-id": "project id",
   "an-error-occurred-while-trying-to-tokenize": "an error occurred while trying to tokenize",
   "unit-tokenization-success": "unit tokenization success",
   "the-unit-has-been-successfully-submitted-for-tokenization-and-is-pending-confirmation-on-the-blockchain": "the unit has been successfully submitted for tokenization and is pending confirmation on the blockchain",
@@ -87,5 +86,14 @@
   "action": "action",
   "tons-co2": "tons co2",
   "retirement": "retirement",
-  "detokenization": "detokenization"
+  "detokenization": "detokenization",
+  "cannot-get-activity-details": "cannot get activity details",
+  "summary": "summary",
+  "activity-details": "activity details",
+  "beneficiary-name": "beneficiary name",
+  "beneficiary-key": "beneficiary key",
+  "registry": "registry",
+  "project-link": "project link",
+  "blockchain-confirmation-height": "blockchain confirmation height",
+  "no-climate-activity-data-to-display": "no climate activity data to display"
 }

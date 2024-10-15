@@ -1,8 +1,7 @@
 import { DebouncedFunc } from 'lodash';
 import React, { useMemo } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Column, DataTable, PageCounter, Pagination, Tooltip } from '@/components';
-import { Badge } from 'flowbite-react';
+import { FormattedMessage } from 'react-intl';
+import { ClimateActionModeRenderer, Column, DataTable, PageCounter, Pagination, Tooltip } from '@/components';
 import { Activity } from '@/schemas/Activity.schema';
 import { timestampToUtcString } from '@/utils/date-time-utils';
 
@@ -29,7 +28,6 @@ const ActivitiesListTable: React.FC<TableProps> = ({
   totalPages,
   totalCount,
 }) => {
-  const intl = useIntl();
   const columns = useMemo(() => {
     /*
       note that the datatable has default rendering for attributes at the top level of the passed in data object so all
@@ -40,6 +38,7 @@ const ActivitiesListTable: React.FC<TableProps> = ({
       {
         title: <FormattedMessage id="registry-project-id" />,
         key: 'projectId',
+        ignoreOrderChange: true,
         render: (row: Activity) => {
           const projectId: string | number = row?.cw_project?.projectId || '--';
           return (
@@ -54,6 +53,7 @@ const ActivitiesListTable: React.FC<TableProps> = ({
       {
         title: <FormattedMessage id="project-name" />,
         key: 'projectName',
+        ignoreOrderChange: true,
         render: (row: Activity) => {
           const projectName: string | number = row?.cw_project?.projectName || '--';
           return (
@@ -68,6 +68,7 @@ const ActivitiesListTable: React.FC<TableProps> = ({
       {
         title: <FormattedMessage id="vintage-year" />,
         key: 'vintageYear',
+        ignoreOrderChange: true,
         render: (row: Activity) => {
           const vintageYear: string | number = row?.cw_unit?.vintageYear || '--';
           return (
@@ -82,45 +83,16 @@ const ActivitiesListTable: React.FC<TableProps> = ({
       {
         title: <FormattedMessage id="action" />,
         key: 'mode',
+        ignoreOrderChange: true,
         render: (row: Activity) => {
           const action = row?.mode;
-          let color: string = '';
-          let displayText = '';
-          switch (action) {
-            case 'TOKENIZATION': {
-              color = 'lime';
-              displayText = intl.formatMessage({ id: 'tokenization' });
-              break;
-            }
-            case 'DETOKENIZATION': {
-              color = 'yellow';
-              displayText = intl.formatMessage({ id: 'detokenization' });
-              break;
-            }
-            case 'PERMISSIONLESS_RETIREMENT': {
-              color = 'red';
-              displayText = intl.formatMessage({ id: 'retirement' });
-              break;
-            }
-            default: {
-              color = 'gray';
-              displayText = '--';
-              break;
-            }
-          }
-
-          return (
-            <div className="flex">
-              <Badge color={color} size="sm" className="capitalize">
-                {displayText}
-              </Badge>
-            </div>
-          );
+          return <ClimateActionModeRenderer actionMode={action} />;
         },
       },
       {
         title: <FormattedMessage id="tons-co2" />,
         key: 'amount',
+        ignoreOrderChange: true,
         render: (row: Activity) => {
           const amount = row.amount ? row.amount / 1000 : '--';
           return (
@@ -135,6 +107,7 @@ const ActivitiesListTable: React.FC<TableProps> = ({
       {
         title: <FormattedMessage id="timestamp-utc" />,
         key: 'timestamp',
+        ignoreOrderChange: true,
         render: (row: Activity) => {
           const timestampDate: string = timestampToUtcString(row.timestamp * 1000);
           return (
@@ -145,6 +118,10 @@ const ActivitiesListTable: React.FC<TableProps> = ({
             </Tooltip>
           );
         },
+      },
+      {
+        title: <FormattedMessage id="blockchain-confirmation-height" />,
+        key: 'height',
       },
     ];
 
