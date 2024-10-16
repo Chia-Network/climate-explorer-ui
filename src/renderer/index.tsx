@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 // @ts-ignore
 import { PersistGate } from 'redux-persist/integration/react';
 // @ts-ignore
-import { store, persistor } from '@/store';
+import { persistor, store } from '@/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root') || document.createElement('div'));
 
@@ -22,3 +22,4 @@ root.render(
     </Provider>
   </React.StrictMode>,
 );
+export { RECORDS_PER_PAGE } from '@/utils/constants';

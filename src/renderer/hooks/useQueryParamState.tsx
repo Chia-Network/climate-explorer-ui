@@ -2,12 +2,10 @@ import _ from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// Define a TypeScript interface for the function's return type
 interface QueryParamState<T> {
   (name: string, defaultValue?: T): [T, (value: T) => void];
 }
 
-// Convert the JavaScript function to TypeScript, specifying types for parameters and return values
 const useQueryParamState: QueryParamState<string> = (name, defaultValue = '') => {
   const [param, setParam] = useState<string>();
   const location = useLocation();
