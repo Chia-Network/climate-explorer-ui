@@ -16,6 +16,6 @@ export default defineConfig({
     outDir: path.resolve(__dirname, 'build/renderer'),
   },
   server: {
-    port: 5176,
+    port: 5177,
   },
 });

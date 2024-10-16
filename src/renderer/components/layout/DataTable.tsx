@@ -82,7 +82,7 @@ const DataTable: React.FC<DataTableProps> = ({
 
       {/* Desktop view */}
       {footer && data.length ? (
-        <div id="footer" className="bg-gray-100 dark:bg-gray-700 w-full p-4 text-left fixed bottom-0 z-50">
+        <div id="footer" className="bg-gray-100 dark:bg-gray-700 w-full p-4 text-left fixed bottom-0 z-40">
           {footer}
         </div>
       ) : null}

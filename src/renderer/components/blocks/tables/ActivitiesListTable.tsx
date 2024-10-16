@@ -1,10 +1,9 @@
 import { DebouncedFunc } from 'lodash';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Column, DataTable, PageCounter, Pagination, Tooltip } from '@/components';
+import { ClimateActionModeRenderer, Column, DataTable, PageCounter, Pagination, Tooltip } from '@/components';
 import { Activity } from '@/schemas/Activity.schema';
 import { timestampToUtcString } from '@/utils/date-time-utils';
-import { ClimateActionModeRenderer } from '@/components/blocks/widgets/ClimateActionModeRenderer';
 
 interface TableProps {
   data: Activity[];

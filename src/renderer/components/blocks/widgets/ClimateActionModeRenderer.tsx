@@ -1,12 +1,13 @@
 import React from 'react';
 import { Badge } from 'flowbite-react';
 import { useIntl } from 'react-intl';
+import { ClimateActionMode } from '@/api';
 
-interface ClimateActionModeRendererProps {
-  actionMode: 'TOKENIZATION' | 'DETOKENIZATION' | 'PERMISSIONLESS_RETIREMENT' | string;
+interface ClimateActionModeRendererProp {
+  actionMode: ClimateActionMode | string;
 }
 
-const ClimateActionModeRenderer: React.FC<ClimateActionModeRendererProps> = ({ actionMode }) => {
+const ClimateActionModeRenderer: React.FC<ClimateActionModeRendererProp> = ({ actionMode }) => {
   const intl = useIntl();
 
   let color: string = '';

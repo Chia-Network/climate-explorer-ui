@@ -3,20 +3,20 @@ export interface Token {
   warehouse_project_id: string;
   vintage_year: number;
   sequence_num: number;
-  index: string; // Hex string for bytes
-  public_key: string; // Hex string for bytes
-  asset_id: string; // Hex string for bytes
+  index: string;
+  public_key: string;
+  asset_id: string;
   tokenization?: {
-    mod_hash: string; // Hex string for bytes
-    public_key: string; // Hex string for bytes
+    mod_hash: string;
+    public_key: string;
   };
   detokenization?: {
-    mod_hash: string; // Hex string for bytes
-    public_key: string; // Hex string for bytes
-    signature: string; // Hex string for bytes
+    mod_hash: string;
+    public_key: string;
+    signature: string;
   };
   permissionless_retirement?: {
-    mod_hash: string; // Hex string for bytes
-    signature: string; // Hex string for bytes
+    mod_hash: string;
+    signature: string;
   };
 }

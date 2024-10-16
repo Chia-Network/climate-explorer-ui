@@ -1,12 +1,43 @@
-import { climateExplorerApi, RECORDS_PER_PAGE } from './index';
+import { climateExplorerApi } from './index';
 import { Activity } from '@/schemas/Activity.schema';
-//@ts-ignore
-import { BaseQueryResult } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
+import { RECORDS_PER_PAGE } from '@/utils/constants';
 
-interface GetActivityParams {
-  page?: number;
+// see https://github.com/Chia-Network/climate-token-driver/blob/develop/app/schemas/activity.py
+export type ActivitySearchBy = 'onchain_metadata' | 'climate_warehouse';
+
+interface GetActivitiesParams {
+  page: number;
   search?: string | null;
-  sort?: string | null;
+  searchBy?: ActivitySearchBy;
+  sort?: 'desc' | 'asc' | string | null;
+}
+
+// query parameter names the explorer api is expecting
+interface GetActivitiesExplorerQueryParams {
+  search?: string;
+  search_by?: ActivitySearchBy;
+  minHeight?: number;
+  mode?: ClimateActionMode;
+  page: number;
+  limit: number;
+  sort?: 'desc' | 'asc';
+}
+
+interface GetActivityRecordParams {
+  warehouseUnitId: string;
+  coinId: string;
+  actionMode: ClimateActionMode;
+}
+
+// query parameter names the explorer api is expecting
+interface GetActivityRecordExplorerQueryParams {
+  cw_unit_id: string;
+  coin_id: string;
+  action_mode: ClimateActionMode;
+}
+
+export interface ClimateActionMode {
+  actionMode: 'TOKENIZATION' | 'DETOKENIZATION' | 'PERMISSIONLESS_RETIREMENT';
 }
 
 interface GetActivitiesResponse {
@@ -16,17 +47,21 @@ interface GetActivitiesResponse {
 
 const activityApi = climateExplorerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getActivities: builder.query<GetActivitiesResponse, GetActivityParams>({
-      query: ({ page, search, sort }: GetActivityParams) => {
-        // Initialize the params object with page and limit
-        const params: GetActivityParams & { limit: number } = { page, limit: RECORDS_PER_PAGE };
-
-        if (search) {
-          params.search = search.replace(/[^a-zA-Z0-9 _.-]+/, '');
-        }
+    getActivities: builder.query<GetActivitiesResponse, GetActivitiesParams>({
+      query: ({ page, search, sort, searchBy }: GetActivitiesParams) => {
+        const params: GetActivitiesExplorerQueryParams = {
+          page,
+          limit: RECORDS_PER_PAGE,
+        };
 
         if (sort) {
-          params.sort = sort;
+          params.sort =
+            sort?.toLowerCase() === 'asc' || sort?.toLowerCase() === 'desc' ? (sort as 'asc' | 'desc') : 'desc';
+        }
+
+        if (search && searchBy) {
+          params.search = search.replace(/[^a-zA-Z0-9 _.-]+/, '');
+          params.search_by = searchBy;
         }
 
         return {
@@ -38,37 +73,25 @@ const activityApi = climateExplorerApi.injectEndpoints({
       keepUnusedDataFor: 600,
     }),
 
-    getActivityByWarehouseUnitId: builder.query<Activity | undefined, string>({
-      query: (warehouseUnitId) => {
-        // Initialize the params object with page and limit
-        const params = { page: 1, limit: 1, search: warehouseUnitId };
+    getActivityRecord: builder.query<Activity | undefined, GetActivityRecordParams>({
+      query: ({ warehouseUnitId, actionMode, coinId }) => {
+        const params: GetActivityRecordExplorerQueryParams = {
+          cw_unit_id: warehouseUnitId,
+          action_mode: actionMode,
+          coin_id: coinId,
+        };
 
         return {
-          url: `/v1/activities`,
+          url: `/v1/activities/activity-record`,
           params,
           method: 'GET',
         };
       },
-      transformResponse(
-        baseQueryReturnValue: BaseQueryResult<GetActivitiesResponse>,
-        _,
-        arg: string,
-      ): Promise<Activity | undefined> | Activity | undefined {
-        try {
-          const returnedWarehouseUnitId: string | null =
-            baseQueryReturnValue?.activities?.[0]?.cw_unit?.warehouseUnitId;
-          console.log('^^^^^^^ returned', returnedWarehouseUnitId, 'requested', arg);
-          if (returnedWarehouseUnitId === arg) {
-            return baseQueryReturnValue.activities[0];
-          }
-          return undefined;
-        } catch (error) {
-          return undefined;
-        }
+      transformResponse(baseQueryReturnValue: any): Activity | undefined {
+        return baseQueryReturnValue?.activity || undefined;
       },
-      keepUnusedDataFor: 0,
     }),
   }),
 });
 
-export const { useGetActivitiesQuery, useGetActivityByWarehouseUnitIdQuery } = activityApi;
+export const { useGetActivitiesQuery, useGetActivityRecordQuery } = activityApi;
