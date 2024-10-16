@@ -48,15 +48,6 @@
   "marketplace": "marketplace",
   "marketplace-identifier": "marketplace identifier",
   "marketplace-link": "marketplace link",
-  "revert-tokens": "revert tokens",
-  "detokenize-unit": "detokenize unit",
-  "revert-carbon-unit-tokenization": "revert carbon unit tokenization",
-  "click-to-upload-or-drag-and-drop-detokenization-file": "click to upload or drag and drop detokenization file",
-  "files-only": "files only",
-  "please-upload-a-different-file": "please upload a different file",
-  "missing-file-name": "missing file name",
-  "testnet-wallet-addresses-start-with-txch-and-are-63-characters-long": "testnet wallet addresses start with 'txch' and are 63 characters long",
-  "wallet-address-must-start-with-xch-or-txch": "wallet address must start with 'xch' or 'txch'",
   "verification-body": "verfication body",
   "country-jurisdiction-of-owner": "country jurisdiction of owner",
   "in-country-jurisdiction-of-owner": "in-country jurisdiction of owner",
@@ -97,5 +88,7 @@
   "blockchain-confirmation-height": "blockchain confirmation height",
   "no-climate-activity-data-to-display": "no climate activity data to display",
   "search-by-climate-data": "search by climate data",
-  "search-by-beneficiary-information": "search by beneficiary information"
+  "search-by-beneficiary-information": "search by beneficiary information",
+  "failed-to-load-organizations": "failed to load organizations",
+  "climate-activity-exploration": "climate activity exploration"
 }

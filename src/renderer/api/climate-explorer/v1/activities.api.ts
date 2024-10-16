@@ -7,6 +7,7 @@ export type ActivitySearchBy = 'onchain_metadata' | 'climate_warehouse';
 
 interface GetActivitiesParams {
   page: number;
+  orgUid: string;
   search?: string | null;
   searchBy?: ActivitySearchBy;
   sort?: 'desc' | 'asc' | string | null;
@@ -21,6 +22,7 @@ interface GetActivitiesExplorerQueryParams {
   page: number;
   limit: number;
   sort?: 'desc' | 'asc';
+  org_uid?: string;
 }
 
 interface GetActivityRecordParams {
@@ -40,7 +42,7 @@ export interface ClimateActionMode {
   actionMode: 'TOKENIZATION' | 'DETOKENIZATION' | 'PERMISSIONLESS_RETIREMENT';
 }
 
-interface GetActivitiesResponse {
+export interface GetActivitiesResponse {
   activities: Activity[];
   total: number;
 }
@@ -48,10 +50,11 @@ interface GetActivitiesResponse {
 const activityApi = climateExplorerApi.injectEndpoints({
   endpoints: (builder) => ({
     getActivities: builder.query<GetActivitiesResponse, GetActivitiesParams>({
-      query: ({ page, search, sort, searchBy }: GetActivitiesParams) => {
+      query: ({ page, orgUid, search, sort, searchBy }: GetActivitiesParams) => {
         const params: GetActivitiesExplorerQueryParams = {
           page,
           limit: RECORDS_PER_PAGE,
+          org_uid: orgUid,
         };
 
         if (sort) {

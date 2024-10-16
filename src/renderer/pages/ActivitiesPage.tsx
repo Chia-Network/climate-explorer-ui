@@ -10,7 +10,7 @@ import {
 } from '@/components';
 import { FormattedMessage } from 'react-intl';
 import { ActivitySearchBy, useGetActivitiesQuery } from '@/api';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Activity } from '@/schemas/Activity.schema';
 import { RECORDS_PER_PAGE, SEARCH_BY_CLIMATE_DATA, SEARCH_BY_ON_CHAIN_METADATA } from '@/utils/constants';
 import { useParams } from 'react-router-dom';
@@ -54,24 +54,20 @@ const ActivitiesPage: React.FC = () => {
   const explorerApiCompatibleOrder: string | null = order?.split(':')?.[1];
 
   const {
-    data: allActivitiesData,
+    data: orgActivitiesData,
     isLoading: activitiesQueryLoading,
     isFetching: activitiesQueryFetching,
     error: activitiesQueryError,
-  } = useGetActivitiesQuery({
-    searchBy,
-    search,
-    page: Number(currentPage),
-    sort: explorerApiCompatibleOrder,
-  });
-
-  const orgActivitiesData: Activity[] | undefined = useMemo<Activity[] | undefined>(() => {
-    if (allActivitiesData?.activities?.map) {
-      return allActivitiesData.activities.filter((activity) => activity?.cw_org?.orgUid === orgUid);
-    } else {
-      return undefined;
-    }
-  }, [allActivitiesData?.activities, orgUid]);
+  } = useGetActivitiesQuery(
+    {
+      searchBy,
+      search,
+      orgUid: orgUid || '',
+      page: Number(currentPage),
+      sort: explorerApiCompatibleOrder,
+    },
+    { skip: !orgUid },
+  );
 
   const handleSearchChange = debounce((event: any) => setSearch(event.target.value), 800);
   const handlePageChange = debounce((page) => setCurrentPage(page), 800);
@@ -92,7 +88,7 @@ const ActivitiesPage: React.FC = () => {
     return <SkeletonTable />;
   }
 
-  if (_.isNil(allActivitiesData?.total) || !orgActivitiesData?.length) {
+  if (_.isNil(orgActivitiesData?.total) || (!orgActivitiesData?.total && !search)) {
     return (
       <div className="h-full flex items-center justify-center">
         <div className="sentence-case font-medium text-lg">
@@ -114,15 +110,15 @@ const ActivitiesPage: React.FC = () => {
           <SearchBox defaultValue={search} onChange={handleSearchChange} />
         </div>
         <ActivitiesListTable
-          data={orgActivitiesData || []}
+          data={orgActivitiesData?.activities || []}
           isLoading={activitiesQueryLoading}
           currentPage={Number(currentPage)}
           onPageChange={handlePageChange}
           setOrder={handleSetOrder}
           onRowClick={handleActivitiesTableRowClick}
           order={order}
-          totalPages={Math.ceil(orgActivitiesData?.length / RECORDS_PER_PAGE)}
-          totalCount={orgActivitiesData?.length}
+          totalPages={Math.ceil(orgActivitiesData?.total / RECORDS_PER_PAGE)}
+          totalCount={orgActivitiesData?.total}
         />
       </div>
 
