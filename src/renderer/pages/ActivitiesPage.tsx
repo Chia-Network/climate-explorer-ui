@@ -2,21 +2,17 @@ import { useColumnOrderHandler, useQueryParamState, useWildCardUrlHash } from '@
 import _, { debounce } from 'lodash';
 import {
   ActivitiesListTable,
+  ActivitiesSearchByDropDown,
   ActivityDetailsModal,
-  Dropdown,
   IndeterminateProgressOverlay,
   SearchBox,
   SkeletonTable,
 } from '@/components';
 import { FormattedMessage } from 'react-intl';
 import { ActivitySearchBy, useGetActivitiesQuery } from '@/api';
-import { RECORDS_PER_PAGE } from '@/api/climate-explorer/v1';
 import React, { useEffect, useState } from 'react';
 import { Activity } from '@/schemas/Activity.schema';
-import { DropdownItem } from 'flowbite-react';
-
-const SEARCH_BY_CLIMATE_DATA: ActivitySearchBy = 'climate_warehouse';
-const SEARCH_BY_ON_CHAIN_METADATA: ActivitySearchBy = 'onchain_metadata';
+import { RECORDS_PER_PAGE, SEARCH_BY_CLIMATE_DATA, SEARCH_BY_ON_CHAIN_METADATA } from '@/utils/constants';
 
 const ActivitiesPage: React.FC = () => {
   // manage searchBy value and searchByString query param separately to avoid query trigger if no search
@@ -101,30 +97,10 @@ const ActivitiesPage: React.FC = () => {
       {activitiesQueryFetching && <IndeterminateProgressOverlay />}
       <div className="pt-2 pl-2 pr-2 h-full">
         <div className="flex flex-col md:flex-row gap-6 my-2.5 relative z-30 items-center h-auto">
-          <Dropdown
-            label={
-              searchByString === SEARCH_BY_ON_CHAIN_METADATA ? (
-                <p className="capitalize">
-                  <FormattedMessage id="search-by-beneficiary-information" />
-                </p>
-              ) : (
-                <p className="capitalize">
-                  <FormattedMessage id="search-by-climate-data" />
-                </p>
-              )
-            }
-          >
-            <DropdownItem onClick={() => setSearchByString(SEARCH_BY_CLIMATE_DATA)}>
-              <p className="capitalize">
-                <FormattedMessage id="search-by-climate-data" />
-              </p>
-            </DropdownItem>
-            <DropdownItem onClick={() => setSearchByString(SEARCH_BY_ON_CHAIN_METADATA)}>
-              <p className="capitalize">
-                <FormattedMessage id="search-by-beneficiary-information" />
-              </p>
-            </DropdownItem>
-          </Dropdown>
+          <ActivitiesSearchByDropDown
+            searchByString={searchByString as unknown as ActivitySearchBy}
+            setSearchByString={setSearchByString}
+          />
           <SearchBox defaultValue={search} onChange={handleSearchChange} />
         </div>
         <ActivitiesListTable

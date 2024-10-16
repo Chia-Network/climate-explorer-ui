@@ -1,5 +1,6 @@
-import { climateExplorerApi, RECORDS_PER_PAGE } from './index';
+import { climateExplorerApi } from './index';
 import { Activity } from '@/schemas/Activity.schema';
+import { RECORDS_PER_PAGE } from '@/utils/constants';
 
 // see https://github.com/Chia-Network/climate-token-driver/blob/develop/app/schemas/activity.py
 export type ActivitySearchBy = 'onchain_metadata' | 'climate_warehouse';

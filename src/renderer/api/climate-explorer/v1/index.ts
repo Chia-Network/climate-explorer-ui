@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import initialState from '@/store/slices/app/app.initialstate';
 
-export const RECORDS_PER_PAGE = 10;
-
 const baseQuery = fetchBaseQuery({
   baseUrl: '/',
 });

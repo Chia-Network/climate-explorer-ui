@@ -1,5 +1,6 @@
 import React from 'react';
-import { RECORDS_PER_PAGE } from '@/api/climate-explorer/v1';
+
+import { RECORDS_PER_PAGE } from '@/utils/constants';
 
 // Define an interface for the component's props
 interface PageCounterProps {
