@@ -138,7 +138,7 @@ const ActivitiesListTable: React.FC<TableProps> = ({
         data={data}
         primaryKey="warehouseUnitId"
         isLoading={isLoading}
-        tableHeightOffsetPx={320}
+        tableHeightOffsetPx={250}
         footer={
           <>
             <PageCounter currentPage={currentPage} totalCount={totalCount} />
