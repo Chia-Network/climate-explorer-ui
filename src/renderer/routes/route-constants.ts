@@ -1,4 +1,3 @@
 export default {
-  CREATE_TOKENS: '/create-tokens',
-  REVERT_TOKENS: '/revert-tokens',
+  ORG_ACTIVITIES: '/org-activities',
 };

@@ -13,9 +13,11 @@ import { ActivitySearchBy, useGetActivitiesQuery } from '@/api';
 import React, { useEffect, useState } from 'react';
 import { Activity } from '@/schemas/Activity.schema';
 import { RECORDS_PER_PAGE, SEARCH_BY_CLIMATE_DATA, SEARCH_BY_ON_CHAIN_METADATA } from '@/utils/constants';
+import { useParams } from 'react-router-dom';
 
 const ActivitiesPage: React.FC = () => {
   // manage searchBy value and searchByString query param separately to avoid query trigger if no search
+  const { orgUid } = useParams();
   const [search, setSearch] = useQueryParamState('search', undefined);
   const [searchByString, setSearchByString] = useQueryParamState('search-by', SEARCH_BY_CLIMATE_DATA);
   const [searchBy, setSearchBy] = useState<ActivitySearchBy | undefined>(undefined);
@@ -52,16 +54,20 @@ const ActivitiesPage: React.FC = () => {
   const explorerApiCompatibleOrder: string | null = order?.split(':')?.[1];
 
   const {
-    data: activitiesData,
+    data: orgActivitiesData,
     isLoading: activitiesQueryLoading,
     isFetching: activitiesQueryFetching,
     error: activitiesQueryError,
-  } = useGetActivitiesQuery({
-    searchBy,
-    search,
-    page: Number(currentPage),
-    sort: explorerApiCompatibleOrder,
-  });
+  } = useGetActivitiesQuery(
+    {
+      searchBy,
+      search,
+      orgUid: orgUid || '',
+      page: Number(currentPage),
+      sort: explorerApiCompatibleOrder,
+    },
+    { skip: !orgUid },
+  );
 
   const handleSearchChange = debounce((event: any) => setSearch(event.target.value), 800);
   const handlePageChange = debounce((page) => setCurrentPage(page), 800);
@@ -82,7 +88,17 @@ const ActivitiesPage: React.FC = () => {
     return <SkeletonTable />;
   }
 
-  if (_.isNil(activitiesData?.total)) {
+  if (!orgUid) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <div className="sentence-case font-medium text-lg">
+          <FormattedMessage id="please-select-a-climate-registry-to-view-activity" />
+        </div>
+      </div>
+    );
+  }
+
+  if ((_.isNil(orgActivitiesData?.total) || (!orgActivitiesData?.total && !search)) && !activitiesQueryFetching) {
     return (
       <div className="h-full flex items-center justify-center">
         <div className="sentence-case font-medium text-lg">
@@ -104,15 +120,15 @@ const ActivitiesPage: React.FC = () => {
           <SearchBox defaultValue={search} onChange={handleSearchChange} />
         </div>
         <ActivitiesListTable
-          data={activitiesData?.activities || []}
-          isLoading={activitiesQueryLoading}
+          data={orgActivitiesData?.activities || []}
+          isLoading={activitiesQueryFetching}
           currentPage={Number(currentPage)}
           onPageChange={handlePageChange}
           setOrder={handleSetOrder}
           onRowClick={handleActivitiesTableRowClick}
           order={order}
-          totalPages={Math.ceil(activitiesData.total / RECORDS_PER_PAGE)}
-          totalCount={activitiesData.total}
+          totalPages={Math.ceil(Number(orgActivitiesData?.total) / RECORDS_PER_PAGE)}
+          totalCount={Number(orgActivitiesData?.total)}
         />
       </div>
 

@@ -14,10 +14,10 @@ const AppNavigator: React.FC = () => {
             loader={({ params }) => redirect(params['*'] || '/')}
           />
           <Route path="" element={<Template />}>
-            <Route path="/" element={<Navigate to={ROUTES.CREATE_TOKENS} />} />
-            <Route path={ROUTES.CREATE_TOKENS} element={<Pages.ActivitiesPage />} />
-            <Route path={ROUTES.REVERT_TOKENS} element={<Pages.RevertTokensPage />} />
-            <Route path="*" element={<Navigate replace to={ROUTES.CREATE_TOKENS} />} />
+            <Route path="/" element={<Navigate to={ROUTES.ORG_ACTIVITIES} />} />
+            <Route path={ROUTES.ORG_ACTIVITIES} element={<Pages.ActivitiesPage />} />
+            <Route path={`${ROUTES.ORG_ACTIVITIES}/:orgUid`} element={<Pages.ActivitiesPage />} />
+            <Route path="*" element={<Navigate replace to={ROUTES.ORG_ACTIVITIES} />} />
           </Route>
         </Routes>
         {/* app-wide blocking modals go below this comment*/}

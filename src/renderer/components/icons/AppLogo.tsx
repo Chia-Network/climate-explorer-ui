@@ -1,4 +1,4 @@
-import logo from '@/assets/img/Tokenization.svg';
+import logo from '@/assets/img/Explorer.svg';
 import React from 'react';
 
 interface AppLogoProps {
