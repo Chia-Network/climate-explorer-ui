@@ -90,5 +90,6 @@
   "search-by-climate-data": "search by climate data",
   "search-by-beneficiary-information": "search by beneficiary information",
   "failed-to-load-organizations": "failed to load organizations",
-  "climate-activity-exploration": "climate activity exploration"
+  "climate-activity-exploration": "climate activity exploration",
+  "please-select-a-climate-registry-to-view-activity": "please select a climate registry to view activity"
 }

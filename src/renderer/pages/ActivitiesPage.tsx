@@ -84,11 +84,21 @@ const ActivitiesPage: React.FC = () => {
     return <FormattedMessage id={'unable-to-load-contents'} />;
   }
 
-  if (activitiesQueryLoading || !orgUid) {
+  if (activitiesQueryLoading) {
     return <SkeletonTable />;
   }
 
-  if (_.isNil(orgActivitiesData?.total) || (!orgActivitiesData?.total && !search)) {
+  if (!orgUid) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <div className="sentence-case font-medium text-lg">
+          <FormattedMessage id="please-select-a-climate-registry-to-view-activity" />
+        </div>
+      </div>
+    );
+  }
+
+  if ((_.isNil(orgActivitiesData?.total) || (!orgActivitiesData?.total && !search)) && !activitiesQueryFetching) {
     return (
       <div className="h-full flex items-center justify-center">
         <div className="sentence-case font-medium text-lg">
@@ -111,14 +121,14 @@ const ActivitiesPage: React.FC = () => {
         </div>
         <ActivitiesListTable
           data={orgActivitiesData?.activities || []}
-          isLoading={activitiesQueryLoading}
+          isLoading={activitiesQueryFetching}
           currentPage={Number(currentPage)}
           onPageChange={handlePageChange}
           setOrder={handleSetOrder}
           onRowClick={handleActivitiesTableRowClick}
           order={order}
-          totalPages={Math.ceil(orgActivitiesData?.total / RECORDS_PER_PAGE)}
-          totalCount={orgActivitiesData?.total}
+          totalPages={Math.ceil(Number(orgActivitiesData?.total) / RECORDS_PER_PAGE)}
+          totalCount={Number(orgActivitiesData?.total)}
         />
       </div>
 
