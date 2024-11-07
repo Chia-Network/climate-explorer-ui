@@ -28,6 +28,15 @@ const ActivitiesListTable: React.FC<TableProps> = ({
   totalPages,
   totalCount,
 }) => {
+  const dataWithUniqueTableId = useMemo<(Activity & { id: string })[]>(() => {
+    return data?.map((activity: Activity) => {
+      return {
+        ...activity,
+        id: activity.coin_id + activity.cw_unit.warehouseUnitId + activity.mode,
+      };
+    });
+  }, [data]);
+
   const columns = useMemo(() => {
     /*
       note that the datatable has default rendering for attributes at the top level of the passed in data object so all
@@ -135,8 +144,7 @@ const ActivitiesListTable: React.FC<TableProps> = ({
         onChangeOrder={setOrder}
         onRowClick={onRowClick}
         order={order}
-        data={data}
-        primaryKey="warehouseUnitId"
+        data={dataWithUniqueTableId}
         isLoading={isLoading}
         tableHeightOffsetPx={250}
         footer={

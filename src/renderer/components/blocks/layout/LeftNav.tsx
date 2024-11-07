@@ -27,6 +27,7 @@ const LeftNav = () => {
       return organizationsList.map((organization) => {
         return (
           <Sidebar.Item
+            key={organization.orgUid}
             style={{ cursor: 'pointer' }}
             active={isActive(`${ROUTES.ORG_ACTIVITIES}/${organization.orgUid}`)}
             onClick={() => navigate(`${ROUTES.ORG_ACTIVITIES}/${organization.orgUid}`)}

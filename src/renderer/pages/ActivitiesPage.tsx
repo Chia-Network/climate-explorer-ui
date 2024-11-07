@@ -14,15 +14,20 @@ import React, { useEffect, useState } from 'react';
 import { Activity } from '@/schemas/Activity.schema';
 import { RECORDS_PER_PAGE, SEARCH_BY_CLIMATE_DATA, SEARCH_BY_ON_CHAIN_METADATA } from '@/utils/constants';
 import { useParams } from 'react-router-dom';
+import { BiRefresh } from 'react-icons/bi';
+import { reloadApplication } from '@/utils/unified-ui-utils';
 
 const ActivitiesPage: React.FC = () => {
   // manage searchBy value and searchByString query param separately to avoid query trigger if no search
   const { orgUid } = useParams();
   const [search, setSearch] = useQueryParamState('search', undefined);
-  const [searchByString, setSearchByString] = useQueryParamState('search-by', SEARCH_BY_CLIMATE_DATA);
+  const [searchByString, setSearchByString] = useQueryParamState(
+    'search-by',
+    orgUid ? SEARCH_BY_CLIMATE_DATA : undefined,
+  );
   const [searchBy, setSearchBy] = useState<ActivitySearchBy | undefined>(undefined);
   const [order, setOrder] = useQueryParamState('order', undefined);
-  const [currentPage, setCurrentPage] = useQueryParamState('page', '1');
+  const [currentPage, setCurrentPage] = useQueryParamState('page', orgUid ? '1' : undefined);
   const handleSetOrder = useColumnOrderHandler(order, setOrder);
   const [activityDetailsModalUrlFragment, showActivityDetailsModal, setShowActivityDetailsModalActive] =
     useWildCardUrlHash('activity-details');
@@ -118,6 +123,15 @@ const ActivitiesPage: React.FC = () => {
             setSearchByString={setSearchByString}
           />
           <SearchBox defaultValue={search} onChange={handleSearchChange} />
+          <button
+            onClick={() => reloadApplication()}
+            className="ml-2 py-2 px-4 bg-orange-200 text-orange-600 border border-orange-400 rounded-lg hover:bg-orange-300 transition duration-150 ease-in-out flex items-center justify-center space-x-2 dark:bg-orange-600 dark:text-orange-200 dark:border-orange-700 dark:hover:bg-orange-700"
+          >
+            <BiRefresh className="text-orange-600 dark:text-orange-300" />
+            <p className="capitalize">
+              <FormattedMessage id="refresh" />
+            </p>
+          </button>
         </div>
         <ActivitiesListTable
           data={orgActivitiesData?.activities || []}
