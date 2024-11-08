@@ -91,5 +91,7 @@
   "search-by-beneficiary-information": "search by beneficiary information",
   "failed-to-load-organizations": "failed to load organizations",
   "climate-activity-exploration": "climate activity exploration",
-  "please-select-a-climate-registry-to-view-activity": "please select a climate registry to view activity"
+  "please-select-a-climate-registry-to-view-activity": "please select a climate registry to view activity",
+  "cannot-connect-to-registry-api-with-current-settings": "Cannot connect to registry API with current settings",
+  "please-disconnect-to-edit-the-api-url-and-api-key": "Please disconnect to edit the API URL and API key"
 }

@@ -64,6 +64,8 @@ function App() {
     }
   };
 
+  useEffect(() => notifyParentOfAppLoad(), []);
+
   useEffect(() => {
     if (appStore.locale) {
       setTranslationTokens(loadLocaleData(appStore.locale));
