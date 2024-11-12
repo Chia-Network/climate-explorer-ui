@@ -4,6 +4,7 @@ export interface AppState {
   apiKey?: string | null;
   configFileLoaded: boolean;
   isDarkTheme: boolean;
+  isCoreRegistryUiApp: boolean;
 }
 
 const initialState: AppState = {
@@ -12,6 +13,7 @@ const initialState: AppState = {
   apiKey: null,
   configFileLoaded: false,
   isDarkTheme: false,
+  isCoreRegistryUiApp: false,
 };
 
 export default initialState;

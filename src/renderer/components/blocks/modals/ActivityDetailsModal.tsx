@@ -28,8 +28,6 @@ const ActivityDetailsModal: React.FC<DetailsModalProps> = ({ onClose }) => {
     error: activityDataError,
   } = useGetActivityRecordQuery({ warehouseUnitId, coinId, actionMode });
 
-  console.log('data:', activityData, 'loading:', activityDataLoading, 'error:', activityDataError);
-
   const modalBody = () => {
     if (activityDataLoading) {
       return (

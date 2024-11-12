@@ -27,9 +27,13 @@ const LeftNav = () => {
       return organizationsList.map((organization) => {
         return (
           <Sidebar.Item
+            key={organization.orgUid}
             style={{ cursor: 'pointer' }}
             active={isActive(`${ROUTES.ORG_ACTIVITIES}/${organization.orgUid}`)}
-            onClick={() => navigate(`${ROUTES.ORG_ACTIVITIES}/${organization.orgUid}`)}
+            onClick={() =>
+              !isActive(`${ROUTES.ORG_ACTIVITIES}/${organization.orgUid}`) &&
+              navigate(`${ROUTES.ORG_ACTIVITIES}/${organization.orgUid}`)
+            }
           >
             <p className="capitalize">{organization.name}</p>
           </Sidebar.Item>

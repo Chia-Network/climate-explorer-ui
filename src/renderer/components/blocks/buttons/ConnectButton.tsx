@@ -7,6 +7,7 @@ import { useGetHealthQuery } from '@/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { resetApiHost } from '@/store/slices/app';
+import { reloadApplication } from '@/utils/unified-ui-utils';
 
 const ConnectButton: React.FC = () => {
   const location = useLocation();
@@ -32,13 +33,13 @@ const ConnectButton: React.FC = () => {
 
   const handleDisconnect = () => {
     dispatch(resetApiHost());
-    setTimeout(() => window.location.reload(), 0);
+    setTimeout(() => reloadApplication(), 0);
   };
 
   const onClose = () => {
     refetch();
     setTimeout(() => setActive(false));
-    setTimeout(() => window.location.reload(), 0);
+    setTimeout(() => reloadApplication(), 0);
   };
 
   return (
