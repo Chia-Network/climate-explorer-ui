@@ -125,9 +125,9 @@ const ActivitiesPage: React.FC = () => {
           <SearchBox defaultValue={search} onChange={handleSearchChange} />
           <button
             onClick={() => reloadApplication()}
-            className="ml-2 py-2 px-4 bg-orange-200 text-orange-600 border border-orange-400 rounded-lg hover:bg-orange-300 transition duration-150 ease-in-out flex items-center justify-center space-x-2 dark:bg-orange-600 dark:text-orange-200 dark:border-orange-700 dark:hover:bg-orange-700"
+            className="ml-2 py-2 px-4 bg-blue-200 text-blue-700 border border-blue-500 rounded-lg hover:bg-blue-100 transition duration-150 ease-in-out flex items-center justify-center space-x-2 dark:bg-blue-500 dark:text-blue-200 dark:border-blue-400 dark:hover:bg-blue-300"
           >
-            <BiRefresh className="text-orange-600 dark:text-orange-300" />
+            <BiRefresh className="text-blue-700 dark:text-blue-200" />
             <p className="capitalize">
               <FormattedMessage id="refresh" />
             </p>
