@@ -1,108 +1,154 @@
-# Carbon UI Template
+# Climate Explorer User Interface
 
-This repo contains the base architecture for a robust client rendered single page application built on React JS and
-typescript.
-Applications built on this template can be packaged into electron applications. Other base technologies used are
-Vite JS, Redux Tool Kit, RTKquery and Flowbite-React. The application has a left navigation bar listing pages to be
-navigated to.
+The Climate Explorer User Interface is the best way for a registry or watchdog organization to follow all on-chain
+activity related to the tokenization of carbon credits using the
+[Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine).
+This user interface accesses data from the [Climate Explorer](https://github.com/Chia-Network/climate-token-driver/)
+and displays all `Tokenization`, `Detokenization`, and `Retirement` events for carbon tokens issued by a particular
+registry.
 
-### General
+The Climate Explorer UI is the final piece of the Climate Tokenization Suite to provide full transparency into the
+tokenization process.
 
-The app resides almost entirely in src/renderer. main.ts exists only to start the electron process and open a window
-requesting the site from the vite server. Exports within the renderer directory are exported from the directory in
-which they reside via index.ts files up to the respective top level folder in the renderer directory. Imports are
-handled
-by importing from @/top-level-dir. for instance to import foo which resides in directory components/fuz/baz, merely
-import
-from @/components. When exporting via the established pattern, there is no need for relative imports.
+Registries leveraging the [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine)
+should plan on setting up a separate machine to run the Climate Explorer and UI, as the Climate Explorer is meant to
+publicly surface registry token activity that is occurring on the Chia blockchain. By having a separate machine running
+the Climate Explorer, organizations are able to better protect the CADT, Climate Tokenization Engine, & Chia Climate
+Tokenization services while still providing transparency to their constituents.
 
-The left navigation bar's buttons are hooked up to the react-router which handles page navigation. the router resides
-in routes/AppNavigator.tsx and the page paths exist in route-constants.ts
+## Related Projects
 
-### API Calls
+* [Chia Blockchain](https://github.com/Chia-Network/chia-blockchain)
+* [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine)
+* [Climate Tokenization Engine UI](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI)
+* [Climate Explorer](https://github.com/Chia-Network/climate-token-driver)
+* [Chia Climate Tokenization](https://github.com/Chia-Network/climate-token-driver)
+* [Climate Wallet](https://github.com/Chia-Network/Climate-Wallet)
+* [Climate Action Data Trust](https://github.com/Chia-Network/cadt)
+* [Climate Action Data Trust UI](https://github.com/Chia-Network/cadt-ui)
 
-API calls are handled via RTKquery, whose base configuration resides in /api/cadt/v1/index.js. It is recommended to
-retain this directory structure and configuration as it allows for dynamic host configuration which is already baked
-into this template. The 'cadt' directory can be renamed to whatever is appropriate.
-endpoints are defined in the /v1 directory alongside index.ts.
+## QuickStart
 
-The endpoints define hooks which mutate or query their resources. There are 2 illustrative examples of how to
-define RTKQuery endpoints in the /v1 directory. Note that when exporting a hook from an endpoint, the name to export
-is prepended with use, and appended with either query or mutation. To export resource query hook foo, the export name
-will need to be useFooQuery. For mutation hook foo it will need to be useFooMutation.
+### Installation
 
-activities.api.ts can be deleted as it is only use in other sample code that will be deleted, but it is highly
-recommended that system.api.ts be kept and the resource url's changed to the /health equivalent for the backend the
-app will be connected to. the application uses these system hooks to determine if the backend is available or not.
-removing it will require refactoring, and it will likely end-up being reimplemented over the course of development.
+Precompiled x86 binaries and installers are available for MacOS, Windows, and Debian-based Linux distros (Ubuntu, Mint,
+PopOS, etc) on the [releases](https://github.com/Chia-Network/climate-explorer-ui/releases) page.
 
-### Components
+#### Using APT on Debian-based Linux Distros (Ubuntu, Mint, etc)
 
-Please see the next section on theming details and implementation
+The Climate Explorer UI can be installed with `apt`.
 
-This UI is built on Flowbite-React tailwind CSS components. Flowbite component theming is handled by importing the
-flowbite components into /components/proxy, then re-exporting the components with a flowbite theme applied.
-If a component needs to be themed, the theme should be declared and set in the proxy component. Page and
-component layouts are achieved via tailwind CSS (with few exceptions). It is recommended to keep it that way. The style
-prop is only set in circumstances when tailwind classes would not suffice. Flowbite components should only be imported
-via @/components. Importing directly from flowbite will introduce inconsistent theming since the theming is set in the
-/components/proxy components. Note that there is a theme selector component which toggles between the tailwind defined
-light mode and dark mode provided by flowbite.
+1. Start by updating apt and allowing repository download over HTTPS:
 
-Forms are handled with formik. the forms themselves can be found in components/blocks/forms and prebuild form components
-can be found in components/form.
+```
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+```
 
-### Theme
+2. Add Chia's official GPG Key (if you have installed Chia with `apt`, you'll have this key already and will get a
+   message about overwriting the existing key, which is safe to do):
 
-Preface - Flowbite-React Documentation: https://flowbite-react.com/docs/components/accordion (See component list in left
-nav)
+```
+curl -sL https://repo.chia.net/FD39E6D3.pubkey.asc | sudo gpg --dearmor -o /usr/share/keyrings/chia.gpg
+```
 
-The Flowbite component library is built on tailwind css classes, but in most cases the components will not react to a
-class or classname being set. To customize the appearance of a flowbite component, a theme will need to be set on the
-component (see the next section on where to do this in the codebase). In the flowbite documentation at the bottom of
-each component page the theme
-that defines the component is provided. The theme is an object with each prop representing a sub-component of the
-component to
-style and the value being a string of the tailwind classes that define the component. When styling a component the
-entire tailwind string
-should be copied, and generally only colors should be changed. At the time of writing any color prefaced with dark:
-should
-NOT be changed. Additionally, colors should only be changed if they're set from the global custom colors. More in the
-next
-paragraph. An example theme can be found in components/proxy/sidebar.tsx
+3. Use the following command to setup the repository.
 
-Global theme colors are provided via an optional colors.json file that the app attempts to fetch. if it exists, the
-colors
-are set via global css properties defined in App.css. To define new colors, the new color must be defined in:
+```
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/chia.gpg] https://repo.chia.net/climate-tokenization/debian/ stable main" | sudo tee /etc/apt/sources.list.d/climate-tokenization.list > /dev/null
+```
 
-- App.css
-- tailwind.config.js
-- colors.json
+4. Install the Climate Explorer UI
 
-From there the color CSS property should be declared in the components that need to apply it.
+```
+sudo apt-get update
+sudo apt-get install climate-explorer-ui
+```
 
-### Patterns
+5. Run the Climate Explorer UI from your OS launcher or at the command line with `climate-explorer-ui`.
 
-The sample patterns in this application are what allow it to be so robust. There are 2 general patterns employed, one
-pattern for displaying data and another pattern for initiating backend operations (or anything else).
-The pattern for displaying data has 3 general steps:
+#### Installing from Source
 
-- the data is fetched with RTKquery hooks at the page level, and all display and organization options are set
-- the data and options are passed to a data organization component which defines the structure and configuration
-  of how to display the data
-- the structure, data, and options are passed to a common base component responsible for rendering the data
+Install [Node 20](https://nodejs.org/en/download/releases) and then run the following:
 
-This pattern is exemplified by pages/TokensPage.tsx, components/blocks/tables/ProjectsListTable.tsx, and
-components/layout/Datatable.tsx. TokensPage.tsx fetches the data via the RTKQuery hooks, then passes the data,
-filters, and sorts to ProjectsListTable.tsx, which defines the structure (columns) of the table and passes the structure
-and data
-down to the generalized DataTable.tsx. The project table and data table are directly controlled at the page level and
-make no assumptions about the data or how to display it. The data table can be used in any capacity for any table and
-any data set.
+```sh
+git clone git@github.com:Chia-Network/climate-explorer-ui
+cd climate-explorer-ui
+npm install
+npm run start
+```
 
-For all other operations that don't involve fetching and sorting data, a pattern of self-contained components which
-pull date directly from the api hooks and are parent component-agnostic is used. Prop drilling is explicitly avoided.
+## Developer Guide
 
-For deep-linking components and state, the hooks/ directory contains hooks for manipulating query params and url hashes.
-these hooks operate much like the useState hook with additional arguments. pages/TokensPage.tsx has examples for
-how to use these hooks.
+### Prerequisites
+
+You'll need:
+
+- Git
+- [nvm](https://github.com/nvm-sh/nvm)
+
+This app uses `nvm` to align node versions across development, CI and production. If you're working on Windows you
+should consider [nvm-windows](https://github.com/coreybutler/nvm-windows)
+
+### Development Environment
+
+Use the following commands to prepare you development environment and run the Climate Explorer UI:
+
+```sh
+git clone git@github.com:Chia-Network/climate-explorer-ui
+cd climate-explorer-ui
+nvm install
+nvm use
+npm install -g husky
+npm install -g prettier
+npm install -g lint-staged
+npm install -g git-authors-cli
+
+npm run start
+```
+
+### Contributing
+
+Upon your first commit, you will automatically be added to the package.json file as a contributor.
+
+### Commiting
+
+[Signed commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits) are
+required.
+
+This repo uses a commit convention. A typical commit message might read:
+
+```
+    fix: correct home screen layout
+```
+
+The first part of this is the commit "type". The most common types are "feat" for new features, and "fix" for bugfixes.
+Using these commit types helps us correctly manage our version numbers and changelogs. Since our release process
+calculates new version numbers from our commits it is very important to get this right.
+
+- `feat` is for introducing a new feature
+- `fix` is for bug fixes
+- `docs` for documentation only changes
+- `style` is for code formatting only
+- `refactor` is for changes to code which should not be detectable by users or testers
+- `perf` is for a code change that improves performance
+- `test` is for changes which only touch test files or related tooling
+- `build` is for changes which only touch our develop/release tools
+- `ci` is for changes to the continuous integration files and scripts
+- `chore` is for changes that don't modify code, like a version bump
+- `revert` is for reverting a previous commit
+
+After the type and scope there should be a colon.
+
+The "subject" of the commit follows. It should be a short indication of the change. The commit convention prefers that
+this is written in the present-imperative tense.
+
+### Commit linting
+
+Each time you commit the message will be checked against these standards in a pre-commit hook. Additionally all the
+commits in a PR branch will be linted before it can be merged to master.
+
+### Branch Layout
+
+All pull requests should be made against the `develop` branch. Commits to the `main` branch will trigger a release, so
+the `main` branch is always the code in the latest release.
