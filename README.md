@@ -80,7 +80,7 @@ server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
 
-    # Path on disk to Tokenization Engine UI files
+    # Path on disk to Explorer UI files
     root /var/www/explorer-ui/build;
 
     # Domain name where this site will be served from
