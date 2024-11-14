@@ -106,12 +106,12 @@
         ]
       },
       "publish": null,
-      "icon": "src/assets/img/explorer-logo.png"
+      "icon": "src/renderer/assets/img/explorer-logo.png"
     },
     "win": {
       "target": "nsis",
       "publish": null,
-      "icon": "src/assets/img/explorer-logo.png"
+      "icon": "src/renderer/assets/img/explorer-logo.png"
     },
     "linux": {
       "target": "deb",
