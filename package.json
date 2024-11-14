@@ -1,12 +1,12 @@
 {
   "name": "climate-explorer-ui",
   "private": true,
-  "version": "0.0.10",
+  "version": "1.2.0",
   "type": "module",
   "main": "build/main.js",
   "engineStrict": true,
   "author": "Chia Network Inc. <hello@chia.net>",
-  "description": "Climate Action Data Trust User Interface",
+  "description": "Climate Explorer User Interface",
   "engines": {
     "node": ">=20.0"
   },
@@ -88,7 +88,7 @@
     "*.+(js|ts|tsx)": "npm run lint:prettier-eslint"
   },
   "build": {
-    "appId": "org.worldbank.climate-action-data-trust",
+    "appId": "org.chia.climate-explorer-ui",
     "productName": "climate-explorer-ui",
     "files": [
       "build/renderer/**/*",
@@ -117,7 +117,7 @@
       "target": "deb",
       "description": "Climate Explorer User Interface",
       "maintainer": "Chia Network Inc. <hello@chia.net>",
-      "vendor": "https://climateactiondata.org/",
+      "vendor": "https://www.chia.net/",
       "publish": null,
       "icon": "src/renderer/assets/img/explorer-logo.png",
       "desktop": {
