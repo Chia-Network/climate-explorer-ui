@@ -1,10 +1,12 @@
 import { ReactElement, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { Card, ComponentCenteredSpinner, Sidebar } from '@/components';
+import { Button, Card, ComponentCenteredSpinner, Sidebar } from '@/components';
 import ROUTES from '@/routes/route-constants';
 import { MdOutlineTravelExplore } from 'react-icons/md';
 import { useGetOrganizationsListQuery } from '@/api';
+import { reloadApplication } from '@/utils/unified-ui-utils';
+import { BiRefresh } from 'react-icons/bi';
 
 const LeftNav = () => {
   const navigate = useNavigate();
@@ -44,8 +46,8 @@ const LeftNav = () => {
 
   return (
     <div className="h-full relative bg-white dark:bg-gray-800">
-      <div className="h-full hidden md:block">
-        <Sidebar aria-label="App Navigation">
+      <div className="h-full md:block">
+        <Sidebar aria-label="App Navigation" className="h-full">
           <Sidebar.Items>
             <Sidebar.ItemGroup>
               <Card className="max-w-sm mb-6 shadow-none">
@@ -56,8 +58,16 @@ const LeftNav = () => {
                   </p>
                 </div>
               </Card>
-              {sideBarItems()}
             </Sidebar.ItemGroup>
+            <Sidebar.ItemGroup>
+              <Button color="green" className="w-full" onClick={reloadApplication}>
+                <BiRefresh className="w-5 h-5 mr-4" />
+                <p className="sentence-case">
+                  <FormattedMessage id="check-for-new-activity" />
+                </p>
+              </Button>
+            </Sidebar.ItemGroup>
+            <Sidebar.ItemGroup>{sideBarItems()}</Sidebar.ItemGroup>
           </Sidebar.Items>
         </Sidebar>
       </div>

@@ -15,6 +15,9 @@ const SidebarTheme = {
     base: 'flex items-center justify-center rounded-lg p-2 font-normal text-leftNavText hover:text-black hover:bg-white dark:text-white dark:hover:bg-gray-700',
     active: 'bg-leftNavItemActive hover:bg-leftNavItemActive dark:bg-gray-700 text-black',
   },
+  items: {
+    base: 'h-full',
+  },
 };
 
 function Sidebar({ children, ...props }: SidebarProps) {
