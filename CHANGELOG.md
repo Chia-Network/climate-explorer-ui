@@ -1,3 +1,34 @@
+## [1.2.3](https://github.com/Chia-Network/climate-explorer-ui/compare/1.2.3-rc2...1.2.3) (2024-12-17)
+
+
+
+## [1.2.2](https://github.com/Chia-Network/climate-explorer-ui/compare/1.2.1...1.2.2) (2024-11-20)
+
+
+
+## [1.2.1](https://github.com/Chia-Network/climate-explorer-ui/compare/1.2.0...1.2.1) (2024-11-14)
+
+
+
+# [1.2.0](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.14...1.2.0) (2024-11-14)
+
+
+
+## [1.2.3-rc1](https://github.com/Chia-Network/climate-explorer-ui/compare/1.2.2...1.2.3-rc1) (2024-12-17)
+
+
+### Bug Fixes
+
+* locked in flowbite-react version ([9e91c95](https://github.com/Chia-Network/climate-explorer-ui/commit/9e91c955eafd7d0e10f0b7b867fff59f63dfacb9))
+
+
+### Features
+
+* remove unnecessary express server for production ui ([cc2cc4e](https://github.com/Chia-Network/climate-explorer-ui/commit/cc2cc4e5a7d99c4a318c158fa3d407b12a96a998))
+* reworked refresh button ([c93f44c](https://github.com/Chia-Network/climate-explorer-ui/commit/c93f44c3a7571715fefcb844c8a878d96a8dd351))
+
+
+
 ## [1.2.2](https://github.com/Chia-Network/climate-explorer-ui/compare/1.2.1...1.2.2) (2024-11-20)
 
 
