@@ -14,8 +14,6 @@ import React, { useEffect, useState } from 'react';
 import { Activity } from '@/schemas/Activity.schema';
 import { RECORDS_PER_PAGE, SEARCH_BY_CLIMATE_DATA, SEARCH_BY_ON_CHAIN_METADATA } from '@/utils/constants';
 import { useParams } from 'react-router-dom';
-import { BiRefresh } from 'react-icons/bi';
-import { reloadApplication } from '@/utils/unified-ui-utils';
 
 const ActivitiesPage: React.FC = () => {
   // manage searchBy value and searchByString query param separately to avoid query trigger if no search
@@ -123,15 +121,6 @@ const ActivitiesPage: React.FC = () => {
             setSearchByString={setSearchByString}
           />
           <SearchBox defaultValue={search} onChange={handleSearchChange} />
-          <button
-            onClick={() => reloadApplication()}
-            className="ml-2 py-2 px-4 bg-blue-200 text-blue-700 border border-blue-500 rounded-lg hover:bg-blue-100 transition duration-150 ease-in-out flex items-center justify-center space-x-2 dark:bg-blue-500 dark:text-blue-200 dark:border-blue-400 dark:hover:bg-blue-300"
-          >
-            <BiRefresh className="text-blue-700 dark:text-blue-200" />
-            <p className="capitalize">
-              <FormattedMessage id="refresh" />
-            </p>
-          </button>
         </div>
         <ActivitiesListTable
           data={orgActivitiesData?.activities || []}

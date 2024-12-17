@@ -12,10 +12,13 @@ const Template = () => {
 
   return (
     <ErrorBoundary>
-      <div id="app" className="dark:bg-gray-800 w-full h-dvh">
+      <div id="app" className="dark:bg-gray-800 w-full h-full">
         <Header />
         <div id="body" className="w-full h-full flex md:flex-row">
-          <LeftNav />
+          <div style={{ height: isCoreRegistryUiApp ? '100vh' : 'calc(100vh - 64px)' }}>
+            <LeftNav />
+          </div>
+
           <div id="content" className="w-full relative dark:text-white">
             <ErrorBoundary>
               <div style={{ height: isCoreRegistryUiApp ? '100vh' : 'calc(100vh - 64px)' }}>
