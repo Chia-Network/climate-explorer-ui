@@ -1,3 +1,29 @@
+## [1.2.4](https://github.com/Chia-Network/climate-explorer-ui/compare/1.2.3-rc8...1.2.4) (2025-02-07)
+
+
+
+## [1.2.3](https://github.com/Chia-Network/climate-explorer-ui/compare/1.2.3-rc2...1.2.3) (2024-12-17)
+
+
+
+## [1.2.2](https://github.com/Chia-Network/climate-explorer-ui/compare/1.2.1...1.2.2) (2024-11-20)
+
+
+
+## [1.2.1](https://github.com/Chia-Network/climate-explorer-ui/compare/1.2.0...1.2.1) (2024-11-14)
+
+
+
+# [1.2.0](https://github.com/Chia-Network/climate-explorer-ui/compare/1.1.14...1.2.0) (2024-11-14)
+
+
+### Bug Fixes
+
+* connect form regex ([5d9c6c5](https://github.com/Chia-Network/climate-explorer-ui/commit/5d9c6c5bbcb5ddb9a8d1c5ca5f327cee5a2dc6b7))
+* ts errors ([3cacbf5](https://github.com/Chia-Network/climate-explorer-ui/commit/3cacbf550e36d9c4bc46d2c3e888ba95cac19de4))
+
+
+
 ## [1.2.3](https://github.com/Chia-Network/climate-explorer-ui/compare/1.2.3-rc2...1.2.3) (2024-12-17)
 
 
